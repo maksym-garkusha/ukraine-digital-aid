@@ -1,9 +1,11 @@
 using UkraineDigitalAid.Export;
 using UkraineDigitalAid.Iati;
+using UkraineDigitalAid.Report;
 using UkraineDigitalAid.Store;
 
 // dotnet run -- fetch                 забрати активності з d-portal у кеш
 // dotnet run -- export <тека>         зібрати data.json для сторінки
+// dotnet run -- report <файл.md>      зібрати звіт за даними з кешу
 // Кеш лежить у теці cache поруч із місцем запуску, інше місце: --cache <тека>
 string cacheDir = OptionValue(ref args, "--cache") ?? "cache";
 var store = new ActivityStore(cacheDir);
@@ -16,8 +18,10 @@ switch (args)
         return await Fetch(store, cancel.Token);
     case ["export", var directory]:
         return await Export(store, directory, cancel.Token);
+    case ["report", var path]:
+        return await Report(store, path, cancel.Token);
     default:
-        Console.Error.WriteLine("Команди: fetch | export <тека> [--cache <тека>]");
+        Console.Error.WriteLine("Команди: fetch | export <тека> | report <файл.md> [--cache <тека>]");
         return 2;
 }
 
@@ -65,6 +69,18 @@ static async Task<int> Export(ActivityStore store, string directory, Cancellatio
     var data = SiteExport.Build(store.Load().Values.Select(e => e.Activity), run, Codelists.Read(store.CodelistsDirectory), DateTime.UtcNow);
     long size = await SiteExport.WriteAsync(data, directory, ct);
     Console.WriteLine($"{Path.Combine(directory, SiteExport.FileName)}: {data.Activities.Count} активностей, {size / 1024} КБ");
+    return 0;
+}
+
+static async Task<int> Report(ActivityStore store, string path, CancellationToken ct)
+{
+    if (store.LoadRun() is not { } run)
+        return NoCache(store);
+    string report = RunReport.Build(store.Load().Values.Select(e => e.Activity), run, Codelists.Read(store.CodelistsDirectory));
+    if (Path.GetDirectoryName(path) is { Length: > 0 } directory)
+        Directory.CreateDirectory(directory);
+    await File.WriteAllTextAsync(path, report, ct);
+    Console.WriteLine($"Звіт записано в {path}");
     return 0;
 }
 
