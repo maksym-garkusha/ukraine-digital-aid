@@ -1,0 +1,265 @@
+{
+ "/activity-date": [
+  {
+   "@iso-date": "2023-09-04",
+   "@type": "1"
+  },
+  {
+   "@iso-date": "2024-04-15",
+   "@type": "2"
+  },
+  {
+   "@iso-date": "2029-03-31",
+   "@type": "3"
+  }
+ ],
+ "/activity-scope@code": "1",
+ "/activity-status@code": "2",
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "The Tech CoE will make it easier for FCDO staff at post and in policy teams to mobilise the right mix of UK and world-class expertise to enhance their technology for development offer to partner countries. The Tech CoE will: \n•            Deliver a technical assistance facility that provides LMICs with the tools and support to develop their domestic technology ecosystems and to shape the international system to the benefit of all. \n•            Invest in new research to build the global evidence base, consolidate existing evidence and lessons learned and improve knowledge management and signposting to existing evidence and learning resources.\n•            Leverage/deploy British expertise. Enhance the UK brand by promoting experts and institutions and/or showcase our ability to convene experts in a community of practice",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "1"
+  }
+ ],
+ "/iati-identifier": "GB-GOV-1-400101",
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "AFRICAN CENTRE FOR TECHNOLOGY STUDIES",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Foreign, Commonwealth and Development Office (FCDO)",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "GB-GOV-1",
+   "@role": "1",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Foreign, Commonwealth and Development Office (FCDO)",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "GB-GOV-1",
+   "@role": "2",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "INTERNATIONAL TELECOMMUNICATION UNI",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "1016076",
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "KNUST KUMASI",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "1010938",
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "IVAN TESTENKO",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "PRICEWATERHOUSECOOPERS LLP",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "THE ALAN TURING INSTITUTE",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "1003133",
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "THIEN HA TRAVEL AND CONVENTION CENTER",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "225422",
+   "@role": "4"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "@code": "GH",
+   "@percentage": 25
+  },
+  {
+   "@code": "PK",
+   "@percentage": 7.5
+  },
+  {
+   "@code": "UA",
+   "@percentage": 12.5
+  }
+ ],
+ "/recipient-region": [
+  {
+   "@code": "998",
+   "@percentage": 55,
+   "@vocabulary": "1"
+  }
+ ],
+ "/related-activity": [
+  {
+   "@ref": "GB-GOV-1-400101-403",
+   "@type": "2"
+  },
+  {
+   "@ref": "GB-GOV-1-400101-405",
+   "@type": "2"
+  },
+  {
+   "@ref": "GB-GOV-1-400101-406",
+   "@type": "2"
+  },
+  {
+   "@ref": "GB-GOV-1-400101-407",
+   "@type": "2"
+  },
+  {
+   "@ref": "GB-GOV-1-400101-408",
+   "@type": "2"
+  },
+  {
+   "@ref": "GB-GOV-1-400101-409",
+   "@type": "2"
+  },
+  {
+   "@ref": "GB-GOV-1-400101-410",
+   "@type": "2"
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "UK - Foreign, Commonwealth Development Office (FCDO)",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "GB-GOV-1",
+ "/reporting-org@type": "10",
+ "/sector": [
+  {
+   "/narrative": [
+    {
+     "": "Energy research",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "23182",
+   "@percentage": 4.71,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://reference.iatistandard.org/codelists/Sector/"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Information and communication technology (ICT)",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "22040",
+   "@percentage": 8.57,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://reference.iatistandard.org/codelists/Sector/"
+  },
+  {
+   "/narrative": [
+    {
+     "": "National standards development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "15144",
+   "@percentage": 1.43,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://reference.iatistandard.org/codelists/Sector/"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Public sector policy and administrative management",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "15110",
+   "@percentage": 45.71,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://reference.iatistandard.org/codelists/Sector/"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Research/scientific institutions",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "43082",
+   "@percentage": 6.29,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://reference.iatistandard.org/codelists/Sector/"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Sectors not specified",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "99810",
+   "@percentage": 28.57,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://reference.iatistandard.org/codelists/Sector/"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "Technology Centre of Expertise (TechGAP)",
+   "@xml:lang": "EN"
+  }
+ ],
+ "@default-currency": "GBP",
+ "@hierarchy": 1,
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "EN"
+}

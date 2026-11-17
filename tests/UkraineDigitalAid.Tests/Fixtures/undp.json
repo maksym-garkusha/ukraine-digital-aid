@@ -1,0 +1,283 @@
+{
+ "/activity-date": [
+  {
+   "@iso-date": "2019-01-01",
+   "@type": "1"
+  },
+  {
+   "@iso-date": "2019-01-01",
+   "@type": "2"
+  },
+  {
+   "@iso-date": "2025-09-01",
+   "@type": "4"
+  },
+  {
+   "@iso-date": "2026-05-06",
+   "@type": "3"
+  }
+ ],
+ "/activity-scope@code": "4",
+ "/activity-status@code": "3",
+ "/capital-spend@percentage": 0,
+ "/collaboration-type@code": "4",
+ "/default-aid-type": [
+  {
+   "@code": "C01",
+   "@vocabulary": "1"
+  }
+ ],
+ "/default-finance-type@code": "110",
+ "/default-flow-type@code": "10",
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "The Human Rights for Ukraine aims at promoting human rights and their effective protection with the support of the National Human Rights Institution, i.e. the OO.",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "1"
+  }
+ ],
+ "/iati-identifier": "XM-DAC-41114-OUTPUT-00100737",
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "GOVERNMENT OF DENMARK",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "DK-1",
+   "@role": "1",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "SWISS AGY FOR DEVELOPMENT & COOPERATION",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "CH-4",
+   "@role": "1",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "XM-DAC-41114",
+   "@role": "4",
+   "@type": "40"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "/narrative": [
+    {
+     "": "Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "UA",
+   "@percentage": 100
+  }
+ ],
+ "/related-activity": [
+  {
+   "@ref": "XM-DAC-41114-PROJECT-00096842",
+   "@type": "1"
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "United Nations Development Programme",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "XM-DAC-41114",
+ "/reporting-org@type": "40",
+ "/sector": [
+  {
+   "/narrative": [
+    {
+     "": "Structural transformation, including green, inclusive and digital transitions",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "21",
+   "@percentage": 100,
+   "@vocabulary": "99"
+  },
+  {
+   "@code": "10.3",
+   "@percentage": 33.34,
+   "@vocabulary": "8"
+  },
+  {
+   "@code": "15110",
+   "@percentage": 100,
+   "@vocabulary": "1"
+  },
+  {
+   "@code": "16.6",
+   "@percentage": 33.33,
+   "@vocabulary": "8"
+  },
+  {
+   "@code": "5.5",
+   "@percentage": 33.33,
+   "@vocabulary": "8"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "Human Rights for Ukraine(HR4U)",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/transaction": [
+  {
+   "/disbursement-channel@code": "2",
+   "/provider-org/narrative": [
+    {
+     "": "GOVERNMENT OF DENMARK",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "DK-1",
+   "/provider-org@type": "10",
+   "/receiver-org/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XM-DAC-41114-OUTPUT-00100737",
+   "/receiver-org@ref": "XM-DAC-41114",
+   "/receiver-org@type": "40",
+   "/transaction-date@iso-date": "2019-12-31",
+   "/transaction-type@code": "1",
+   "/value": -49992,
+   "/value@currency": "USD",
+   "/value@value-date": "2019-12-31"
+  },
+  {
+   "/disbursement-channel@code": "2",
+   "/provider-org/narrative": [
+    {
+     "": "GOVERNMENT OF DENMARK",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "DK-1",
+   "/provider-org@type": "10",
+   "/receiver-org/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XM-DAC-41114-OUTPUT-00100737",
+   "/receiver-org@ref": "XM-DAC-41114",
+   "/receiver-org@type": "40",
+   "/transaction-date@iso-date": "2020-12-31",
+   "/transaction-type@code": "1",
+   "/value": 263877,
+   "/value@currency": "USD",
+   "/value@value-date": "2020-12-31"
+  },
+  {
+   "/disbursement-channel@code": "2",
+   "/provider-org/narrative": [
+    {
+     "": "GOVERNMENT OF DENMARK",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "DK-1",
+   "/provider-org@type": "10",
+   "/receiver-org/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XM-DAC-41114-OUTPUT-00100737",
+   "/receiver-org@ref": "XM-DAC-41114",
+   "/receiver-org@type": "40",
+   "/transaction-date@iso-date": "2021-12-31",
+   "/transaction-type@code": "1",
+   "/value": -137194,
+   "/value@currency": "USD",
+   "/value@value-date": "2021-12-31"
+  },
+  {
+   "/disbursement-channel@code": "2",
+   "/provider-org/narrative": [
+    {
+     "": "GOVERNMENT OF DENMARK",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "DK-1",
+   "/provider-org@type": "10",
+   "/receiver-org/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XM-DAC-41114-OUTPUT-00100737",
+   "/receiver-org@ref": "XM-DAC-41114",
+   "/receiver-org@type": "40",
+   "/transaction-date@iso-date": "2022-12-31",
+   "/transaction-type@code": "1",
+   "/value": -95975,
+   "/value@currency": "USD",
+   "/value@value-date": "2022-12-31"
+  },
+  {
+   "/disbursement-channel@code": "2",
+   "/provider-org/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "XM-DAC-41114",
+   "/provider-org@type": "40",
+   "/transaction-date@iso-date": "2019-12-31",
+   "/transaction-type@code": "4",
+   "/value": 839562,
+   "/value@currency": "USD",
+   "/value@value-date": "2019-12-31"
+  },
+  {
+   "/disbursement-channel@code": "2",
+   "/provider-org/narrative": [
+    {
+     "": "United Nations Development Programme",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "XM-DAC-41114",
+   "/provider-org@type": "40",
+   "/transaction-date@iso-date": "2020-12-31",
+   "/transaction-type@code": "4",
+   "/value": 880955,
+   "/value@currency": "USD",
+   "/value@value-date": "2020-12-31"
+  }
+ ],
+ "@default-currency": "USD",
+ "@hierarchy": 2,
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "EN"
+}

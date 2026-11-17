@@ -1,0 +1,340 @@
+{
+ "/activity-date": [
+  {
+   "/narrative": [
+    {
+     "": "Actual End: 2024-04-01",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2024-04-01",
+   "@type": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Actual Start: 2020-10-01",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2020-10-01",
+   "@type": "2"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Planned End: 2024-04-01",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2024-04-01",
+   "@type": "3"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Planned Start: 2020-09-28",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2020-09-28",
+   "@type": "1"
+  }
+ ],
+ "/activity-scope@code": "4",
+ "/activity-status@code": "2",
+ "/capital-spend@percentage": 0,
+ "/collaboration-type@code": "1",
+ "/default-aid-type": [
+  {
+   "@code": "C01",
+   "@vocabulary": "1"
+  }
+ ],
+ "/default-finance-type@code": "110",
+ "/default-flow-type@code": "10",
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "Contract related to: EU4DigitalUA: interoperability, e-services and cybersecurity - This programme will address key structural issues, which improve the framework conditions for the digital economy and provide the basis for the automation of business processes in public institutions",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "1"
+  }
+ ],
+ "/iati-identifier": "XI-IATI-EC_NEAR-2020-PCC-415971",
+ "/other-identifier": [
+  {
+   "@ref": "2019000416001",
+   "@type": "A2"
+  },
+  {
+   "@ref": "XI-IATI-EC_NEAR-2020/415-971",
+   "@type": "A3"
+  }
+ ],
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "Directorate-General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "@ref": "XI-IATI-EC_NEAR",
+   "@role": "3",
+   "@type": "15"
+  },
+  {
+   "/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "European Commission",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "@ref": "XI-IATI-EC_NEAR",
+   "@role": "1",
+   "@type": "15"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Private sector in provider country",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "@ref": "XM-DAC-61000",
+   "@role": "2"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "/narrative": [
+    {
+     "": "Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "UA",
+   "@percentage": 100
+  }
+ ],
+ "/related-activity": [
+  {
+   "@ref": "XI-IATI-EC_NEAR-2019-ACT-D-42007-00",
+   "@type": "1"
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "European Commission - Directorate-General for Neighbourhood and Enlargement Negotiations",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "XI-IATI-EC_NEAR",
+ "/reporting-org@secondary-reporter": 0,
+ "/reporting-org@type": "15",
+ "/sector": [
+  {
+   "/narrative": [
+    {
+     "": "Information and communication technology (ICT)",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "22040",
+   "@percentage": 50,
+   "@vocabulary": "1"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Public sector policy and administrative management",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "15110",
+   "@percentage": 50,
+   "@vocabulary": "1"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "EU4DigitalUA: interoperability, e-services and cybersecurity",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/transaction": [
+  {
+   "/provider-org/narrative": [
+    {
+     "": "European Commission - Directorate General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@provider-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/provider-org@ref": "XI-IATI-EC_NEAR",
+   "/provider-org@type": "15",
+   "/receiver-org/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/transaction-date@iso-date": "2020-09-28",
+   "/transaction-type@code": "2",
+   "/value": 9599900,
+   "/value@currency": "EUR",
+   "/value@value-date": "2020-01-01",
+   "@humanitarian": 0,
+   "@ref": "XI-IATI-EC_NEAR-2020-PCC-415971-SCR.CTR.415971.01"
+  },
+  {
+   "/provider-org/narrative": [
+    {
+     "": "European Commission - Directorate General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@provider-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/provider-org@ref": "XI-IATI-EC_NEAR",
+   "/provider-org@type": "15",
+   "/receiver-org/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/transaction-date@iso-date": "2020-11-13",
+   "/transaction-type@code": "4",
+   "/value": 300000,
+   "/value@currency": "EUR",
+   "/value@value-date": "2020-11-18",
+   "@humanitarian": 0,
+   "@ref": "XI-IATI-EC_NEAR-2020-PCC-415971-SI2.4519695"
+  },
+  {
+   "/provider-org/narrative": [
+    {
+     "": "European Commission - Directorate General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@provider-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/provider-org@ref": "XI-IATI-EC_NEAR",
+   "/provider-org@type": "15",
+   "/receiver-org/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/transaction-date@iso-date": "2021-07-06",
+   "/transaction-type@code": "4",
+   "/value": 1619980,
+   "/value@currency": "EUR",
+   "/value@value-date": "2021-07-09",
+   "@humanitarian": 0,
+   "@ref": "XI-IATI-EC_NEAR-2020-PCC-415971-SI2.4590321"
+  },
+  {
+   "/provider-org/narrative": [
+    {
+     "": "European Commission - Directorate General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@provider-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/provider-org@ref": "XI-IATI-EC_NEAR",
+   "/provider-org@type": "15",
+   "/receiver-org/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/transaction-date@iso-date": "2021-08-18",
+   "/transaction-type@code": "2",
+   "/value": 402700,
+   "/value@currency": "EUR",
+   "/value@value-date": "2021-01-01",
+   "@humanitarian": 0,
+   "@ref": "XI-IATI-EC_NEAR-2020-PCC-415971-SCR.CTR.415971.01"
+  },
+  {
+   "/provider-org/narrative": [
+    {
+     "": "European Commission - Directorate General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@provider-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/provider-org@ref": "XI-IATI-EC_NEAR",
+   "/provider-org@type": "15",
+   "/receiver-org/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/transaction-date@iso-date": "2021-12-07",
+   "/transaction-type@code": "4",
+   "/value": 344681.28,
+   "/value@currency": "EUR",
+   "/value@value-date": "2021-12-10",
+   "@humanitarian": 0,
+   "@ref": "XI-IATI-EC_NEAR-2020-PCC-415971-SI2.4633337"
+  },
+  {
+   "/provider-org/narrative": [
+    {
+     "": "European Commission - Directorate General for Neighbourhood and Enlargement Negotiations",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@provider-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/provider-org@ref": "XI-IATI-EC_NEAR",
+   "/provider-org@type": "15",
+   "/receiver-org/narrative": [
+    {
+     "": "E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@receiver-activity-id": "XI-IATI-EC_NEAR-2020-PCC-415971",
+   "/transaction-date@iso-date": "2022-01-26",
+   "/transaction-type@code": "4",
+   "/value": 1028287.48,
+   "/value@currency": "EUR",
+   "/value@value-date": "2022-01-31",
+   "@humanitarian": 0,
+   "@ref": "XI-IATI-EC_NEAR-2020-PCC-415971-SI2.4649838"
+  }
+ ],
+ "@default-currency": "EUR",
+ "@hierarchy": 2,
+ "@humanitarian": 0,
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "EN"
+}

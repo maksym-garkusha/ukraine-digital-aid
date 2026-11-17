@@ -1,0 +1,232 @@
+{
+ "/activity-date": [
+  {
+   "@iso-date": "2023-06-01",
+   "@type": "1"
+  },
+  {
+   "@iso-date": "2023-06-01",
+   "@type": "2"
+  },
+  {
+   "@iso-date": "2026-06-01",
+   "@type": "3"
+  },
+  {
+   "@iso-date": "2026-06-01",
+   "@type": "4"
+  }
+ ],
+ "/activity-scope@code": "4",
+ "/activity-status@code": "4",
+ "/capital-spend@percentage": 0,
+ "/collaboration-type@code": "1",
+ "/default-aid-type": [
+  {
+   "@code": "C01",
+   "@vocabulary": "1"
+  }
+ ],
+ "/default-finance-type@code": "110",
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "Aim to contribute to an increased data security, strengthened digital resilience and improvement of governmental services to the public in Ukraine.",
+     "@xml:lang": "EN"
+    },
+    {
+     "": "Aim to contribute to an increased data security, strengthened digital resilience and improvement of governmental services to the public in Ukraine.",
+     "@xml:lang": "SV"
+    }
+   ],
+   "@type": "1"
+  }
+ ],
+ "/iati-identifier": "SE-0-SE-22-68067-1",
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "Ministry of Digital Transformation of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "12001",
+   "@role": "2",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Ministry of Digital Transformation of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "12001",
+   "@role": "4",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Sweden",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "11001",
+   "@ref": "SE-0",
+   "@role": "1",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Swedfund",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "11001",
+   "@ref": "SE-22",
+   "@role": "3",
+   "@type": "10"
+  }
+ ],
+ "/related-activity": [
+  {
+   "@ref": "SE-0-SE-22-68067",
+   "@type": "1"
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "Sweden",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "SE-0",
+ "/reporting-org@secondary-reporter": 0,
+ "/reporting-org@type": "10",
+ "/title/narrative": [
+  {
+   "": "Government Cloud for Ukraine",
+   "@xml:lang": "EN"
+  },
+  {
+   "": "Government Cloud for Ukraine",
+   "@xml:lang": "SV"
+  }
+ ],
+ "/transaction": [
+  {
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Digital Transformation of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "XM-DAC-12001",
+   "/receiver-org@type": "10",
+   "/recipient-country@code": "UA",
+   "/sector": [
+    {
+     "@code": "220",
+     "@vocabulary": "2"
+    },
+    {
+     "@code": "22040",
+     "@vocabulary": "1"
+    }
+   ],
+   "/transaction-date@iso-date": "2023-01-28",
+   "/transaction-type@code": "3",
+   "/value": 775000,
+   "/value@currency": "SEK",
+   "/value@value-date": "2023-01-28"
+  },
+  {
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Digital Transformation of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "XM-DAC-12001",
+   "/receiver-org@type": "10",
+   "/recipient-country@code": "UA",
+   "/sector": [
+    {
+     "@code": "220",
+     "@vocabulary": "2"
+    },
+    {
+     "@code": "22040",
+     "@vocabulary": "1"
+    }
+   ],
+   "/transaction-date@iso-date": "2023-06-01",
+   "/transaction-type@code": "2",
+   "/value": 2300000,
+   "/value@currency": "SEK",
+   "/value@value-date": "2023-06-01"
+  },
+  {
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Digital Transformation of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "XM-DAC-12001",
+   "/receiver-org@type": "10",
+   "/recipient-country@code": "UA",
+   "/sector": [
+    {
+     "@code": "220",
+     "@vocabulary": "2"
+    },
+    {
+     "@code": "22040",
+     "@vocabulary": "1"
+    }
+   ],
+   "/transaction-date@iso-date": "2024-01-28",
+   "/transaction-type@code": "3",
+   "/value": 507684,
+   "/value@currency": "SEK",
+   "/value@value-date": "2024-01-28"
+  },
+  {
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Digital Transformation of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "XM-DAC-12001",
+   "/receiver-org@type": "10",
+   "/recipient-country@code": "UA",
+   "/sector": [
+    {
+     "@code": "220",
+     "@vocabulary": "2"
+    },
+    {
+     "@code": "22040",
+     "@vocabulary": "1"
+    }
+   ],
+   "/transaction-date@iso-date": "2025-01-28",
+   "/transaction-type@code": "3",
+   "/value": 14949000,
+   "/value@currency": "SEK",
+   "/value@value-date": "2025-01-28"
+  }
+ ],
+ "@default-currency": "SEK",
+ "@hierarchy": 2,
+ "@humanitarian": 0,
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "EN"
+}

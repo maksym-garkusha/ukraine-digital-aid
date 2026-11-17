@@ -1,0 +1,164 @@
+{
+ "/activity-date": [
+  {
+   "/narrative": [
+    {
+     "": "geplanter Projektbeginn",
+     "@xml:lang": "DE"
+    }
+   ],
+   "@iso-date": "2019-06-01",
+   "@type": "1"
+  },
+  {
+   "/narrative": [
+    {
+     "": "geplantes Projektende",
+     "@xml:lang": "DE"
+    }
+   ],
+   "@iso-date": "2019-12-31",
+   "@type": "3"
+  }
+ ],
+ "/activity-scope@code": "4",
+ "/activity-status@code": "4",
+ "/collaboration-type@code": "1",
+ "/default-aid-type": [
+  {
+   "@code": "D02",
+   "@vocabulary": "1"
+  }
+ ],
+ "/default-finance-type@code": "110",
+ "/default-flow-type@code": "10",
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "Projektziel ist es, MitarbeiterInnen ukrainischer NGOs während eines Medienmarathons im Bereich digitaler Kommunikation und Außenwirkung fortzubilden.",
+     "@xml:lang": "DE"
+    },
+    {
+     "": "The project aims at educating Ukrainian NGO-workers on how to use digitale communication to improve their external image.",
+     "@xml:lang": "EN"
+    }
+   ]
+  }
+ ],
+ "/iati-identifier": "XM-DAC-5-7-6612999",
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "Germany - Federal Foreign Office",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "11001",
+   "@role": "3",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Germany",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "11001",
+   "@role": "1",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Goethe-Institut",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@crs-channel-code": "11004",
+   "@role": "4",
+   "@type": "15"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "/narrative": [
+    {
+     "": "UKRAINE",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "UA",
+   "@percentage": 100
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "Deutschland - Auswärtiges Amt",
+   "@xml:lang": "DE"
+  },
+  {
+   "": "Germany - Federal Foreign Office",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "XM-DAC-5-7",
+ "/reporting-org@type": "10",
+ "/sector": [
+  {
+   "@code": "15153",
+   "@percentage": 100,
+   "@vocabulary": "1",
+   "@vocabulary-uri": "http://www.oecd.org/dac/stats/dacandcrscodelists.htm"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "Digital media marathon for NGO workers in Ukraine",
+   "@xml:lang": "EN"
+  },
+  {
+   "": "Digitaler Medienmarathon für NGO MitarbeiterInnen in der Ukraine",
+   "@xml:lang": "DE"
+  }
+ ],
+ "/transaction": [
+  {
+   "/disbursement-channel@code": "2",
+   "/receiver-org/narrative": [
+    {
+     "": "Goethe-Institut",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/transaction-date@iso-date": "2019-05-13",
+   "/transaction-type@code": "2",
+   "/value": 24700,
+   "/value@currency": "EUR",
+   "/value@value-date": "2019-05-13"
+  },
+  {
+   "/disbursement-channel@code": "2",
+   "/receiver-org/narrative": [
+    {
+     "": "Goethe-Institut",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/transaction-date@iso-date": "2019-12-15",
+   "/transaction-type@code": "3",
+   "/value": 24700,
+   "/value@currency": "EUR",
+   "/value@value-date": "2019-12-15"
+  }
+ ],
+ "@default-currency": "EUR",
+ "@hierarchy": 1,
+ "@humanitarian": 0,
+ "@iati-activities:linked-data-default": "http://www.auswaertiges-amt.de",
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "EN"
+}

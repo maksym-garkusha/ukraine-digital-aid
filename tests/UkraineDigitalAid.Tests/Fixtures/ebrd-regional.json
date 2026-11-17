@@ -1,0 +1,151 @@
+{
+ "/activity-date": [
+  {
+   "@iso-date": "2020-06-30",
+   "@type": "1"
+  },
+  {
+   "@iso-date": "2020-06-30",
+   "@type": "2"
+  }
+ ],
+ "/activity-scope@code": "3",
+ "/activity-status@code": "2",
+ "/collaboration-type@code": "4",
+ "/country-budget-items/budget-item": [
+  {
+   "@code": "7.1.1",
+   "@percentage": 100,
+   "@vocabulary": "1"
+  }
+ ],
+ "/country-budget-items@vocabulary": "1",
+ "/default-aid-type": [
+  {
+   "@code": "C01",
+   "@vocabulary": "1"
+  }
+ ],
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "The proposed transaction is an equity commitment of up to EUR 30 million in  favour of Earlybird Digital East Fund II (the \"Fund\").",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "1"
+  }
+ ],
+ "/iati-identifier": "XI-IATI-EBRD-50444",
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "DIGITAL EAST FUND II SCSP",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@role": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "European Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "XI-IATI-EBRD",
+   "@role": "1",
+   "@type": "40"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "@code": "BG",
+   "@percentage": 5
+  },
+  {
+   "@code": "EE",
+   "@percentage": 3
+  },
+  {
+   "@code": "GR",
+   "@percentage": 3
+  },
+  {
+   "@code": "HR",
+   "@percentage": 3
+  },
+  {
+   "@code": "HU",
+   "@percentage": 3
+  },
+  {
+   "@code": "JO",
+   "@percentage": 3
+  },
+  {
+   "@code": "LT",
+   "@percentage": 3
+  },
+  {
+   "@code": "LV",
+   "@percentage": 3
+  },
+  {
+   "@code": "PL",
+   "@percentage": 3
+  },
+  {
+   "@code": "RO",
+   "@percentage": 5
+  },
+  {
+   "@code": "RS",
+   "@percentage": 3
+  },
+  {
+   "@code": "SI",
+   "@percentage": 5
+  },
+  {
+   "@code": "SK",
+   "@percentage": 5
+  },
+  {
+   "@code": "TR",
+   "@percentage": 50
+  },
+  {
+   "@code": "UA",
+   "@percentage": 3
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "European Bank for Reconstruction and Development",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "XI-IATI-EBRD",
+ "/reporting-org@type": "40",
+ "/sector": [
+  {
+   "@code": "24030",
+   "@percentage": 100,
+   "@vocabulary": "1"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "Digital East Fund II",
+   "@xml:lang": "EN"
+  }
+ ],
+ "@default-currency": "EUR",
+ "@hierarchy": 1,
+ "@iati-activities:version": "2.01",
+ "@xml:lang": "EN"
+}

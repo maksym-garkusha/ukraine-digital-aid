@@ -1,0 +1,218 @@
+{
+ "/activity-date": [
+  {
+   "@iso-date": "2022-12-29",
+   "@type": "1"
+  },
+  {
+   "@iso-date": "2023-01-01",
+   "@type": "2"
+  },
+  {
+   "@iso-date": "2026-12-31",
+   "@type": "3"
+  }
+ ],
+ "/activity-scope@code": "4",
+ "/activity-status@code": "2",
+ "/collaboration-type@code": "1",
+ "/default-aid-type": [
+  {
+   "@code": "C01",
+   "@vocabulary": "1"
+  }
+ ],
+ "/default-finance-type@code": "110",
+ "/default-flow-type@code": "10",
+ "/default-tied-status@code": "3",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "Ausgangssituation: \n\nObwohl in der Ukraine Krieg herrscht, laufen bereits Vorbereitungen für einen langfristigen, integrativen und transparenten Wiederaufbau. Diese Aufgabe wird viel Zeit und erhebliche internationale Unterstützung erfordern. Eine wichtige Rolle werden dabei auch digitale und innovative Ansätze spielen, die unter dem Begriff GovTech zusammengefasst sind. Gemeint sind digitale Lösungen, die die Verwaltung und ihre Dienstleistungen effizienter und bürgerfreundlicher machen.\n\nZiel: \n\nDie öffentliche Verwaltung und die Zivilgesellschaft nutzen innovative und digitale Lösungen für einen transparenten und inklusiven Wiederaufbau.\n\nVorgehensweise: \n\nDas Projekt unterstützt relevante Akteur*innen dabei, innovative und bedarfsorientierte GovTech-Lösungen für einen transparenten Wiederaufbau zu entwickeln.\n\nUm Online-Dienstleistungen und die Digitalisierung im Allgemeinen zu beschleunigen, entwickelt das Projekt die Plattform der Register (Diia.Engine) zusammen mit dem Ministerium für Digitales weiter. Mit Diia.Engine können Behörden schnell neue digitale Dienstleistungen erstellen. Das spart Zeit und Kosten für die Behörden.\n\nFür die transparente Planung des Wiederaufbaus fördert das Projekt die Entwicklung der digitalen Lösung DREAM. Damit lassen sich Wiederaufbauprojekte in allen Phasen überwachen und kontrollieren, von der Schadensbewertung und Finanzierung bis zu Bau und Prüfung. DREAM wird somit die Schnittstelle für die Projektüberwachung und -kontrolle.\n\nEine weitere Maßnahme ist die Beteiligung am Tolocar-Projekt, das mobile Makerspaces im ganzen Land betreibt. Dabei handelt es sich um umgebaute Lieferwagen, die mit Werkzeugen und digitaler Produktionstechnologie für Holz- und Metallverarbeitung sowie 3D-Druck ausgestattet sind. Unter Anleitung der Tolocar-Teams entwickeln lokale Gemeinschaften eigene Lösungen für humanitäre Herausforderungen. Zum Beispiel haben sie verlassene Gebäude für Binnenvertriebene umfunktioniert und Gemeinschaftsräume zu Notunterkünften ausgebaut.",
+     "@xml:lang": "DE"
+    },
+    {
+     "": "Context: \n\nAlthough war is raging in Ukraine, preparations are already underway for long-term, inclusive and transparent reconstruction. This task will require a considerable amount of time and international support. Digital and innovative approaches, which are summarised under the term GovTech, will also play an important role here. These are digital solutions that make administration and its services more efficient and citizen-friendly.\n\nObjective: \n\nPublic administration and civil society are using innovative and digital solutions for transparent and inclusive reconstruction.\n\nApproach: \n\nThe project supports relevant actors in developing innovative and needs-based GovTech solutions for transparent reconstruction.\n\nIn order to accelerate online services and digitalisation in general, the project is further developing the platform of the registers (Diia.Engine) together with the Ministry of Digital Transformation. With Diia.Engine, public authorities can quickly create new digital services. This saves the authorities time and money.\n\nThe project is promoting the development of the digital solution DREAM for transparent reconstruction planning. This allows reconstruction projects to be monitored and controlled in all phases, from damage assessment and financing to construction and inspection. DREAM is thus to become the interface for project monitoring and control.\n\nA further measure is participation in the Tolocar project, which operates mobile makerspaces throughout the country. These are converted delivery vehicles equipped with tools and digital production technology for wood and metal processing as well as 3D printing. Under the guidance of the Tolocar teams, local communities are developing their own solutions to humanitarian challenges. For example, they have converted abandoned buildings for internally displaced people and turned communal spaces into emergency accommodation.",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "1"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Ausgangssituation: \n\nObwohl in der Ukraine Krieg herrscht, laufen bereits Vorbereitungen für einen langfristigen, integrativen und transparenten Wiederaufbau. Diese Aufgabe wird viel Zeit und erhebliche internationale Unterstützung erfordern. Eine wichtige Rolle werden dabei auch digitale und innovative Ansätze spielen, die unter dem Begriff GovTech zusammengefasst sind. Gemeint sind digitale Lösungen, die die Verwaltung und ihre Dienstleistungen effizienter und bürgerfreundlicher machen.\n\nZiel: \n\nDie öffentliche Verwaltung und die Zivilgesellschaft nutzen innovative und digitale Lösungen für einen transparenten und inklusiven Wiederaufbau.\n\nVorgehensweise: \n\nDas Projekt unterstützt relevante Akteur*innen dabei, innovative und bedarfsorientierte GovTech-Lösungen für einen transparenten Wiederaufbau zu entwickeln.\n\nUm Online-Dienstleistungen und die Digitalisierung im Allgemeinen zu beschleunigen, entwickelt das Projekt die Plattform der Register (Diia.Engine) zusammen mit dem Ministerium für Digitales weiter. Mit Diia.Engine können Behörden schnell neue digitale Dienstleistungen erstellen. Das spart Zeit und Kosten für die Behörden.\n\nFür die transparente Planung des Wiederaufbaus fördert das Projekt die Entwicklung der digitalen Lösung DREAM. Damit lassen sich Wiederaufbauprojekte in allen Phasen überwachen und kontrollieren, von der Schadensbewertung und Finanzierung bis zu Bau und Prüfung. DREAM wird somit die Schnittstelle für die Projektüberwachung und -kontrolle.\n\nEine weitere Maßnahme ist die Beteiligung am Tolocar-Projekt, das mobile Makerspaces im ganzen Land betreibt. Dabei handelt es sich um umgebaute Lieferwagen, die mit Werkzeugen und digitaler Produktionstechnologie für Holz- und Metallverarbeitung sowie 3D-Druck ausgestattet sind. Unter Anleitung der Tolocar-Teams entwickeln lokale Gemeinschaften eigene Lösungen für humanitäre Herausforderungen. Zum Beispiel haben sie verlassene Gebäude für Binnenvertriebene umfunktioniert und Gemeinschaftsräume zu Notunterkünften ausgebaut.",
+     "@xml:lang": "DE"
+    },
+    {
+     "": "Context: \n\nAlthough war is raging in Ukraine, preparations are already underway for long-term, inclusive and transparent reconstruction. This task will require a considerable amount of time and international support. Digital and innovative approaches, which are summarised under the term GovTech, will also play an important role here. These are digital solutions that make administration and its services more efficient and citizen-friendly.\n\nObjective: \n\nPublic administration and civil society are using innovative and digital solutions for transparent and inclusive reconstruction.\n\nApproach: \n\nThe project supports relevant actors in developing innovative and needs-based GovTech solutions for transparent reconstruction.\n\nIn order to accelerate online services and digitalisation in general, the project is further developing the platform of the registers (Diia.Engine) together with the Ministry of Digital Transformation. With Diia.Engine, public authorities can quickly create new digital services. This saves the authorities time and money.\n\nThe project is promoting the development of the digital solution DREAM for transparent reconstruction planning. This allows reconstruction projects to be monitored and controlled in all phases, from damage assessment and financing to construction and inspection. DREAM is thus to become the interface for project monitoring and control.\n\nA further measure is participation in the Tolocar project, which operates mobile makerspaces throughout the country. These are converted delivery vehicles equipped with tools and digital production technology for wood and metal processing as well as 3D printing. Under the guidance of the Tolocar teams, local communities are developing their own solutions to humanitarian challenges. For example, they have converted abandoned buildings for internally displaced people and turned communal spaces into emergency accommodation.",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "2"
+  }
+ ],
+ "/iati-identifier": "DE-1-202121465",
+ "/other-identifier": [
+  {
+   "/owner-org/narrative": [
+    {
+     "": "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung (BMZ)",
+     "@xml:lang": "DE"
+    },
+    {
+     "": "Federal Ministry for Economic Cooperation and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/owner-org@ref": "DE-1",
+   "@ref": "202121465",
+   "@type": "A1"
+  }
+ ],
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung (BMZ)",
+     "@xml:lang": "DE"
+    },
+    {
+     "": "Federal Ministry for Economic Cooperation and Development (BMZ)",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "DE-1",
+   "@role": "1",
+   "@type": "10"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+     "@xml:lang": "DE"
+    }
+   ],
+   "@ref": "XM-DAC-5-52",
+   "@role": "2",
+   "@type": "15"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH",
+     "@xml:lang": "DE"
+    }
+   ],
+   "@ref": "XM-DAC-5-52",
+   "@role": "3",
+   "@type": "15"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Ministerium für Digitale Transformation",
+     "@xml:lang": "DE"
+    }
+   ],
+   "@role": "4"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "/narrative": [
+    {
+     "": "Ukraine",
+     "@xml:lang": "DE"
+    }
+   ],
+   "@code": "UA",
+   "@percentage": 100
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung (BMZ)",
+   "@xml:lang": "DE"
+  },
+  {
+   "": "Federal Ministry for Economic Cooperation and Development (BMZ)",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "DE-1",
+ "/reporting-org@secondary-reporter": 0,
+ "/reporting-org@type": "10",
+ "/sector": [
+  {
+   "@code": "15110",
+   "@percentage": 60,
+   "@vocabulary": "1"
+  },
+  {
+   "@code": "15150",
+   "@percentage": 40,
+   "@vocabulary": "1"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "Good Governance through GovTech and Transparency",
+   "@xml:lang": "EN"
+  },
+  {
+   "": "Gute Regierungsführung durch GovTech und Transparenz",
+   "@xml:lang": "DE"
+  }
+ ],
+ "/transaction": [
+  {
+   "/transaction-date@iso-date": "2023-01-01",
+   "/transaction-type@code": "2",
+   "/value": 13000000,
+   "/value@currency": "EUR",
+   "/value@value-date": "2023-01-01"
+  },
+  {
+   "/transaction-date@iso-date": "2023-03-31",
+   "/transaction-type@code": "4",
+   "/value": 130556.15,
+   "/value@currency": "EUR",
+   "/value@value-date": "2023-03-31"
+  },
+  {
+   "/transaction-date@iso-date": "2023-06-30",
+   "/transaction-type@code": "4",
+   "/value": 512730.63,
+   "/value@currency": "EUR",
+   "/value@value-date": "2023-06-30"
+  },
+  {
+   "/transaction-date@iso-date": "2023-09-30",
+   "/transaction-type@code": "4",
+   "/value": 1940051.98,
+   "/value@currency": "EUR",
+   "/value@value-date": "2023-09-30"
+  },
+  {
+   "/transaction-date@iso-date": "2023-12-31",
+   "/transaction-type@code": "4",
+   "/value": 4018991.23,
+   "/value@currency": "EUR",
+   "/value@value-date": "2023-12-31"
+  },
+  {
+   "/transaction-date@iso-date": "2024-03-31",
+   "/transaction-type@code": "4",
+   "/value": 322615.57,
+   "/value@currency": "EUR",
+   "/value@value-date": "2024-03-31"
+  }
+ ],
+ "@default-currency": "EUR",
+ "@hierarchy": 1,
+ "@iati-activities:linked-data-default": "http://www.bmz.de/opendata",
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "DE"
+}

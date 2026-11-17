@@ -1,0 +1,457 @@
+{
+ "/activity-date": [
+  {
+   "/narrative": [
+    {
+     "": "Actual end date of the activity",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2027-10-31",
+   "@type": "4"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Actual start date of the activity",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2024-10-31",
+   "@type": "2"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Planned end date of the activity",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2027-10-31",
+   "@type": "3"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Planned start date of the activity",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@iso-date": "2024-10-31",
+   "@type": "1"
+  }
+ ],
+ "/activity-status@code": "2",
+ "/capital-spend@percentage": 0,
+ "/collaboration-type@code": "2",
+ "/contact-info": [
+  {
+   "/email": [
+    {
+     "": "ivan.testenko@example.org"
+    }
+   ],
+   "/mailing-address": [
+    {
+     "/narrative": [
+      {
+       "": "1 Test Street, Testville",
+       "@xml:lang": "EN"
+      }
+     ]
+    }
+   ],
+   "/organisation/narrative": [
+    {
+     "": "Test Organisation",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/person-name/narrative": [
+    {
+     "": "Ivan Testenko",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/telephone": [
+    {
+     "": "+380 44 000 00 00"
+    }
+   ],
+   "@type": "1"
+  }
+ ],
+ "/default-aid-type": [
+  {
+   "@code": "C01",
+   "@vocabulary": "1",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/default-tied-status@code": "5",
+ "/description": [
+  {
+   "/narrative": [
+    {
+     "": "The development objective of the Resilient, Inclusive and Sustainable Enterprise Program for Results Project for Ukraine is to improve the enabling environment for a sustainable private sector-led recovery in Ukraine. The additional financing (AF) will co-finance eligible expenditures linked to disbursement-linked results (DLRs) expected to be achieved between January and December 2026 and will close the financing gap foreseen under the original design. The Program supports the implementation of selected components of the Government's National Economic Strategy (NES) 2021-2030 and the Ukraine Plan 2024-2027 across three results areas (RAs). These are: (i) improving efficiency of state support to small and medium enterprises (SMEs), with a focus on green competitiveness; (ii) improving the business environment and Government-to-Business (G2B) digital services; and (iii) enabling SMEs access to export markets.",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "1",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "@xml:lang": "EN"
+    }
+   ],
+   "@type": "2",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/iati-identifier": "44000-P505616",
+ "/participating-org": [
+  {
+   "/narrative": [
+    {
+     "": "International Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "44001",
+   "@role": "1",
+   "@type": "40",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "": "International Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "44001",
+   "@role": "3",
+   "@type": "40",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "": "International Development Association",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "44002",
+   "@role": "1",
+   "@type": "40",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "": "International Development Association",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "44002",
+   "@role": "3",
+   "@type": "40",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "UA-COA-00006319",
+   "@role": "4",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Ministry of Finance of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@ref": "UA–00006317",
+   "@role": "2",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/recipient-country": [
+  {
+   "/narrative": [
+    {
+     "": "UKRAINE",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "UA",
+   "@percentage": 100
+  }
+ ],
+ "/reporting-org/narrative": [
+  {
+   "": "World Bank",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/reporting-org@ref": "44000",
+ "/reporting-org@type": "40",
+ "/sector": [
+  {
+   "/narrative": [
+    {
+     "": "Public Administration - Financial Sector",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "FFP",
+   "@percentage": 50,
+   "@vocabulary": "99",
+   "@vocabulary-uri": "http://pubdocs.worldbank.org/en/538321490128452070/Sector-Taxonomy-and-definitions.pdf",
+   "@xml:lang": "EN"
+  },
+  {
+   "/narrative": [
+    {
+     "": "Public Administration - Industry, Trade, and Services",
+     "@xml:lang": "EN"
+    }
+   ],
+   "@code": "YYF",
+   "@percentage": 50,
+   "@vocabulary": "99",
+   "@vocabulary-uri": "http://pubdocs.worldbank.org/en/538321490128452070/Sector-Taxonomy-and-definitions.pdf",
+   "@xml:lang": "EN"
+  },
+  {
+   "@code": "24010",
+   "@percentage": 76,
+   "@vocabulary": "1",
+   "@xml:lang": "EN"
+  },
+  {
+   "@code": "24010",
+   "@percentage": 76,
+   "@vocabulary": "1",
+   "@xml:lang": "EN"
+  },
+  {
+   "@code": "25010",
+   "@percentage": 24,
+   "@vocabulary": "1",
+   "@xml:lang": "EN"
+  },
+  {
+   "@code": "25010",
+   "@percentage": 24,
+   "@vocabulary": "1",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/title/narrative": [
+  {
+   "": "Resilient, Inclusive and Sustainable Enterprise Program for Results",
+   "@xml:lang": "EN"
+  }
+ ],
+ "/title@xml:lang": "EN",
+ "/transaction": [
+  {
+   "/description/narrative": [
+    {
+     "": "Total Commitment in May Month of 2026",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/description@xml:lang": "EN",
+   "/finance-type@code": "410",
+   "/flow-type@code": "20",
+   "/provider-org/narrative": [
+    {
+     "": "International Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "44001",
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "UA-COA-6319",
+   "/receiver-org@xml:lang": "EN",
+   "/transaction-date@iso-date": "2026-05-31",
+   "/transaction-type@code": "2",
+   "/value": 390000000,
+   "/value@currency": "USD",
+   "/value@value-date": "2026-05-31"
+  },
+  {
+   "/description/narrative": [
+    {
+     "": "Total Commitment in October Month of 2024",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/description@xml:lang": "EN",
+   "/finance-type@code": "410",
+   "/flow-type@code": "10",
+   "/provider-org/narrative": [
+    {
+     "": "IDA Credit",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "44002",
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "UA-COA-6319",
+   "/receiver-org@xml:lang": "EN",
+   "/transaction-date@iso-date": "2024-10-31",
+   "/transaction-type@code": "2",
+   "/value": 300000000,
+   "/value@currency": "USD",
+   "/value@value-date": "2024-10-31"
+  },
+  {
+   "/description/narrative": [
+    {
+     "": "Total Commitment in October Month of 2024",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/description@xml:lang": "EN",
+   "/finance-type@code": "410",
+   "/flow-type@code": "20",
+   "/provider-org/narrative": [
+    {
+     "": "International Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "44001",
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "UA-COA-6319",
+   "/receiver-org@xml:lang": "EN",
+   "/transaction-date@iso-date": "2024-10-31",
+   "/transaction-type@code": "2",
+   "/value": 283000000,
+   "/value@currency": "USD",
+   "/value@value-date": "2024-10-31"
+  },
+  {
+   "/description/narrative": [
+    {
+     "": "Total Commitment in September Month of 2025",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/description@xml:lang": "EN",
+   "/finance-type@code": "410",
+   "/flow-type@code": "20",
+   "/provider-org/narrative": [
+    {
+     "": "International Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "44001",
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "UA-COA-6319",
+   "/receiver-org@xml:lang": "EN",
+   "/transaction-date@iso-date": "2025-09-30",
+   "/transaction-type@code": "2",
+   "/value": 88000000,
+   "/value@currency": "USD",
+   "/value@value-date": "2025-09-30"
+  },
+  {
+   "/description/narrative": [
+    {
+     "": "Total Disbursement in December Month of 2024",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/description@xml:lang": "EN",
+   "/finance-type@code": "410",
+   "/flow-type@code": "20",
+   "/provider-org/narrative": [
+    {
+     "": "International Bank for Reconstruction and Development",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "44001",
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "UA-COA-6319",
+   "/receiver-org@xml:lang": "EN",
+   "/transaction-date@iso-date": "2024-12-31",
+   "/transaction-type@code": "3",
+   "/value": 120479837,
+   "/value@currency": "USD",
+   "/value@value-date": "2024-12-31"
+  },
+  {
+   "/description/narrative": [
+    {
+     "": "Total Disbursement in December Month of 2025",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/description@xml:lang": "EN",
+   "/finance-type@code": "410",
+   "/flow-type@code": "10",
+   "/provider-org/narrative": [
+    {
+     "": "IDA Credit",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/provider-org@ref": "44002",
+   "/receiver-org/narrative": [
+    {
+     "": "Ministry of Economy of Ukraine",
+     "@xml:lang": "EN"
+    }
+   ],
+   "/receiver-org@ref": "UA-COA-6319",
+   "/receiver-org@xml:lang": "EN",
+   "/transaction-date@iso-date": "2025-12-31",
+   "/transaction-type@code": "3",
+   "/value": 210000000,
+   "/value@currency": "USD",
+   "/value@value-date": "2025-12-31"
+  }
+ ],
+ "@default-currency": "USD",
+ "@hierarchy": 1,
+ "@iati-activities:version": "2.03",
+ "@xml:lang": "EN"
+}
