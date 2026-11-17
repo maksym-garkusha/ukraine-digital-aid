@@ -58,27 +58,29 @@
 
 ## Відбір
 
-Відібрано 685 записів: 246 прямих і 439 дотичних.
+Відібрано 685 записів: 227 прямих і 458 дотичних.
 
 | Головна підстава | Прямі | Дотичні |
 |---|---:|---:|
 | сектор ІКТ | 54 | 61 |
-| слово в назві | 192 | 0 |
+| слово в назві | 173 | 19 |
 | слово лише в описі | 0 | 378 |
+
+Записи військової допомоги (публікатор US-GOV-7) завжди дотичні: 27, з них зі словом у назві 19.
 
 Найчастіші слова в назвах прямих записів:
 
-digital (66), e-governance (51), cyber (18), IT (15), cybersecurity (13), software (13), information system (12), digitalization (6), registry (6), digitalisation (5), digitization (4), ICT (2), broadband (1), data management (1), e-services (1)
+digital (66), e-governance (51), IT (15), cybersecurity (13), information system (12), software (7), cyber (6), digitalization (6), registry (6), digitalisation (5), digitization (4), ICT (2), data management (1), e-services (1), eHealth (1)
 
 ## Прямі активності
 
-Без подвійного рахунку програм і їхніх частин: 218. У реалізації 113, з них завершуються до 17.11.2027: 13. Донорів: 35.
+Без подвійного рахунку програм і їхніх частин: 199. Зі статусом «у реалізації» 113, у 71 з них дата завершення вже минула; завершуються до 17.11.2027: 13. Донорів: 34.
 
 | Статус | Записів |
 |---|---:|
 | Pipeline/identification | 1 |
 | Implementation | 113 |
-| Finalisation | 53 |
+| Finalisation | 34 |
 | Closed | 51 |
 
 ### Донори
@@ -90,7 +92,6 @@ digital (66), e-governance (51), cyber (18), IT (15), cybersecurity (13), softwa
 | Swiss Agency for Development and Cooperation (SDC) | 46 | 41 | 46 | $94,0 млн | $71,1 млн |
 | Sweden | 22 | 4 | 22 | $19,2 млн | $19,0 млн |
 | Germany - Federal Foreign Office | 20 | 0 | 12 | $1,0 млн | $1,0 млн |
-| Department of Defense | 19 | 0 | 19 | $15,9 млн | $20,9 млн |
 | European Commission - Directorate-General for Neighbourhood and Enlargement Negotiations | 13 | 11 | 13 | $53,2 млн | $41,6 млн |
 | World Health Organization | 13 | 2 | 13 | $1,7 млн | $0,8 млн |
 | European Bank for Reconstruction and Development | 10 | 9 | 8 | 0 | 0 |
@@ -100,19 +101,20 @@ digital (66), e-governance (51), cyber (18), IT (15), cybersecurity (13), softwa
 | Ministry for Foreign Affairs of Finland | 6 | 6 | 6 | $0,6 млн | $0,1 млн |
 | U.S. Agency for International Development | 5 | 1 | 1 | $69,0 млн | $24,2 млн |
 | United Nations Development Programme | 5 | 4 | 5 | $14,2 млн | $7,0 млн |
-| Department of Health and Human Services | 4 | 3 | 2 | $2,0 млн | $1,2 млн |
+| U.S. Department of Health and Human Services | 4 | 3 | 2 | $2,0 млн | $1,2 млн |
 | European Commission - Service for Foreign Policy Instruments | 3 | 3 | 3 | $9,3 млн | $8,7 млн |
 | Ministry of Foreign Affairs, Denmark | 3 | 1 | 3 | $3,3 млн | $3,2 млн |
 | Office for Government Policy Coordination | 3 | 3 | 3 | 0 | $0,6 млн |
-| Department of Energy | 2 | 0 | 2 | $0,4 млн | $0,4 млн |
 | GlobalGiving | 2 | 1 | 2 | 0 | $22 тис. |
 | International Organization for Migration (IOM) | 2 | 0 | 2 | $0,2 млн | $0,2 млн |
 | Netherlands Enterprise Agency | 2 | 0 | 1 | $39 тис. | $40 тис. |
+| U.S. Department of Energy | 2 | 0 | 2 | $0,4 млн | $0,4 млн |
 | UK - Foreign, Commonwealth Development Office (FCDO) | 2 | 2 | 2 | $19,9 млн | $15,8 млн |
 | United Nations Educational, Scientific and Cultural Organization (UNESCO) | 2 | 2 | 2 | 0 | $0,1 млн |
 | United Nations Office for Project Services (UNOPS) | 2 | 0 | 0 | 0 | 0 |
 | United Nations Office for the Coordination of Humanitarian Affairs | 2 | 0 | 2 | $3,6 млн | $3,6 млн |
-| ще 10 донорів | | | | | |
+| AICS - Italian Agency for Cooperation and Development | 1 | 1 | 1 | $2,1 млн | $1,5 млн |
+| ще 9 донорів | | | | | |
 
 ### Виконавці
 
@@ -120,12 +122,10 @@ digital (66), e-governance (51), cyber (18), IT (15), cybersecurity (13), softwa
 
 | Виконавець | Активностей | Донорів |
 |---|---:|---:|
-| U.S. Government - Department of Defense | 15 | 1 |
 | World Health Organization | 13 | 1 |
 | UNDP/United Nations Development Programme | 12 | 3 |
 | Organization for Security and Co-operation in Europe | 7 | 1 |
 | Strålsäkerhetsmyndigheten | 4 | 1 |
-| U.S. Government - Department of the Army | 4 | 1 |
 | Ministry of Digital Transformation of Ukraine | 3 | 1 |
 | E-RIIGI AKADEEMIA SIHTASUTUS*E-GOVERNANCE ACADEMY EGA | 2 | 1 |
 | Joint United Nations Programme on HIV/AIDS | 2 | 1 |
@@ -140,17 +140,19 @@ digital (66), e-governance (51), cyber (18), IT (15), cybersecurity (13), softwa
 | Alinea International Ltd. UK | 1 | 1 |
 | All Ukrainian Network of People Living with HIV/AIDS | 1 | 1 |
 | BMS TECHNO LLC | 1 | 1 |
+| Better Regulation Delivery Office (BRDO) | 1 | 1 |
+| Brock Systems LLC | 1 | 1 |
 
 ### Роки завершення
 
 | Рік | Записів |
 |---|---:|
-| 2021 | 14 |
-| 2022 | 9 |
-| 2023 | 27 |
-| 2024 | 36 |
-| 2025 | 35 |
-| 2026 | 22 |
+| 2021 | 12 |
+| 2022 | 8 |
+| 2023 | 22 |
+| 2024 | 30 |
+| 2025 | 33 |
+| 2026 | 21 |
 | 2027 | 12 |
 | 2028 | 7 |
 | 2029 | 4 |

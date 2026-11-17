@@ -24,15 +24,15 @@ Who might find it useful:
 
 d-portal snapshot of 17 November 2026.
 
-- IATI holds 23,855 activities with Ukraine as a recipient. Under the rules below, 685 of them are digital: 246 direct and 439 related.
-- Some donors publish a programme and its parts as separate records. Without that double counting there are 218 direct activities. 113 of them have the status "Implementation", and 13 of those 113 end by 17 November 2027.
-- The direct activities come from 35 donors. The most records are published by the Swiss Agency for Development and Cooperation (SDC, 46), Sweden (22), the German Federal Foreign Office (20), the US Department of Defense (19), the European Commission's DG NEAR (13) and WHO (13).
+- IATI holds 23,855 activities with Ukraine as a recipient. Under the rules below, 685 of them are digital: 227 direct and 458 related.
+- Some donors publish a programme and its parts as separate records. Without that double counting there are 199 direct activities. 113 of them have the status "Implementation", and 13 of those 113 end by 17 November 2027.
+- The direct activities come from 34 donors. The most records are published by the Swiss Agency for Development and Cooperation (SDC, 46), Sweden (22), the German Federal Foreign Office (20), the European Commission's DG NEAR (13) and WHO (13).
 
 These numbers need some context:
 
 - **SDC's 46 records are mostly one programme.** E-Governance for Accountability and Participation (EGAP) is published as separate records per year and per contract: the same contract number appears in `CH-4-2022-2013006824`, `CH-4-2023-2013006824`, `CH-4-2024-2013006824`. The page does not try to merge them, as that would mean guessing another organisation's identifier scheme.
-- **The 19 US Department of Defense records** are cyber support to Ukraine's Ministry of Defence under USAI and software for military equipment provided under Presidential Drawdown Authority.
-- **Status is not always current.** Of all 685 selected records, 129 are marked "Implementation" although their end date has passed; 71 of them are direct.
+- **Military assistance is among the related records.** The US Department of Defense published 27 of the selected records: cyber support to Ukraine's Ministry of Defence under USAI and software for military equipment provided under Presidential Drawdown Authority. 19 of them have a keyword in the title, but all 27 count as related (see the rule below), so they are not among the direct records or in the direct implementers table.
+- **Status is not always current.** Of the 113 direct records marked "Implementation", 71 are past their end date, and 37 of those are SDC's yearly records. The page shows this number under the "Implementation" figure.
 - **Amounts are not always there.** 206 records have no or zero commitments, 136 name no implementer at all, and in 22 the donor withheld the title of the activity itself.
 
 The full report with donor and implementer tables and a list of what ends within a year: [docs/report.md](docs/report.md) (in Ukrainian). It is produced by the `report` command and rebuilt weekly together with the page.
@@ -65,12 +65,12 @@ After the first collection, 120 records were checked by hand.
 - **30 random related records.** 7 are about digital transformation: Prozorro.Sale, software licences for nuclear plant safety analysis, telemedicine, the electronic regulatory platform of the communications regulator (NCEC), the VzayemoDiia e-participation platform, an online dialogue platform for labour migrants, and e-services of the tax service. The rest mention digital things in passing, which is why related records are hidden by default.
 - **30 rejected records from neighbouring sectors** (15110, 15111, 15113, 16010). None was clearly digital, 2 are open to question ("NGO Risk Scoring Center" and CoST reporting on disclosed data). 10 of the 30 cannot be judged: 6 have no description, and in 4 the donor withheld both title and description.
 
-One rule changed after the check. The list originally had a bare `connectivity`, but in Ukrainian records it is mostly about roads and logistics (Ukraine Transport Connectivity, RELINC), so the word now counts only as `internet connectivity`. False positives among direct records were below a quarter even before that change (6 of 60), so no second sample was drawn.
+Two rules changed after the check. The list originally had a bare `connectivity`, but in Ukrainian records it is mostly about roads and logistics (Ukraine Transport Connectivity, RELINC), so the word now counts only as `internet connectivity`. Later, US Department of Defense records became related; two of the 60 checked direct records were such records, the M109A6 howitzer and "Project Sentinel Software". False positives among direct records were below a quarter even before these changes (6 of 60), so no second sample was drawn.
 
 ## What the data does not show
 
 - **The data is self-reported.** Each donor decides what to publish and when. Some update monthly, some once a year, and the status "Implementation" sometimes stays after the end date.
-- **Amounts cover the whole activity.** `commitment` and `spend` refer to the entire activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, the page shows those shares next to the amount and does not multiply anything. The donor table counts amounts only for records where Ukraine is 100% (197 of the 218 direct ones), and says so.
+- **Amounts cover the whole activity.** `commitment` and `spend` refer to the entire activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, the page shows those shares next to the amount and does not multiply anything. The donor table counts amounts only for records where Ukraine is 100% (178 of the 199 direct ones), and says so.
 - **Multi-country programmes.** A regional programme carries one amount for all countries. Ukraine's share is taken as the donor stated it. For 36 of the selected records d-portal shows a different share: it leaves out regions and in some records computes the share from transactions.
 - **Not everyone publishes.** Donors and funds that do not report to IATI are invisible here. Some donors (USAID and the US State Department among them) withhold titles, implementers or amounts under their own rules.
 - **Programmes and their parts.** The EU, Sweden and the UK publish a programme and its components separately. Totals count only the components; the list shows both records with a label.
@@ -120,7 +120,7 @@ tests/          xUnit, fixtures taken from real records of different donors
 
 **Personal data.** The `contact-info` block with names, addresses and phone numbers is not read at all, and a test checks that. E-mail addresses in descriptions are replaced with `[e-mail]`. Some donors list individuals (grantees or contractors) among implementers; an implementer name without an identifier that consists of two to four plain words and no word typical of an organisation is not stored. The check is rough and also hides some organisation names, which the page shows as "implementer name withheld". Titles and descriptions of activities are shown as the donor published them.
 
-**A page without a server.** Once a week GitHub Actions pulls fresh records (the cache is kept between runs), builds `data.json` (about 810 KB, 180 KB compressed) and publishes it with the page on GitHub Pages. If d-portal is unavailable or the run collects less than half of last time's volume, the step fails and the previous page stays up.
+**A page without a server.** Once a week GitHub Actions pulls fresh records (the cache is kept between runs), builds `data.json` (about 850 KB, 180 KB compressed) and publishes it with the page on GitHub Pages. If d-portal is unavailable or the run collects less than half of last time's volume, the step fails and the previous page stays up.
 
 ## Data and licence
 

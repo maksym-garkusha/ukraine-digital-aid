@@ -65,7 +65,9 @@ public static class RunReport
 
         md.AppendLine("## Прямі активності");
         md.AppendLine();
-        md.AppendLine($"Без подвійного рахунку програм і їхніх частин: {N(summary.Counted)}. У реалізації {N(summary.Active)}, з них завершуються до {today.AddYears(1):dd.MM.yyyy}: {N(summary.EndingSoon)}. Донорів: {N(summary.Donors.Count)}.");
+        md.AppendLine($"Без подвійного рахунку програм і їхніх частин: {N(summary.Counted)}. Зі статусом «у реалізації» {N(summary.Active)}, "
+                      + $"у {N(summary.ActivePastEnd)} з них дата завершення вже минула; завершуються до {today.AddYears(1):dd.MM.yyyy}: {N(summary.EndingSoon)}. "
+                      + $"Донорів: {N(summary.Donors.Count)}.");
         md.AppendLine();
         md.AppendLine("| Статус | Записів |");
         md.AppendLine("|---|---:|");

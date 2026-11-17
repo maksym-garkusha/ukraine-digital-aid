@@ -50,6 +50,17 @@ public class RunReportTests
     }
 
     [Fact]
+    public void Report_says_how_many_active_records_are_past_their_end_date()
+    {
+        string report = RunReport.Build([
+            Build.Activity(id: "A-1", title: "Digital skills", status: 2, end: new DateOnly(2027, 3, 31)),
+            Build.Activity(id: "A-2", title: "Digital courts", status: 2, end: new DateOnly(2024, 12, 31))
+        ], Run, Lists);
+
+        Assert.Contains("Зі статусом «у реалізації» 2, у 1 з них дата завершення вже минула; завершуються до 18.11.2027: 1.", report);
+    }
+
+    [Fact]
     public void Withheld_title_is_replaced_in_the_ending_soon_list()
     {
         string report = RunReport.Build([
