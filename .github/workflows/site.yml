@@ -14,8 +14,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -49,6 +47,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    # права на публікацію потрібні тільки цьому кроку, збірка їх не має
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
