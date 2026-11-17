@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/UkraineDigitalAid/UkraineDigitalAid.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/UkraineDigitalAid.Tests/UkraineDigitalAid.Tests.csproj" />
+  </Folder>
+</Solution>
