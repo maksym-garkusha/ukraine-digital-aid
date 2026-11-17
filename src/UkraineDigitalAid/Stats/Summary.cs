@@ -70,7 +70,7 @@ public static class Stats
             {
                 var whole = g.Where(IsWhollyUkraine).ToList();
                 return new DonorStats(
-                    g.Key, MostCommon(g.Select(a => a.Publisher.Name ?? g.Key)),
+                    g.Key, MostCommon(g.Select(a => Organisations.PublisherName(a.Publisher))),
                     g.Count(), g.Count(a => a.Status == Implementation),
                     whole.Sum(a => a.Commitment ?? 0), whole.Sum(a => a.Spend ?? 0), whole.Count);
             })

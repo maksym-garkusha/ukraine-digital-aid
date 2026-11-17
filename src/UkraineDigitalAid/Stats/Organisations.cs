@@ -36,6 +36,21 @@ public static partial class Organisations
 
     public static bool LooksLikeIdentifier(string reference) => Identifier().IsMatch(reference.Trim());
 
+    /// <summary>
+    /// Назва публікатора для показу. Відомства уряду США (ідентифікатори US-GOV-...)
+    /// підписуються без країни, «Department of Defense», тож додаємо «U.S.».
+    /// </summary>
+    public static string PublisherName(Organisation publisher)
+    {
+        if (publisher.Name?.Trim() is not { Length: > 0 } name)
+            return publisher.Ref ?? "";
+        bool usGovernment = publisher.Ref?.StartsWith("US-GOV-", StringComparison.OrdinalIgnoreCase) == true;
+        bool hasCountry = name.StartsWith("U.S.", StringComparison.OrdinalIgnoreCase)
+            || name.StartsWith("US ", StringComparison.Ordinal)
+            || name.StartsWith("United States", StringComparison.OrdinalIgnoreCase);
+        return usGovernment && !hasCountry ? "U.S. " + name : name;
+    }
+
     public static string NormalizeName(string name) =>
         string.Join(' ', name.Split((char[])[' ', '\t', '\n', '\r'], StringSplitOptions.RemoveEmptyEntries)).ToUpperInvariant();
 

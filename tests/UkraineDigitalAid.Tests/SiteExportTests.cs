@@ -77,6 +77,16 @@ public class SiteExportTests
     }
 
     [Fact]
+    public void Donor_whose_only_record_is_a_programme_published_in_parts_by_others_keeps_its_name()
+    {
+        var data = Export(
+            Build.Activity(id: "XI-IATI-EC_NEAR-P", title: "Digital programme", publisher: "XI-IATI-EC_NEAR"),
+            Build.Activity(id: "XM-DAC-41114-1", title: "Digital output", publisher: "XM-DAC-41114", parentId: "XI-IATI-EC_NEAR-P"));
+
+        Assert.Equal("XI-IATI-EC_NEAR name", data.Donors.Single(d => d.Id == "XI-IATI-EC_NEAR").Name);
+    }
+
+    [Fact]
     public void Implementers_are_keys_into_the_organisation_list()
     {
         var data = Export(Build.Activity(title: "Digital skills", participants: [Build.Implementer("Beetroot Academy")]));

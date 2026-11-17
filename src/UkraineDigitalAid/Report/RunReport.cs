@@ -129,7 +129,7 @@ public static class RunReport
         md.AppendLine("|---|---|---|");
         var parents = Stats.Stats.Parents(direct);
         foreach (var a in direct.Where(a => !parents.Contains(a.Id) && Stats.Stats.IsEndingSoon(a, today)).OrderBy(a => a.End).ThenBy(a => a.Id))
-            md.AppendLine($"| {a.End:dd.MM.yyyy} | {Cell(a.Publisher.Name ?? "")} | [{Cell(a.Title)}](https://d-portal.org/ctrack.html#view=act&aid={Uri.EscapeDataString(a.Id)}) |");
+            md.AppendLine($"| {a.End:dd.MM.yyyy} | {Cell(Organisations.PublisherName(a.Publisher))} | [{Cell(a.Title)}](https://d-portal.org/ctrack.html#view=act&aid={Uri.EscapeDataString(a.Id)}) |");
 
         return md.ToString();
     }

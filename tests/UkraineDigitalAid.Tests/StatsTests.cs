@@ -102,6 +102,24 @@ public class StatsTests
     }
 
     [Theory]
+    [InlineData("US-GOV-7", "Department of Defense", "U.S. Department of Defense")]
+    [InlineData("US-GOV-12", "Trade and Development Agency", "U.S. Trade and Development Agency")]
+    [InlineData("US-GOV-1", "U.S. Agency for International Development", "U.S. Agency for International Development")]
+    [InlineData("US-GOV-11", "United States Department of State", "United States Department of State")]
+    [InlineData("US-EIN-52-1780162", "Eurasia Foundation", "Eurasia Foundation")]
+    [InlineData("SE-0", "Sweden", "Sweden")]
+    public void Us_government_publishers_are_shown_with_the_country(string reference, string name, string shown) =>
+        Assert.Equal(shown, Organisations.PublisherName(new Organisation(reference, name)));
+
+    [Fact]
+    public void Donor_table_uses_the_display_name()
+    {
+        var activity = Build.Activity(publisher: "US-GOV-7") with { Publisher = new Organisation("US-GOV-7", "Department of Defense") };
+
+        Assert.Equal("U.S. Department of Defense", Summarise(activity).Donors.Single().Name);
+    }
+
+    [Theory]
     [InlineData("XM-DAC-41114", true)]
     [InlineData("GB-COH-1762840", true)]
     [InlineData("44001", true)]

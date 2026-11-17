@@ -70,7 +70,9 @@ public static class SiteExport
         var sectorCodes = selected.SelectMany(s => s.Activity.Sectors).Select(s => s.Code)
             .Where(DigitalRules.SectorCodes.Contains).Distinct();
         var donors = all.GroupBy(a => a.Publisher.Ref ?? a.Publisher.Name ?? "")
-            .Select(g => new SiteDonor(g.Key, summary["all"].Donors.First(d => d.Id == g.Key).Name))
+            // донора без жодного запису в підсумках (лише програми з чужими частинами) у таблиці немає
+            .Select(g => new SiteDonor(g.Key, summary["all"].Donors.FirstOrDefault(d => d.Id == g.Key)?.Name
+                                              ?? Organisations.PublisherName(g.First().Publisher)))
             .OrderBy(d => d.Name, StringComparer.Ordinal)
             .ToList();
 
