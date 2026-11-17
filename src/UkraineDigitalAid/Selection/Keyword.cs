@@ -10,33 +10,40 @@ public enum KeywordKind
     CaseSensitive
 }
 
-public record Keyword(string Text, KeywordKind Kind)
+/// <param name="Plural">Множина, яку не дає просте «s» у кінці, або яку треба окремо шукати на d-portal.</param>
+public record Keyword(string Text, KeywordKind Kind, string? Plural = null)
 {
-    public static Keyword Word(string text) => new(text, KeywordKind.Word);
+    public static Keyword Word(string text, string? plural = null) => new(text, KeywordKind.Word, plural);
 
     public static Keyword Stem(string text) => new(text, KeywordKind.Stem);
 
     public static Keyword CaseSensitive(string text) => new(text, KeywordKind.CaseSensitive);
 
     /// <summary>
-    /// Запит для text_search на d-portal. Там повнотекстовий пошук PostgreSQL з
+    /// Запити для text_search на d-portal. Там повнотекстовий пошук PostgreSQL з
     /// конфігурацією simple: цілі слова без основ і з регістром, зведеним до малих літер.
-    /// Тому основи й «IT» (він збігся б з англійським it) так не шукаються; ці слова
-    /// ловить перегляд назв усіх активностей.
+    /// Тому множину треба шукати окремо, а основи й «IT» (він збігся б з англійським it)
+    /// так не шукаються зовсім; ці слова ловить перегляд назв усіх активностей.
     /// </summary>
-    public string? SearchTerm => Kind == KeywordKind.Word ? Text : null;
+    public IEnumerable<string> SearchTerms =>
+        Kind != KeywordKind.Word ? [] : Plural is null ? [Text] : [Text, Plural];
 
     public bool IsIn(string text)
     {
         string haystack = Normalize(text);
+        return Occurs(haystack, Text) || (Plural is not null && Occurs(haystack, Plural));
+    }
+
+    private bool Occurs(string haystack, string word)
+    {
         var comparison = Kind == KeywordKind.CaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
-        for (int at = haystack.IndexOf(Text, comparison); at >= 0; at = haystack.IndexOf(Text, at + 1, comparison))
+        for (int at = haystack.IndexOf(word, comparison); at >= 0; at = haystack.IndexOf(word, at + 1, comparison))
         {
             if (at > 0 && char.IsLetterOrDigit(haystack[at - 1]))
                 continue;
             if (Kind == KeywordKind.Stem)
                 return true;
-            int end = at + Text.Length;
+            int end = at + word.Length;
             if (Kind == KeywordKind.Word && end < haystack.Length && haystack[end] is 's' or 'S')
                 end++;
             if (end >= haystack.Length || !char.IsLetterOrDigit(haystack[end]))

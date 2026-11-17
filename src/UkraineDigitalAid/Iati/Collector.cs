@@ -42,10 +42,10 @@ public class Collector(DPortalClient portal, TextWriter log)
             sources["sector " + code] = found.Count;
             candidates.UnionWith(found);
         }
-        foreach (var keyword in Keywords.All.Where(k => k.SearchTerm is not null))
+        foreach (string term in Keywords.All.SelectMany(k => k.SearchTerms))
         {
-            var found = await AidsAsync([.. Ukraine, ("text_search", keyword.SearchTerm!)], ct);
-            sources["text " + keyword.Text] = found.Count;
+            var found = await AidsAsync([.. Ukraine, ("text_search", term)], ct);
+            sources["text " + term] = found.Count;
             candidates.UnionWith(found);
         }
         var byTitle = rows.Values.Where(r => r.Title is not null && Keywords.Find(r.Title).Any()).Select(r => r.Aid).ToList();

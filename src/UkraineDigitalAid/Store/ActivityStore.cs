@@ -22,7 +22,7 @@ public record FetchRun(
 /// </summary>
 public class ActivityStore(string directory)
 {
-    public const int Version = 1;
+    public const int Version = 2;
 
     public static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web)
     {

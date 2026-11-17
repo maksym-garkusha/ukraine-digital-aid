@@ -15,6 +15,8 @@ public class PersonNamesTests
     [InlineData("PRICEWATERHOUSECOOPERS LLP")]
     [InlineData("Ministry of Digital Transformation of Ukraine")]
     [InlineData("Swedfund")]
+    [InlineData("FUNDACION MICROJUSTICIA BOLIVIA")]
+    [InlineData("MitOst e.V.")]
     public void Organisation_names_do_not_look_like_a_person(string name) =>
         Assert.False(PersonNames.LooksLikePerson(name, null));
 

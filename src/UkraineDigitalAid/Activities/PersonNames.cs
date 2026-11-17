@@ -22,7 +22,14 @@ public static class PersonNames
         "media", "news", "press", "radio", "tv", "studio", "lab", "labs", "hub", "platform", "cooperative",
         "ngo", "cso", "charity", "mission", "unit", "team", "forum", "house", "world", "global", "international",
         "national", "europe", "european", "ukraine", "ukrainian", "kyiv", "america", "american", "nations",
-        "united", "un", "eu", "usa", "uk", "public", "private", "state", "city", "region", "regional", "local"
+        "united", "un", "eu", "usa", "uk", "public", "private", "state", "city", "region", "regional", "local",
+        // іспанською, португальською, німецькою, скандинавськими: такі назви трапляються серед грантоотримувачів
+        "fundacion", "fundación", "fundação", "fundacao", "fondation", "fondazione", "stiftung", "stiftelsen",
+        "asociacion", "asociación", "associação", "associacao", "associazione", "corporacion", "corporación",
+        "compania", "compañía", "cooperativa", "colectivo", "centro", "instituto", "institut", "institutt",
+        "e.v", "ev", "ggmbh", "stadt", "gemeinde", "samtgemeinde", "verbandsgemeinde", "landkreis", "kommune",
+        "municipality", "oblast", "research", "care", "aid", "initiatives", "governments", "railways", "ngos",
+        "applicable", "digital", "grupo", "mobility", "nasjonalt", "india", "peru", "kosovo", "norge", "tanzania", "honduras", "bolivia", "france", "germany"
     };
 
     public static bool LooksLikePerson(string name, string? reference)
@@ -33,6 +40,10 @@ public static class PersonNames
         if (words.Length is < 2 or > 4)
             return false;
         return words.All(w => w.Length >= 2 && w.All(c => char.IsLetter(c) || c is '-' or '\'' or '’' or '.')
-                              && !OrganisationWords.Contains(w.Trim('.')));
+                              && !OrganisationWords.Contains(w.Trim('.')) && !IsCamelCase(w));
     }
+
+    // «MitOst», «eHealth»: так пишуть назви, а не імена
+    private static bool IsCamelCase(string word) =>
+        word.Skip(1).Zip(word.Skip(2)).Any(pair => char.IsLower(pair.First) && char.IsUpper(pair.Second));
 }

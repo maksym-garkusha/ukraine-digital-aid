@@ -40,6 +40,21 @@ public class KeywordTests
     public void Plural_form_matches()
     {
         Assert.True(Found("Modernisation of health information systems", "information system"));
+        Assert.True(Found("Support to national registries", "registry"));
+    }
+
+    [Fact]
+    public void Plural_is_searched_separately_on_the_portal()
+    {
+        // text_search не знає основ: «information system» не знаходить «information systems»
+        Assert.Equal(["information system", "information systems"], Keyword.Word("information system", "information systems").SearchTerms);
+    }
+
+    [Fact]
+    public void Transport_connectivity_is_not_digital()
+    {
+        Assert.Empty(Keywords.Find("Ukraine Transport Connectivity - Phase I"));
+        Assert.True(Found("Restoring internet connectivity in frontline communities", "internet connectivity"));
     }
 
     [Fact]
@@ -79,8 +94,8 @@ public class KeywordTests
     public void Stems_and_IT_are_not_sent_to_full_text_search()
     {
         // d-portal шукає цілі слова в нижньому регістрі: «it» збігся б з англійським займенником
-        Assert.Null(Keyword.CaseSensitive("IT").SearchTerm);
-        Assert.Null(Keyword.Stem("цифров").SearchTerm);
-        Assert.Equal("open data", Keyword.Word("open data").SearchTerm);
+        Assert.Empty(Keyword.CaseSensitive("IT").SearchTerms);
+        Assert.Empty(Keyword.Stem("цифров").SearchTerms);
+        Assert.Equal(["open data"], Keyword.Word("open data").SearchTerms);
     }
 }
