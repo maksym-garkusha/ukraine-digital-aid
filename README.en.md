@@ -57,13 +57,13 @@ Tricky cases covered by tests: `IT` is not found in `ITALY` or in the English "i
 
 ### Manual check
 
-After the first collection I went through records by hand.
+After the first collection, 120 records were checked by hand.
 
 - **60 random direct records.** 6 are not about digital transformation: a project for small farms where the donor gave 20% to the ICT sector; a WHO output on mental health policy with "information systems" in its title; the media project "Investigative journalism meets IT-Expertise"; "Ukraine Transport Connectivity", which is about roads; a US Department of Energy record whose title is the name of an accounting system while the description is about humanitarian response; software for the M109A6 howitzer. 2 more cannot be judged from the text: the donor withheld the title, or the title says only "Project Sentinel Software".
 - **30 random related records.** 7 are about digital transformation: Prozorro.Sale, software licences for nuclear plant safety analysis, telemedicine, the electronic regulatory platform of the communications regulator (NCEC), the VzayemoDiia e-participation platform, an online dialogue platform for labour migrants, and e-services of the tax service. The rest mention digital things in passing, which is why related records are hidden by default.
 - **30 rejected records from neighbouring sectors** (15110, 15111, 15113, 16010). None was clearly digital, 2 are open to question ("NGO Risk Scoring Center" and CoST reporting on disclosed data). 10 of the 30 cannot be judged: 6 have no description, and in 4 the donor withheld both title and description.
 
-One rule changed after the check. The list originally had a bare `connectivity`, but in Ukrainian records it is mostly about roads and logistics (Ukraine Transport Connectivity, RELINC), so the word now counts only as `internet connectivity`. False positives among direct records were below a quarter even before that change (6 of 60), so I did not draw a second sample.
+One rule changed after the check. The list originally had a bare `connectivity`, but in Ukrainian records it is mostly about roads and logistics (Ukraine Transport Connectivity, RELINC), so the word now counts only as `internet connectivity`. False positives among direct records were below a quarter even before that change (6 of 60), so no second sample was drawn.
 
 ## What the data does not show
 
