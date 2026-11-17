@@ -73,6 +73,7 @@ public class SiteExportTests
         var data = Export(Fixture("sida-parent"), Fixture("sida-child"));
 
         Assert.True(data.Activities.Single(a => a.Id == "SE-0-SE-22-68067").HasParts);
+        Assert.True(data.Activities.Single(a => a.Id == "SE-0-SE-22-68067").HasDirectParts);
         Assert.Equal("SE-0-SE-22-68067", data.Activities.Single(a => a.Id == "SE-0-SE-22-68067-1").Parent);
     }
 
@@ -101,6 +102,19 @@ public class SiteExportTests
     public void Ordinary_title_is_not_marked_withheld()
     {
         Assert.False(Export(Build.Activity(title: "Digital skills")).Activities.Single().TitleWithheld);
+    }
+
+    [Fact]
+    public void Programme_with_only_related_parts_counts_among_direct_records()
+    {
+        var data = Export(
+            Build.Activity(id: "SE-0-P", title: "Digital governance programme"),
+            Build.Activity(id: "SE-0-P-1", title: "Human rights", description: "Includes an information system.", parentId: "SE-0-P"));
+
+        var programme = data.Activities.Single(a => a.Id == "SE-0-P");
+        Assert.True(programme.HasParts);
+        Assert.False(programme.HasDirectParts);
+        Assert.Equal(1, data.Summary["direct"].Counted);
     }
 
     [Fact]

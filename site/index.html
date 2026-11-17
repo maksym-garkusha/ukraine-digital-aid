@@ -58,7 +58,10 @@ h1 { font-size: clamp(30px, 5.2vw, 46px); line-height: 1.1; letter-spacing: -.02
 button.figure { cursor: pointer; }
 button.figure:hover { border-color: var(--ink); }
 .figure b { display: block; font-size: 32px; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.figure { display: flex; flex-direction: column; justify-content: flex-start; }
 .figure span { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); line-height: 1.35; }
+.figure small { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.35; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 section.block { margin: 72px 0 0; }
 h2 { font-size: 26px; letter-spacing: -.015em; margin: 0 0 8px; }
@@ -179,7 +182,7 @@ footer p { margin: 0 0 8px; max-width: 46em; }
   <p class="note disclaimer" data-t="disclaimer"></p>
   <p class="note"><a href="https://github.com/maksym-garkusha/ukraine-digital-aid" data-t="repo"></a> · <a href="#method" data-t="methodLink"></a></p>
 
-  <div class="figures" id="figures" aria-live="polite"></div>
+  <div class="figures" id="figures"></div>
 
   <section class="block" id="donors-block">
     <h2 data-t="donorsTitle"></h2>
@@ -214,7 +217,7 @@ footer p { margin: 0 0 8px; max-width: 46em; }
     <h2 data-t="listTitle"></h2>
     <p data-t="listNote"></p>
     <div class="search">
-      <label for="q" hidden data-t="searchLabel"></label>
+      <label for="q" class="sr-only" data-t="searchLabel"></label>
       <input id="q" type="search" autocomplete="off" spellcheck="false" disabled>
     </div>
     <div class="filters">
@@ -275,7 +278,8 @@ const TEXT = {
     methodLink: 'Як відбираються записи',
     figDirect: 'прямих активностей про цифровізацію',
     figAll: 'активностей разом з дотичними',
-    figActive: 'зараз у реалізації',
+    figActive: 'зі статусом «у\u00a0реалізації»',
+    figActivePast: n => `у ${n} з них дата завершення вже минула`,
     figEnding: 'у реалізації, завершуються протягом 12 місяців',
     figDonors: 'донорів, що їх публікують',
     figHint: 'Програми, частини яких є в переліку окремо, не рахуються двічі.',
@@ -294,7 +298,7 @@ const TEXT = {
     showAll: n => `Показати всіх (${n})`,
     showFewer: 'Згорнути',
     listTitle: 'Перелік активностей',
-    listNote: 'Назви й описи мовою донора. Назва веде на сторінку запису на d-portal. Тут є і програми, і їхні частини, тому записів більше, ніж у підсумках вище.',
+    listNote: 'Назви й описи мовою донора. Назва веде на сторінку запису на d-portal. Тут є і програми, і їхні частини, тому записів більше, ніж у підсумках вище; рядок над переліком показує обидва числа.',
     searchLabel: 'Пошук',
     searchPlaceholder: 'Назва, опис, організація або ідентифікатор',
     fStatus: 'Статус',
@@ -312,11 +316,13 @@ const TEXT = {
     implementerChip: 'виконавець',
     clear: 'прибрати фільтр',
     loading: 'Завантажую дані…',
-    failed: 'Не вдалося завантажити дані. Локально спершу виконайте: dotnet run --project src/UkraineDigitalAid -- fetch, потім export site.',
+    failed: 'Не вдалося завантажити дані. Спробуйте оновити сторінку трохи згодом.',
     nothing: 'Нічого не знайдено. Спробуйте інше слово або приберіть фільтри.',
-    found: (n, shown) => shown < n ? `Знайдено ${num(n)}, показано ${num(shown)}` : `Знайдено: ${num(n)}`,
+    found: (n, counted, shown) => `Знайдено ${num(n)} ${plural(n, 'запис', 'записи', 'записів')}` +
+      (counted < n ? ` (${num(counted)} без програм, частини яких є в переліку окремо)` : '') +
+      (shown < n ? `. Показано ${num(shown)}.` : ''),
     more: n => `Показати ще ${n}`,
-    status: { 1: 'у підготовці', 2: 'у реалізації', 3: 'завершується', 4: 'закрито', 5: 'скасовано', 6: 'призупинено' },
+    status: { 1: 'у підготовці', 2: 'у реалізації', 3: 'фінальна стадія', 4: 'закрито', 5: 'скасовано', 6: 'призупинено' },
     noImplementer: 'виконавця не вказано',
     hiddenImplementer: n => n === 1 ? 'назву виконавця приховано' : `${n} виконавців без назви`,
     andMore: n => `і ще ${n}`,
@@ -372,7 +378,8 @@ const TEXT = {
     methodLink: 'How records are selected',
     figDirect: 'activities directly about digital transformation',
     figAll: 'activities including related ones',
-    figActive: 'currently in implementation',
+    figActive: 'with the status "Implementation"',
+    figActivePast: n => `${n} of them past their end date`,
     figEnding: 'in implementation, ending within 12 months',
     figDonors: 'donors publishing them',
     figHint: 'Programmes whose parts are listed separately are not counted twice.',
@@ -391,7 +398,7 @@ const TEXT = {
     showAll: n => `Show all (${n})`,
     showFewer: 'Show fewer',
     listTitle: 'Activities',
-    listNote: 'Titles and descriptions are in the donor\'s language. The title links to the record on d-portal. Both programmes and their parts are listed, so there are more records here than in the totals above.',
+    listNote: 'Titles and descriptions are in the donor\'s language. The title links to the record on d-portal. Both programmes and their parts are listed, so there are more records here than in the totals above; the line above the list gives both numbers.',
     searchLabel: 'Search',
     searchPlaceholder: 'Title, description, organisation or identifier',
     fStatus: 'Status',
@@ -409,9 +416,11 @@ const TEXT = {
     implementerChip: 'implementer',
     clear: 'remove filter',
     loading: 'Loading data…',
-    failed: 'Could not load the data. To run locally, first do: dotnet run --project src/UkraineDigitalAid -- fetch, then export site.',
+    failed: 'Could not load the data. Please try reloading the page a little later.',
     nothing: 'Nothing found. Try another word or remove some filters.',
-    found: (n, shown) => shown < n ? `Found ${num(n)}, showing ${num(shown)}` : `Found: ${num(n)}`,
+    found: (n, counted, shown) => `Found ${num(n)} record${n === 1 ? '' : 's'}` +
+      (counted < n ? ` (${num(counted)} not counting programmes whose parts are listed separately)` : '') +
+      (shown < n ? `. Showing ${num(shown)}.` : ''),
     more: n => `Show ${n} more`,
     status: { 1: 'Pipeline', 2: 'Implementation', 3: 'Finalisation', 4: 'Closed', 5: 'Cancelled', 6: 'Suspended' },
     noImplementer: 'no implementer given',
@@ -465,7 +474,7 @@ const input = $('q'), statusLine = $('status'), results = $('results');
 
 let data = null, failed = false, lang = 'uk', T = TEXT.uk;
 let state = {}, shown = PAGE, donorsOpen = false, implOpen = false;
-const donorNames = {};
+const donorNames = {}, byId = {};
 
 function esc(value) {
   return String(value ?? '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
@@ -474,6 +483,13 @@ function esc(value) {
 function locale() { return lang === 'uk' ? 'uk-UA' : 'en-GB'; }
 
 function num(n) { return Number(n || 0).toLocaleString(locale()); }
+
+// українська множина: 1 запис, 2 записи, 5 записів, 11 записів, 21 запис
+function plural(n, one, few, many) {
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  return m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? few : many;
+}
 
 function pct(p) { return Number(p).toLocaleString(locale(), { maximumFractionDigits: 2 }); }
 
@@ -537,19 +553,25 @@ function applyLanguage() {
 
 function summary() { return data.summary[state.all ? 'all' : 'direct']; }
 
+// програма, частини якої є в поточному переліку окремо: у підсумках її не рахують
+function isProgramme(a) { return state.all ? a.hasParts : a.hasDirectParts; }
+
 function figures() {
   const s = summary();
   const items = [
-    [s.counted, state.all ? T.figAll : T.figDirect, null],
-    [s.active, T.figActive, { status: '2', end: '' }],
-    [s.endingSoon, T.figEnding, { status: '2', end: '12m' }],
-    [s.donors.length, T.figDonors, null]
+    [s.counted, state.all ? T.figAll : T.figDirect, null, ''],
+    [s.active, T.figActive, { status: '2', end: '' }, s.activePastEnd ? T.figActivePast(num(s.activePastEnd)) : ''],
+    [s.endingSoon, T.figEnding, { status: '2', end: '12m' }, ''],
+    [s.donors.length, T.figDonors, null, '']
   ];
-  $('figures').innerHTML = items.map(([n, label, filter], i) => filter
-    ? `<button type="button" class="figure" data-i="${i}"><b>${num(n)}</b><span>${esc(label)}</span></button>`
-    : `<div class="figure"><b>${num(n)}</b><span>${esc(label)}</span></div>`).join('');
+  const inner = (n, label, note) => `<b>${num(n)}</b><span>${esc(label)}</span>` + (note ? `<small>${esc(note)}</small>` : '');
+  $('figures').innerHTML = items.map(([n, label, filter, note], i) => filter
+    ? `<button type="button" class="figure" data-i="${i}">${inner(n, label, note)}</button>`
+    : `<div class="figure">${inner(n, label, note)}</div>`).join('');
   $('figures').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
-    Object.assign(state, items[b.dataset.i][2]);
+    // плитка показує свій набір цілком, тож інші фільтри знімаються, і числа зійдуться
+    Object.assign(state, { q: '', donor: '', impl: '' }, items[b.dataset.i][2]);
+    input.value = '';
     refreshList(true);
   }));
   $('figures').title = T.figHint;
@@ -677,8 +699,9 @@ function card(a) {
   const why = `${T.basis[a.basis]}: ${a.why.filter((_, i) => i < 4).join(', ')}`;
   const kind = a.direct ? T.direct : a.military ? `${T.tangential} · ${T.military}` : T.tangential;
   const tags = [`<span class="tag${a.direct ? ' direct' : ''}">${esc(kind)} · ${esc(why)}</span>`];
-  if (a.parent) tags.push(`<span class="tag part">${esc(T.partOf)}</span>`);
-  if (a.hasParts) tags.push(`<span class="tag part">${esc(T.hasParts)}</span>`);
+  const parent = a.parent && byId[a.parent];
+  if (parent && (state.all || parent.direct)) tags.push(`<span class="tag part">${esc(T.partOf)}</span>`);
+  if (isProgramme(a)) tags.push(`<span class="tag part">${esc(T.hasParts)}</span>`);
 
   const url = 'https://d-portal.org/ctrack.html#view=act&aid=' + encodeURIComponent(a.id);
   // замість прихованої назви донори пишуть довге речення про закон; його видно в розгорнутому описі
@@ -701,7 +724,7 @@ function showList() {
     return;
   }
   const visible = list.slice(0, shown);
-  statusLine.textContent = T.found(list.length, visible.length);
+  statusLine.textContent = T.found(list.length, list.filter(a => !isProgramme(a)).length, visible.length);
   results.innerHTML = visible.map(card).join('');
   const rest = list.length - visible.length;
   $('results-more').hidden = rest <= 0;
@@ -760,6 +783,7 @@ fetch('data.json')
   .then(loaded => {
     data = loaded;
     data.donors.forEach(d => { donorNames[d.id] = d.name; });
+    data.activities.forEach(a => { byId[a.id] = a; });
     input.disabled = false;
     input.value = state.q;
     render();

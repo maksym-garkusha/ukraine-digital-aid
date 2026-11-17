@@ -15,6 +15,8 @@ namespace UkraineDigitalAid.Export;
 /// <param name="Military">Військова допомога: запис дотичний, хоч би що збіглося.</param>
 /// <param name="Parent">Програма, частиною якої є запис, якщо вона теж у переліку.</param>
 /// <param name="HasParts">Частини цієї програми є в переліку окремо, у підсумках вона не рахується.</param>
+/// <param name="HasDirectParts">Те саме серед самих прямих записів: підсумки прямих рахуються окремо,
+/// і програма, чиї частини лише дотичні, у них рахується.</param>
 public record SiteActivity(
     string Id, string Title, bool TitleWithheld, string? Description, string Donor,
     IReadOnlyList<string> Funders, IReadOnlyList<string> Implementers,
@@ -22,7 +24,7 @@ public record SiteActivity(
     DateOnly? Start, DateOnly? End, int? Status,
     decimal? Commitment, decimal? Spend, double? Ukraine, double Ict,
     string Basis, IReadOnlyList<string> Why, bool Direct, bool Military,
-    string? Parent, bool HasParts);
+    string? Parent, bool HasParts, bool HasDirectParts);
 
 public record SiteDonor(string Id, string Name);
 
@@ -57,6 +59,7 @@ public static class SiteExport
         var all = selected.Select(s => s.Activity).ToList();
         var ids = all.Select(a => a.Id).ToHashSet();
         var parents = Stats.Stats.Parents(all);
+        var directParents = Stats.Stats.Parents(direct);
 
         var organisations = new Dictionary<string, string>();
         var summary = new Dictionary<string, Summary>
@@ -67,7 +70,7 @@ public static class SiteExport
         foreach (var implementer in summary["all"].Implementers)
             organisations[implementer.Id] = implementer.Name;
 
-        var rows = selected.Select(s => Row(s, ids, parents, organisations)).ToList();
+        var rows = selected.Select(s => Row(s, ids, parents, directParents, organisations)).ToList();
 
         var sectorCodes = selected.SelectMany(s => s.Activity.Sectors).Select(s => s.Code)
             .Where(DigitalRules.SectorCodes.Contains).Distinct();
@@ -96,7 +99,7 @@ public static class SiteExport
     }
 
     private static SiteActivity Row(SelectedActivity s, HashSet<string> ids, HashSet<string> parents,
-        Dictionary<string, string> organisations)
+        HashSet<string> directParents, Dictionary<string, string> organisations)
     {
         var a = s.Activity;
         var implementing = a.WithRole(OrgRole.Implementing).ToList();
@@ -123,7 +126,8 @@ public static class SiteExport
             s.Selection.Direct,
             s.Selection.Military,
             a.ParentId is { } parent && ids.Contains(parent) ? parent : null,
-            parents.Contains(a.Id));
+            parents.Contains(a.Id),
+            directParents.Contains(a.Id));
     }
 
     private static string? Shorten(string? text)
