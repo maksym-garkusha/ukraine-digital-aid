@@ -87,6 +87,23 @@ public class SiteExportTests
     }
 
     [Fact]
+    public void Withheld_title_is_marked_and_keeps_the_donor_text()
+    {
+        const string redacted = "USAID redacted this field in accordance with the exceptions outlined in the Foreign Aid Transparency and Accountability Act of 2016.";
+
+        var row = Export(Build.Activity(title: redacted, sectors: [new SectorShare("22040", 100)])).Activities.Single();
+
+        Assert.True(row.TitleWithheld);
+        Assert.Equal(redacted, row.Title);
+    }
+
+    [Fact]
+    public void Ordinary_title_is_not_marked_withheld()
+    {
+        Assert.False(Export(Build.Activity(title: "Digital skills")).Activities.Single().TitleWithheld);
+    }
+
+    [Fact]
     public void Implementers_are_keys_into_the_organisation_list()
     {
         var data = Export(Build.Activity(title: "Digital skills", participants: [Build.Implementer("Beetroot Academy")]));

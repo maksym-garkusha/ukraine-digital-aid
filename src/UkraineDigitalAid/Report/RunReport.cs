@@ -133,10 +133,13 @@ public static class RunReport
         md.AppendLine("|---|---|---|");
         var parents = Stats.Stats.Parents(direct);
         foreach (var a in direct.Where(a => !parents.Contains(a.Id) && Stats.Stats.IsEndingSoon(a, today)).OrderBy(a => a.End).ThenBy(a => a.Id))
-            md.AppendLine($"| {a.End:dd.MM.yyyy} | {Cell(Organisations.PublisherName(a.Publisher))} | [{Cell(a.Title)}](https://d-portal.org/ctrack.html#view=act&aid={Uri.EscapeDataString(a.Id)}) |");
+            md.AppendLine($"| {a.End:dd.MM.yyyy} | {Cell(Organisations.PublisherName(a.Publisher))} | [{Cell(ShownTitle(a))}](https://d-portal.org/ctrack.html#view=act&aid={Uri.EscapeDataString(a.Id)}) |");
 
         return md.ToString();
     }
+
+    // USAID і Держдеп пишуть замість прихованої назви довге речення про закон FATAA
+    private static string ShownTitle(Activity a) => ActivityParser.IsRedacted(a.Title) ? "назву приховано донором" : a.Title;
 
     private static string BasisName(Basis basis) => basis switch
     {

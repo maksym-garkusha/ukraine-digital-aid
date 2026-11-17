@@ -48,4 +48,16 @@ public class RunReportTests
         Assert.Contains("| 31.03.2027 |", report);
         Assert.Contains("view=act&aid=A-1", report);
     }
+
+    [Fact]
+    public void Withheld_title_is_replaced_in_the_ending_soon_list()
+    {
+        string report = RunReport.Build([
+            Build.Activity(id: "US-GOV-11-1", status: 2, end: new DateOnly(2027, 3, 31), sectors: [new SectorShare("22040", 50)],
+                title: "Information has been Redacted in accordance with the two principled exceptions of the Foreign Aid Transparency and Accountability Act (FATAA) of 2016")
+        ], Run, Lists);
+
+        Assert.Contains("[назву приховано донором](https://d-portal.org/ctrack.html#view=act&aid=US-GOV-11-1)", report);
+        Assert.DoesNotContain("in accordance with", report);
+    }
 }

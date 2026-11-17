@@ -333,6 +333,8 @@ const TEXT = {
     partOf: 'частина програми, яка теж є в переліку',
     hasParts: 'програма: її частини в переліку окремо, у підсумках не рахується',
     description: 'Опис',
+    titleWithheld: 'Назву приховано донором',
+    donorTitle: 'Текст донора на місці назви',
     million: 'млн',
     thousand: 'тис.',
     methodTitle: 'Як це зібрано',
@@ -428,6 +430,8 @@ const TEXT = {
     partOf: 'part of a programme that is also listed',
     hasParts: 'programme: its parts are listed separately and not counted twice',
     description: 'Description',
+    titleWithheld: 'Title withheld by the donor',
+    donorTitle: 'Donor\'s text in place of the title',
     million: 'M',
     thousand: 'K',
     methodTitle: 'How this is put together',
@@ -677,11 +681,14 @@ function card(a) {
   if (a.hasParts) tags.push(`<span class="tag part">${esc(T.hasParts)}</span>`);
 
   const url = 'https://d-portal.org/ctrack.html#view=act&aid=' + encodeURIComponent(a.id);
-  return `<article class="act"><h3><a href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a></h3>` +
+  // замість прихованої назви донори пишуть довге речення про закон; його видно в розгорнутому описі
+  const details = (a.titleWithheld ? `<p>${esc(T.donorTitle)}: ${esc(a.title)}</p>` : '') +
+    (a.description ? `<p>${esc(a.description)}</p>` : '');
+  return `<article class="act"><h3><a href="${url}" target="_blank" rel="noopener">${esc(a.titleWithheld ? T.titleWithheld : a.title)}</a></h3>` +
     `<p class="meta">${esc(meta.join(' · '))}</p>` +
     `<p class="money">${moneyLine}</p>` +
     `<p>${tags.join('')} <span class="tag code">${esc(a.id)}</span></p>` +
-    (a.description ? `<details><summary>${esc(T.description)}</summary><p>${esc(a.description)}</p></details>` : '') +
+    (details ? `<details><summary>${esc(T.description)}</summary>${details}</details>` : '') +
     `</article>`;
 }
 

@@ -7,6 +7,7 @@ using UkraineDigitalAid.Store;
 
 namespace UkraineDigitalAid.Export;
 
+/// <param name="Title">Назва від донора. Якщо донор її приховав, тут його пояснення, а TitleWithheld = true.</param>
 /// <param name="Implementers">Ключі організацій-виконавців, назви лежать у SiteData.Organisations.</param>
 /// <param name="OtherImplementers">Виконавці, вказані лише категорією («Developing country-based NGO»).</param>
 /// <param name="HiddenImplementers">Скільки виконавців без назви: донор її приховав або це, схоже, фізособа.</param>
@@ -15,7 +16,7 @@ namespace UkraineDigitalAid.Export;
 /// <param name="Parent">Програма, частиною якої є запис, якщо вона теж у переліку.</param>
 /// <param name="HasParts">Частини цієї програми є в переліку окремо, у підсумках вона не рахується.</param>
 public record SiteActivity(
-    string Id, string Title, string? Description, string Donor,
+    string Id, string Title, bool TitleWithheld, string? Description, string Donor,
     IReadOnlyList<string> Funders, IReadOnlyList<string> Implementers,
     IReadOnlyList<string> OtherImplementers, int HiddenImplementers,
     DateOnly? Start, DateOnly? End, int? Status,
@@ -110,7 +111,7 @@ public static class SiteExport
         }
 
         return new SiteActivity(
-            a.Id, a.Title, Shorten(a.Description), a.Publisher.Ref ?? a.Publisher.Name ?? "",
+            a.Id, a.Title, ActivityParser.IsRedacted(a.Title), Shorten(a.Description), a.Publisher.Ref ?? a.Publisher.Name ?? "",
             a.WithRole(OrgRole.Funding).Select(p => p.Name).OfType<string>().Distinct()
                 .Where(n => n != a.Publisher.Name).ToList(),
             keys,
