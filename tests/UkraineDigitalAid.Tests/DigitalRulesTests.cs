@@ -88,6 +88,49 @@ public class DigitalRulesTests
         Assert.Null(DigitalRules.Evaluate(activity));
     }
 
+    [Theory]
+    [InlineData("Ukraine Security Assistance Initiative: Ministry of Defense - Cyber Support")]
+    [InlineData("Presidential Drawdown Authority for Military Assistance for Ukraine: M109A6 Software (TRAVERSE)")]
+    public void Defense_department_supplies_are_related_not_direct(string title)
+    {
+        var selection = DigitalRules.Evaluate(Build.Activity(title: title, publisher: "US-GOV-7",
+            sectors: [new SectorShare("15210", 100)]));
+
+        Assert.False(selection!.Direct);
+        Assert.True(selection.Military);
+        Assert.Equal(Basis.Title, selection.Basis);
+    }
+
+    [Fact]
+    public void Military_publisher_stays_related_even_with_an_ict_sector()
+    {
+        var selection = DigitalRules.Evaluate(Build.Activity(title: "Command and control", publisher: "US-GOV-7",
+            sectors: [new SectorShare("22040", 100)]));
+
+        Assert.False(selection!.Direct);
+    }
+
+    [Theory]
+    [InlineData("XM-DAC-5-7", "Strengthening Ukrainian State Authorities’ Cyber Hygiene and Cybersecurity", "15210")]
+    [InlineData("CH-4", "UA Support to e-governance (E-GAP)", "15250")]
+    [InlineData("XI-IATI-EC_FPI", "Delivering Accountability through Enhanced Digital Evidence Processing", "15220")]
+    public void Civilian_security_sector_projects_stay_direct(string publisher, string title, string sector)
+    {
+        var selection = DigitalRules.Evaluate(Build.Activity(title: title, publisher: publisher,
+            sectors: [new SectorShare(sector, 100)]));
+
+        Assert.True(selection!.Direct);
+        Assert.False(selection.Military);
+    }
+
+    [Fact]
+    public void Other_us_government_publishers_are_not_military()
+    {
+        var selection = DigitalRules.Evaluate(Build.Activity(title: "Digital transformation support", publisher: "US-GOV-1"));
+
+        Assert.True(selection!.Direct);
+    }
+
     [Fact]
     public void Nothing_digital_is_not_selected()
     {

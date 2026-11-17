@@ -45,7 +45,9 @@ To be clear: this is a heuristic. An activity is included if at least one of the
 2. **A keyword in the title** from the list below.
 3. **A keyword only in the description**, not in the title. This is a weaker signal.
 
-Records with an ICT sector share of at least 20% or a keyword in the title count as direct; the rest are related. The page shows direct records by default, and related ones appear when a box is ticked. Each record carries the reason it was selected and what exactly matched: a sector code with its share, or a word.
+Records with an ICT sector share of at least 20% or a keyword in the title count as direct; the rest are related. One exception: records from the US Department of Defense (publisher `US-GOV-7`) are always related. They are military supplies, software for equipment and cyber support for the Ministry of Defence, and without the exception the words `software` and `cyber` in their titles would make them direct. A rule based on DAC sector group 152 (Conflict, peace and security) was tried and dropped: donors file civilian cybersecurity for government bodies (German Federal Foreign Office), SDC's e-governance work and digital evidence for the courts (EU) under the same sectors. The list of such publishers is in [DigitalRules.cs](src/UkraineDigitalAid/Selection/DigitalRules.cs).
+
+The page shows direct records by default, and related ones appear when a box is ticked. Each record carries the reason it was selected and what exactly matched: a sector code with its share, or a word.
 
 Keywords (case-insensitive, whole words only; a trailing "s" is allowed):
 

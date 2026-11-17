@@ -27,6 +27,18 @@ public class RunReportTests
     }
 
     [Fact]
+    public void Report_counts_military_records_apart()
+    {
+        string report = RunReport.Build([
+            Build.Activity(id: "US-GOV-7-1", title: "Ministry of Defense - Cyber Support", publisher: "US-GOV-7"),
+            Build.Activity(id: "A-2", title: "Digital skills")
+        ], Run, Lists);
+
+        Assert.Contains("Відібрано 2 записів: 1 прямих і 1 дотичних.", report);
+        Assert.Contains("завжди дотичні: 1, з них зі словом у назві 1.", report);
+    }
+
+    [Fact]
     public void Report_lists_activities_ending_within_a_year()
     {
         string report = RunReport.Build([

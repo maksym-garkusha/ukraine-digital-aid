@@ -329,6 +329,7 @@ const TEXT = {
     basis: { sector: 'сектор', title: 'у назві', description: 'лише в описі' },
     direct: 'пряма',
     tangential: 'дотична',
+    military: 'військова допомога',
     partOf: 'частина програми, яка теж є в переліку',
     hasParts: 'програма: її частини в переліку окремо, у підсумках не рахується',
     description: 'Опис',
@@ -340,7 +341,7 @@ const TEXT = {
       <ul><li>серед секторів DAC є 22040 (ІКТ), 22010 (політика у сфері зв'язку) або 22020 (телекомунікації); 22030 (радіо, ТБ, друк) не береться;</li>
       <li>у назві є одне зі слів нижче;</li>
       <li>слово є тільки в описі: це слабший сигнал.</li></ul>
-      <p><b>Прямі</b> записи: частка ІКТ-секторів від 20% або слово в назві. Решта <b>дотичні</b>, вони показуються, якщо поставити позначку «з дотичними». Результат ручної перевірки відбору наведено в <a href="https://github.com/maksym-garkusha/ukraine-digital-aid#readme">README</a>.</p>
+      <p><b>Прямі</b> записи: частка ІКТ-секторів від 20% або слово в назві. Решта <b>дотичні</b>, вони показуються, якщо поставити позначку «з дотичними». Записи Міністерства оборони США завжди дотичні: це військові постачання (програмне забезпечення до техніки, кіберпідтримка війська), а не цифровізація державного управління. Результат ручної перевірки відбору наведено в <a href="https://github.com/maksym-garkusha/ukraine-digital-aid#readme">README</a>.</p>
       <p>Слова шукаються без урахування регістру й тільки цілими словами; IT лише великими літерами, українські основи на початку слова:</p>`,
     mMoneyTitle: 'Як читати суми',
     mMoney: `<p>Суми d-portal перераховує в долари США. Вони стосуються всієї активності, а не її цифрової частини і не тільки України. Якщо Україна лише один з отримувачів або ІКТ лише частина секторів, ці частки показано поруч із сумою; сторінка їх не множить.</p>
@@ -423,6 +424,7 @@ const TEXT = {
     basis: { sector: 'sector', title: 'in title', description: 'description only' },
     direct: 'direct',
     tangential: 'related',
+    military: 'military assistance',
     partOf: 'part of a programme that is also listed',
     hasParts: 'programme: its parts are listed separately and not counted twice',
     description: 'Description',
@@ -434,7 +436,7 @@ const TEXT = {
       <ul><li>its DAC sectors include 22040 (ICT), 22010 (communications policy) or 22020 (telecommunications); 22030 (radio, TV, print media) is not included;</li>
       <li>its title contains one of the words below;</li>
       <li>the word appears only in the description, which is a weaker signal.</li></ul>
-      <p><b>Direct</b> records have an ICT sector share of at least 20% or a keyword in the title. The rest are <b>related</b> and appear when "include related" is ticked. The results of a manual check of the selection are in the <a href="https://github.com/maksym-garkusha/ukraine-digital-aid/blob/main/README.en.md">README</a>.</p>
+      <p><b>Direct</b> records have an ICT sector share of at least 20% or a keyword in the title. The rest are <b>related</b> and appear when "include related" is ticked. Records from the US Department of Defense are always related: they are military supplies (software for equipment, cyber support for the armed forces) rather than digital government. The results of a manual check of the selection are in the <a href="https://github.com/maksym-garkusha/ukraine-digital-aid/blob/main/README.en.md">README</a>.</p>
       <p>Words are matched regardless of case and only as whole words; IT only in capitals, Ukrainian stems at the start of a word:</p>`,
     mMoneyTitle: 'Reading the amounts',
     mMoney: `<p>d-portal converts amounts into US dollars. They cover the whole activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, those shares are shown next to the amount; the page does not multiply them.</p>
@@ -669,7 +671,8 @@ function card(a) {
     (shares.length ? ` <span class="share">(${esc(shares.join(', '))})</span>` : '');
 
   const why = `${T.basis[a.basis]}: ${a.why.filter((_, i) => i < 4).join(', ')}`;
-  const tags = [`<span class="tag${a.direct ? ' direct' : ''}">${esc(a.direct ? T.direct : T.tangential)} · ${esc(why)}</span>`];
+  const kind = a.direct ? T.direct : a.military ? `${T.tangential} · ${T.military}` : T.tangential;
+  const tags = [`<span class="tag${a.direct ? ' direct' : ''}">${esc(kind)} · ${esc(why)}</span>`];
   if (a.parent) tags.push(`<span class="tag part">${esc(T.partOf)}</span>`);
   if (a.hasParts) tags.push(`<span class="tag part">${esc(T.hasParts)}</span>`);
 

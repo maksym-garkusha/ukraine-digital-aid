@@ -51,6 +51,10 @@ public static class RunReport
         foreach (var basis in Enum.GetValues<Basis>())
             md.AppendLine($"| {BasisName(basis)} | {N(selected.Count(s => s.Selection.Direct && s.Selection.Basis == basis))} | {N(selected.Count(s => !s.Selection.Direct && s.Selection.Basis == basis))} |");
         md.AppendLine();
+        var military = selected.Where(s => s.Selection.Military).ToList();
+        int militaryByTitle = military.Count(s => s.Selection.Reasons.Any(r => r.Basis == Basis.Title));
+        md.AppendLine($"Записи військової допомоги (публікатор {string.Join(", ", DigitalRules.MilitaryPublishers)}) завжди дотичні: {N(military.Count)}, з них зі словом у назві {N(militaryByTitle)}.");
+        md.AppendLine();
         md.AppendLine("Найчастіші слова в назвах прямих записів:");
         md.AppendLine();
         var words = selected.Where(s => s.Selection.Direct)

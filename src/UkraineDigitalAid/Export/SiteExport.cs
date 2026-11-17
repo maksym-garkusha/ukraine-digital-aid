@@ -11,6 +11,7 @@ namespace UkraineDigitalAid.Export;
 /// <param name="OtherImplementers">Виконавці, вказані лише категорією («Developing country-based NGO»).</param>
 /// <param name="HiddenImplementers">Скільки виконавців без назви: донор її приховав або це, схоже, фізособа.</param>
 /// <param name="Why">Що збіглося: «22040 50%» або слово; перша підстава головна.</param>
+/// <param name="Military">Військова допомога: запис дотичний, хоч би що збіглося.</param>
 /// <param name="Parent">Програма, частиною якої є запис, якщо вона теж у переліку.</param>
 /// <param name="HasParts">Частини цієї програми є в переліку окремо, у підсумках вона не рахується.</param>
 public record SiteActivity(
@@ -19,7 +20,7 @@ public record SiteActivity(
     IReadOnlyList<string> OtherImplementers, int HiddenImplementers,
     DateOnly? Start, DateOnly? End, int? Status,
     decimal? Commitment, decimal? Spend, double? Ukraine, double Ict,
-    string Basis, IReadOnlyList<string> Why, bool Direct,
+    string Basis, IReadOnlyList<string> Why, bool Direct, bool Military,
     string? Parent, bool HasParts);
 
 public record SiteDonor(string Id, string Name);
@@ -119,6 +120,7 @@ public static class SiteExport
             s.Selection.Basis.ToString().ToLowerInvariant(),
             s.Selection.Reasons.Select(r => r.What).ToList(),
             s.Selection.Direct,
+            s.Selection.Military,
             a.ParentId is { } parent && ids.Contains(parent) ? parent : null,
             parents.Contains(a.Id));
     }
