@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Хто фінансує цифровізацію України: донорські проєкти з IATI</title>
+<meta name="description" content="Донорські активності з цифровізації в Україні за відкритими даними IATI: донори, виконавці, суми, дати, статус. Незалежний навчальний проєкт.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2314201c'/%3E%3Crect x='6' y='6' width='8' height='8' fill='%23fff'/%3E%3Crect x='18' y='6' width='8' height='8' fill='%23fff'/%3E%3Crect x='6' y='18' width='8' height='8' fill='%23fff'/%3E%3Crect x='18' y='18' width='8' height='8' fill='%23f2b705'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f3f5f4;
+  --card: #ffffff;
+  --ink: #14201c;
+  --muted: #5e6b66;
+  --line: #d5dbd8;
+  --amber: #f2b705;
+  --amber-soft: #fdf3cf;
+  --blue: #1f4fd8;
+  --off: #c9d0cc;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 17px/1.5 "Golos Text", system-ui, sans-serif;
+}
+a { color: var(--blue); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+.code { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .92em; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+header.top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 22px 0 0; }
+.mark { font-weight: 700; letter-spacing: -.01em; }
+.mark i { font-style: normal; color: var(--muted); font-weight: 400; }
+.top nav { display: flex; align-items: baseline; gap: 18px; white-space: nowrap; }
+.langs { display: inline-flex; border: 1px solid var(--ink); border-radius: 4px; overflow: hidden; }
+.langs button {
+  font: inherit; font-size: 14px; font-weight: 600; padding: 3px 10px; border: 0; background: var(--card);
+  color: var(--ink); cursor: pointer;
+}
+.langs button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+h1 { font-size: clamp(30px, 5.2vw, 46px); line-height: 1.1; letter-spacing: -.025em; font-weight: 700; margin: 56px 0 14px; max-width: 17em; }
+.lead { color: var(--muted); max-width: 36em; margin: 0 0 14px; }
+.note { font-size: 15px; color: var(--muted); max-width: 46em; margin: 0 0 8px; }
+.note.disclaimer { border-left: 4px solid var(--amber); background: var(--amber-soft); color: var(--ink); padding: 10px 14px; margin: 18px 0 10px; }
+
+.figures { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 34px 0 0; }
+.figure { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; text-align: left; font: inherit; color: inherit; }
+button.figure { cursor: pointer; }
+button.figure:hover { border-color: var(--ink); }
+.figure b { display: block; font-size: 32px; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.figure span { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); line-height: 1.35; }
+
+section.block { margin: 72px 0 0; }
+h2 { font-size: 26px; letter-spacing: -.015em; margin: 0 0 8px; }
+section.block > p { color: var(--muted); max-width: 40em; margin: 0 0 20px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; background: var(--card); border: 1px solid var(--line); font-size: 15.5px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; font-size: 14px; color: var(--muted); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+tr.chosen td { background: var(--amber-soft); }
+td .pick {
+  font: inherit; color: var(--blue); background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--off);
+}
+td .pick:hover { text-decoration-color: currentColor; }
+td .small { display: block; color: var(--muted); font-size: 14px; }
+.more {
+  font: inherit; font-size: 15px; margin: 12px 0 0; padding: 9px 16px; border: 1px solid var(--ink); border-radius: 4px;
+  background: var(--card); color: var(--ink); cursor: pointer;
+}
+.more:hover { background: var(--ink); color: #fff; }
+
+.search { position: relative; }
+.search input {
+  width: 100%;
+  font: inherit;
+  font-size: 20px;
+  padding: 18px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--ink);
+}
+.search input::placeholder { color: #8b9692; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; margin: 14px 0 0; font-size: 15px; }
+.filters label { display: grid; gap: 3px; color: var(--muted); font-size: 14px; }
+.filters select {
+  font: inherit; font-size: 15px; color: var(--ink); background: var(--card); border: 1px solid var(--ink);
+  border-radius: 4px; padding: 7px 8px; max-width: 260px;
+}
+.filters .check { display: flex; align-items: center; gap: 7px; color: var(--ink); font-size: 15px; padding-bottom: 8px; }
+.filters .check input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.chip {
+  font: inherit; font-size: 14px; display: inline-flex; gap: 8px; align-items: center; background: var(--amber-soft);
+  border: 1px solid var(--amber); border-radius: 3px; padding: 3px 10px; color: var(--ink); cursor: pointer;
+}
+.chip b { font-weight: 600; }
+
+#status { margin: 18px 0 8px; color: var(--muted); font-size: 15px; min-height: 1.5em; }
+
+.act { background: var(--card); border: 1px solid var(--line); border-radius: 4px; margin: 0 0 8px; padding: 14px 18px; }
+.act h3 { margin: 0 0 6px; font-size: 17px; font-weight: 500; line-height: 1.35; }
+.act h3 a { color: var(--ink); text-decoration-color: var(--off); }
+.act h3 a:hover { color: var(--blue); text-decoration-color: currentColor; }
+.act p { margin: 0 0 4px; font-size: 15.5px; overflow-wrap: anywhere; }
+.act .meta { color: var(--muted); }
+.act .money { font-variant-numeric: tabular-nums; }
+.act .share { color: var(--muted); }
+.tag { display: inline-block; font-size: 13px; line-height: 1.4; padding: 1px 7px; border-radius: 3px; background: var(--paper); border: 1px solid var(--line); color: var(--muted); margin: 4px 6px 0 0; }
+.tag.direct { border-color: var(--ink); color: var(--ink); }
+.tag.part { background: var(--amber-soft); border-color: var(--amber); color: var(--ink); }
+.act details { margin-top: 6px; font-size: 15px; }
+.act summary { cursor: pointer; color: var(--blue); width: max-content; }
+.act details p { color: var(--muted); margin-top: 6px; }
+
+.method { display: grid; gap: 22px; }
+.method h3 { font-size: 16px; margin: 0 0 6px; }
+.method p, .method li { font-size: 15.5px; max-width: 44em; }
+.method p { margin: 0 0 8px; }
+.method ul { margin: 0; padding-left: 20px; }
+.words { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+.words span { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 13.5px; background: var(--card); border: 1px solid var(--line); border-radius: 3px; padding: 1px 7px; }
+
+footer { margin: 80px 0 0; padding: 26px 0 60px; border-top: 2px solid var(--ink); color: var(--muted); font-size: 15px; }
+footer p { margin: 0 0 8px; max-width: 46em; }
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .mark i { display: none; }
+  .top nav a { display: none; }
+  h1 { margin-top: 40px; }
+  .figures { grid-template-columns: 1fr 1fr; }
+  .figure b { font-size: 26px; }
+  .filters label, .filters select { width: 100%; max-width: none; }
+  .search input { font-size: 18px; padding: 14px 16px; }
+  .act { padding: 12px 14px; }
+  /* на вузькому екрані рядок таблиці стає карткою: назва зверху, числа з підписами нижче */
+  table, tbody, tr, td { display: block; width: 100%; }
+  thead { display: none; }
+  tr { border-bottom: 1px solid var(--line); padding: 10px 12px; }
+  tr:last-child { border-bottom: 0; }
+  td { border: 0; padding: 2px 0; }
+  td.num { text-align: left; white-space: normal; }
+  td[data-label]::before { content: attr(data-label) ": "; color: var(--muted); font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="mark">ukraine-digital-aid <i data-t="mark"></i></div>
+  <nav>
+    <a href="https://github.com/maksym-garkusha/ukraine-digital-aid" data-t="code"></a>
+    <span class="langs" role="group" aria-label="Мова / Language">
+      <button type="button" data-lang="uk" aria-pressed="true">UA</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </span>
+  </nav>
+</header>
+
+<main>
+  <h1 data-t="title"></h1>
+  <p class="lead" data-t="lead"></p>
+  <p class="note" id="snapshot"></p>
+  <p class="note disclaimer" data-t="disclaimer"></p>
+  <p class="note"><a href="https://github.com/maksym-garkusha/ukraine-digital-aid" data-t="repo"></a> · <a href="#method" data-t="methodLink"></a></p>
+
+  <div class="figures" id="figures" aria-live="polite"></div>
+
+  <section class="block" id="donors-block">
+    <h2 data-t="donorsTitle"></h2>
+    <p data-t="donorsNote"></p>
+    <div class="tablewrap"><table>
+      <thead><tr>
+        <th data-t="colDonor"></th>
+        <th class="num" data-t="colActivities"></th>
+        <th class="num" data-t="colCommitment"></th>
+        <th class="num" data-t="colSpend"></th>
+      </tr></thead>
+      <tbody id="donors"></tbody>
+    </table></div>
+    <button type="button" class="more" id="donors-more" hidden></button>
+  </section>
+
+  <section class="block" id="implementers-block">
+    <h2 data-t="implTitle"></h2>
+    <p data-t="implNote"></p>
+    <div class="tablewrap"><table>
+      <thead><tr>
+        <th data-t="colImplementer"></th>
+        <th class="num" data-t="colCount"></th>
+        <th data-t="colWithDonors"></th>
+      </tr></thead>
+      <tbody id="implementers"></tbody>
+    </table></div>
+    <button type="button" class="more" id="implementers-more" hidden></button>
+  </section>
+
+  <section class="block" id="list">
+    <h2 data-t="listTitle"></h2>
+    <p data-t="listNote"></p>
+    <div class="search">
+      <label for="q" hidden data-t="searchLabel"></label>
+      <input id="q" type="search" autocomplete="off" spellcheck="false" disabled>
+    </div>
+    <div class="filters">
+      <label><span data-t="fStatus"></span><select id="f-status"></select></label>
+      <label><span data-t="fDonor"></span><select id="f-donor"></select></label>
+      <label><span data-t="fEnd"></span><select id="f-end"></select></label>
+      <label><span data-t="fSort"></span><select id="f-sort"></select></label>
+      <span class="check"><input type="checkbox" id="f-all"><label for="f-all" data-t="fAll"></label></span>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div id="status" role="status"></div>
+    <div id="results"></div>
+    <button type="button" class="more" id="results-more" hidden></button>
+  </section>
+
+  <section class="block" id="method">
+    <h2 data-t="methodTitle"></h2>
+    <div class="method">
+      <div>
+        <h3 data-t="mSelectTitle"></h3>
+        <div data-t="mSelect" data-html></div>
+        <div class="words" id="keywords"></div>
+      </div>
+      <div>
+        <h3 data-t="mMoneyTitle"></h3>
+        <div data-t="mMoney" data-html></div>
+      </div>
+      <div>
+        <h3 data-t="mLimitsTitle"></h3>
+        <div data-t="mLimits" data-html></div>
+      </div>
+      <div>
+        <h3 data-t="mSourceTitle"></h3>
+        <div data-t="mSource" data-html></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p data-t="footer"></p>
+  <p data-t="author" data-html></p>
+</footer>
+
+</div>
+<script>
+// усі тексти інтерфейсу тут, двома мовами; назви й описи активностей показуються мовою оригіналу
+const TEXT = {
+  uk: {
+    pageTitle: 'Хто фінансує цифровізацію України: донорські проєкти з IATI',
+    mark: '/ відкриті дані IATI',
+    code: 'Код на GitHub',
+    title: 'Хто фінансує цифровізацію України',
+    lead: 'Донори публікують свої проєкти у відкритому стандарті IATI, але кожен окремо. Тут зібрано активності з отримувачем Україна, які стосуються цифровізації: донор, виконавці, суми, дати і статус в одному переліку.',
+    snapshot: d => `Зріз даних d-portal від ${d}. Оновлюється щотижня.`,
+    disclaimer: 'Незалежний навчальний проєкт на відкритих даних IATI. Дані подають самі донори, і повнота залежить від них. Це не офіційна статистика, і проєкт не пов\'язаний з державними органами чи донорами.',
+    repo: 'Репозиторій',
+    methodLink: 'Як відбираються записи',
+    figDirect: 'прямих активностей про цифровізацію',
+    figAll: 'активностей разом з дотичними',
+    figActive: 'зараз у реалізації',
+    figEnding: 'у реалізації, завершуються протягом 12 місяців',
+    figDonors: 'донорів, що їх публікують',
+    figHint: 'Програми, частини яких є в переліку окремо, не рахуються двічі.',
+    donorsTitle: 'Донори',
+    donorsNote: 'Донор тут це організація, яка опублікувала запис в IATI. Суми в доларах США за всю активність і тільки за записами, де Україна єдиний отримувач. Клік за назвою фільтрує перелік.',
+    colDonor: 'Донор',
+    colActivities: 'Активностей: усього / у реалізації',
+    colCommitment: 'Зобов\'язання*',
+    colSpend: 'Виплати*',
+    wholeNote: (n, total) => `* за ${n} з ${total} записів, де Україна 100%`,
+    implTitle: 'Виконавці',
+    implNote: 'Організації, вказані в записах з роллю «виконавець» (Implementing). Назви як у донорів, зведені за ідентифікатором IATI, якщо він є. Клік фільтрує перелік.',
+    colImplementer: 'Виконавець',
+    colCount: 'Активностей',
+    colWithDonors: 'З донорами',
+    showAll: n => `Показати всіх (${n})`,
+    showFewer: 'Згорнути',
+    listTitle: 'Перелік активностей',
+    listNote: 'Назви й описи мовою донора. Назва веде на сторінку запису на d-portal. Тут є і програми, і їхні частини, тому записів більше, ніж у підсумках вище.',
+    searchLabel: 'Пошук',
+    searchPlaceholder: 'Назва, опис, організація або ідентифікатор',
+    fStatus: 'Статус',
+    fDonor: 'Донор',
+    fEnd: 'Завершується',
+    fSort: 'Порядок',
+    fAll: 'з дотичними',
+    any: 'усі',
+    anyTime: 'будь-коли',
+    within12: 'протягом 12 місяців',
+    byEndOf: y => `до кінця ${y}`,
+    sortEndDesc: 'спершу пізніше завершення',
+    sortEndAsc: 'спершу раніше завершення',
+    sortSum: 'за сумою зобов\'язань',
+    implementerChip: 'виконавець',
+    clear: 'прибрати фільтр',
+    loading: 'Завантажую дані…',
+    failed: 'Не вдалося завантажити дані. Локально спершу виконайте: dotnet run --project src/UkraineDigitalAid -- fetch, потім export site.',
+    nothing: 'Нічого не знайдено. Спробуйте інше слово або приберіть фільтри.',
+    found: (n, shown) => shown < n ? `Знайдено ${num(n)}, показано ${num(shown)}` : `Знайдено: ${num(n)}`,
+    more: n => `Показати ще ${n}`,
+    status: { 1: 'у підготовці', 2: 'у реалізації', 3: 'завершується', 4: 'закрито', 5: 'скасовано', 6: 'призупинено' },
+    noImplementer: 'виконавця не вказано',
+    hiddenImplementer: n => n === 1 ? 'назву виконавця приховано' : `${n} виконавців без назви`,
+    andMore: n => `і ще ${n}`,
+    commitment: 'зобов\'язання',
+    spend: 'виплати',
+    noMoney: 'суми не вказано',
+    ukraineShare: p => `Україна ${p}% від суми`,
+    ukraineUnknown: 'частку України не вказано',
+    ictShare: p => `ІКТ ${p}% за секторами`,
+    basis: { sector: 'сектор', title: 'у назві', description: 'лише в описі' },
+    direct: 'пряма',
+    tangential: 'дотична',
+    partOf: 'частина програми, яка теж є в переліку',
+    hasParts: 'програма: її частини в переліку окремо, у підсумках не рахується',
+    description: 'Опис',
+    million: 'млн',
+    thousand: 'тис.',
+    methodTitle: 'Як це зібрано',
+    mSelectTitle: 'Що вважається цифровим проєктом',
+    mSelect: `<p>Це евристика. Запис потрапляє до переліку, якщо виконується хоча б одне:</p>
+      <ul><li>серед секторів DAC є 22040 (ІКТ), 22010 (політика у сфері зв'язку) або 22020 (телекомунікації); 22030 (радіо, ТБ, друк) не береться;</li>
+      <li>у назві є одне зі слів нижче;</li>
+      <li>слово є тільки в описі: це слабший сигнал.</li></ul>
+      <p><b>Прямі</b> записи: частка ІКТ-секторів від 20% або слово в назві. Решта <b>дотичні</b>, вони показуються, якщо поставити позначку «з дотичними». Результат ручної перевірки відбору наведено в <a href="https://github.com/maksym-garkusha/ukraine-digital-aid#readme">README</a>.</p>
+      <p>Слова шукаються без урахування регістру й тільки цілими словами; IT лише великими літерами, українські основи на початку слова:</p>`,
+    mMoneyTitle: 'Як читати суми',
+    mMoney: `<p>Суми d-portal перераховує в долари США. Вони стосуються всієї активності, а не її цифрової частини і не тільки України. Якщо Україна лише один з отримувачів або ІКТ лише частина секторів, ці частки показано поруч із сумою; сторінка їх не множить.</p>
+      <p>У таблиці донорів суми рахуються тільки за записами, де Україна єдиний отримувач. Деякі донори публікують і програму, і її частини окремими записами; у підсумках тоді рахуються тільки частини.</p>`,
+    mLimitsTitle: 'Чого ці дані не показують',
+    mLimits: `<ul><li>Дані подають самі донори, з різною повнотою й затримкою. Статус «у реалізації» іноді лишається після дати завершення.</li>
+      <li>Не всі донори публікують в IATI, і не всі проєкти мають сектори чи виконавців.</li>
+      <li>Регіональні програми на кілька країн мають одну суму на всіх.</li>
+      <li>Частина донорів (зокрема USAID) приховує назви й виконавців за власними правилами.</li>
+      <li>Деякі донори публікують одну програму кількома записами, наприклад за роками, тому кількість записів не дорівнює кількості програм.</li></ul>`,
+    mSourceTitle: 'Джерело і ліцензія',
+    mSource: `<p>Дані: <a href="https://d-portal.org/">d-portal</a>, відкритий сервіс поверх реєстру <a href="https://iatistandard.org/">IATI</a>. Записи публікують самі організації. За <a href="https://web-terms.iatistandard.org/en/latest/copyright/">правилами IATI</a> дані належать організації, яка їх опублікувала, і поширюються за відкритою ліцензією, вказаною для неї в реєстрі IATI. Код d-portal відкритий під ліцензією MIT.</p>
+      <p>Код цього проєкту: MIT. Контактні дані з записів не читаються і не зберігаються.</p>`,
+    footer: 'Незалежний навчальний проєкт на відкритих даних IATI. Не пов\'язаний з державними органами чи донорами і не є офіційною статистикою.',
+    author: 'Автор: <a href="https://github.com/maksym-garkusha">Максим Гаркуша</a>.'
+  },
+  en: {
+    pageTitle: 'Who funds Ukraine\'s digital transformation: donor projects from IATI',
+    mark: '/ IATI open data',
+    code: 'Code on GitHub',
+    title: 'Who funds Ukraine\'s digital transformation',
+    lead: 'Donors publish their projects in the open IATI standard, but each one separately. This page brings together activities with Ukraine as a recipient that deal with digital transformation: donor, implementers, amounts, dates and status in one list.',
+    snapshot: d => `d-portal data as of ${d}. Updated weekly.`,
+    disclaimer: 'An independent learning project built on IATI open data. The data is published by the donors themselves and is only as complete as they make it. This is not official statistics, and the project is not affiliated with any government body or donor.',
+    repo: 'Repository',
+    methodLink: 'How records are selected',
+    figDirect: 'activities directly about digital transformation',
+    figAll: 'activities including related ones',
+    figActive: 'currently in implementation',
+    figEnding: 'in implementation, ending within 12 months',
+    figDonors: 'donors publishing them',
+    figHint: 'Programmes whose parts are listed separately are not counted twice.',
+    donorsTitle: 'Donors',
+    donorsNote: 'A donor here is the organisation that published the record in IATI. Amounts are in US dollars for the whole activity, counted only for records where Ukraine is the sole recipient. Click a name to filter the list.',
+    colDonor: 'Donor',
+    colActivities: 'Activities: all / in implementation',
+    colCommitment: 'Commitments*',
+    colSpend: 'Disbursements*',
+    wholeNote: (n, total) => `* for ${n} of ${total} records where Ukraine is 100%`,
+    implTitle: 'Implementers',
+    implNote: 'Organisations listed with the Implementing role. Names are as the donors give them, grouped by IATI identifier where there is one. Click to filter the list.',
+    colImplementer: 'Implementer',
+    colCount: 'Activities',
+    colWithDonors: 'With donors',
+    showAll: n => `Show all (${n})`,
+    showFewer: 'Show fewer',
+    listTitle: 'Activities',
+    listNote: 'Titles and descriptions are in the donor\'s language. The title links to the record on d-portal. Both programmes and their parts are listed, so there are more records here than in the totals above.',
+    searchLabel: 'Search',
+    searchPlaceholder: 'Title, description, organisation or identifier',
+    fStatus: 'Status',
+    fDonor: 'Donor',
+    fEnd: 'Ends',
+    fSort: 'Order',
+    fAll: 'include related',
+    any: 'any',
+    anyTime: 'any time',
+    within12: 'within 12 months',
+    byEndOf: y => `by the end of ${y}`,
+    sortEndDesc: 'latest end date first',
+    sortEndAsc: 'earliest end date first',
+    sortSum: 'by commitment',
+    implementerChip: 'implementer',
+    clear: 'remove filter',
+    loading: 'Loading data…',
+    failed: 'Could not load the data. To run locally, first do: dotnet run --project src/UkraineDigitalAid -- fetch, then export site.',
+    nothing: 'Nothing found. Try another word or remove some filters.',
+    found: (n, shown) => shown < n ? `Found ${num(n)}, showing ${num(shown)}` : `Found: ${num(n)}`,
+    more: n => `Show ${n} more`,
+    status: { 1: 'Pipeline', 2: 'Implementation', 3: 'Finalisation', 4: 'Closed', 5: 'Cancelled', 6: 'Suspended' },
+    noImplementer: 'no implementer given',
+    hiddenImplementer: n => n === 1 ? 'implementer name withheld' : `${n} implementers without a name`,
+    andMore: n => `and ${n} more`,
+    commitment: 'commitments',
+    spend: 'disbursements',
+    noMoney: 'no amounts given',
+    ukraineShare: p => `Ukraine ${p}% of the total`,
+    ukraineUnknown: 'Ukraine\'s share not given',
+    ictShare: p => `ICT ${p}% by sector`,
+    basis: { sector: 'sector', title: 'in title', description: 'description only' },
+    direct: 'direct',
+    tangential: 'related',
+    partOf: 'part of a programme that is also listed',
+    hasParts: 'programme: its parts are listed separately and not counted twice',
+    description: 'Description',
+    million: 'M',
+    thousand: 'K',
+    methodTitle: 'How this is put together',
+    mSelectTitle: 'What counts as a digital project',
+    mSelect: `<p>This is a heuristic. A record is included if at least one of these holds:</p>
+      <ul><li>its DAC sectors include 22040 (ICT), 22010 (communications policy) or 22020 (telecommunications); 22030 (radio, TV, print media) is not included;</li>
+      <li>its title contains one of the words below;</li>
+      <li>the word appears only in the description, which is a weaker signal.</li></ul>
+      <p><b>Direct</b> records have an ICT sector share of at least 20% or a keyword in the title. The rest are <b>related</b> and appear when "include related" is ticked. The results of a manual check of the selection are in the <a href="https://github.com/maksym-garkusha/ukraine-digital-aid/blob/main/README.en.md">README</a>.</p>
+      <p>Words are matched regardless of case and only as whole words; IT only in capitals, Ukrainian stems at the start of a word:</p>`,
+    mMoneyTitle: 'Reading the amounts',
+    mMoney: `<p>d-portal converts amounts into US dollars. They cover the whole activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, those shares are shown next to the amount; the page does not multiply them.</p>
+      <p>In the donor table, amounts are counted only for records where Ukraine is the sole recipient. Some donors publish a programme and its parts as separate records; totals then count only the parts.</p>`,
+    mLimitsTitle: 'What this data does not show',
+    mLimits: `<ul><li>Donors report their own data, with varying completeness and delay. The status "Implementation" sometimes stays after the end date.</li>
+      <li>Not every donor publishes to IATI, and not every project lists sectors or implementers.</li>
+      <li>Regional programmes covering several countries carry one amount for all of them.</li>
+      <li>Some donors (USAID among them) withhold titles and implementers under their own rules.</li>
+      <li>Some donors publish one programme as several records, for example one per year, so the number of records is not the number of programmes.</li></ul>`,
+    mSourceTitle: 'Source and licence',
+    mSource: `<p>Data: <a href="https://d-portal.org/">d-portal</a>, an open service on top of the <a href="https://iatistandard.org/">IATI</a> registry. Records are published by the organisations themselves. Under the <a href="https://web-terms.iatistandard.org/en/latest/copyright/">IATI terms</a>, the data belongs to the organisation that published it and is released under the open licence listed for it on the IATI Registry. The d-portal code is open source under the MIT licence.</p>
+      <p>This project's code: MIT. Contact details in the records are neither read nor stored.</p>`,
+    footer: 'An independent learning project on IATI open data. Not affiliated with any government body or donor, and not official statistics.',
+    author: 'Author: <a href="https://github.com/maksym-garkusha">Maksym Harkusha</a>.'
+  }
+};
+
+const PAGE = 50, TABLE_ROWS = 15;
+const $ = id => document.getElementById(id);
+const input = $('q'), statusLine = $('status'), results = $('results');
+
+let data = null, failed = false, lang = 'uk', T = TEXT.uk;
+let state = {}, shown = PAGE, donorsOpen = false, implOpen = false;
+const donorNames = {};
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+}
+
+function locale() { return lang === 'uk' ? 'uk-UA' : 'en-GB'; }
+
+function num(n) { return Number(n || 0).toLocaleString(locale()); }
+
+function pct(p) { return Number(p).toLocaleString(locale(), { maximumFractionDigits: 2 }); }
+
+function usd(value) {
+  if (!value) return '0';
+  const abs = Math.abs(value);
+  const fmt = (v, digits) => v.toLocaleString(locale(), { maximumFractionDigits: digits });
+  if (abs >= 1e6) return `$${fmt(value / 1e6, abs >= 1e8 ? 0 : 1)}${lang === 'uk' ? ' ' : ''}${T.million}`;
+  if (abs >= 1e3) return `$${fmt(value / 1e3, 0)}${lang === 'uk' ? ' ' : ''}${T.thousand}`;
+  return `$${fmt(value, 0)}`;
+}
+
+function day(iso) {
+  if (!iso) return '';
+  if (lang === 'uk') return iso.split('-').reverse().join('.');
+  return new Date(iso + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+function years(a) {
+  const from = a.start ? a.start.slice(0, 4) : '…', to = a.end ? a.end.slice(0, 4) : '…';
+  return from === to ? from : `${from}–${to}`;
+}
+
+// стан фільтрів живе в адресі після #, щоб посиланням можна було поділитися
+function readState() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  return {
+    lang: p.get('lang'), q: p.get('q') || '', status: p.get('status') || '', donor: p.get('donor') || '',
+    impl: p.get('impl') || '', end: p.get('end') || '', sort: p.get('sort') || 'end', all: p.get('all') === '1'
+  };
+}
+
+function writeState() {
+  const p = new URLSearchParams();
+  if (lang !== defaultLang()) p.set('lang', lang);
+  if (state.q) p.set('q', state.q);
+  for (const key of ['status', 'donor', 'impl', 'end']) if (state[key]) p.set(key, state[key]);
+  if (state.sort !== 'end') p.set('sort', state.sort);
+  if (state.all) p.set('all', '1');
+  const hash = p.toString();
+  history.replaceState(null, '', hash ? '#' + hash : location.pathname + location.search);
+}
+
+function defaultLang() {
+  return (navigator.language || 'uk').toLowerCase().startsWith('uk') ? 'uk' : 'en';
+}
+
+function applyLanguage() {
+  T = TEXT[lang];
+  document.documentElement.lang = lang;
+  document.title = T.pageTitle;
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const value = T[el.dataset.t];
+    if (typeof value !== 'string') return;
+    if ('html' in el.dataset) el.innerHTML = value; else el.textContent = value;
+  });
+  document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  input.placeholder = T.searchPlaceholder;
+  if (!data) statusLine.textContent = failed ? T.failed : T.loading;
+}
+
+function summary() { return data.summary[state.all ? 'all' : 'direct']; }
+
+function figures() {
+  const s = summary();
+  const items = [
+    [s.counted, state.all ? T.figAll : T.figDirect, null],
+    [s.active, T.figActive, { status: '2', end: '' }],
+    [s.endingSoon, T.figEnding, { status: '2', end: '12m' }],
+    [s.donors.length, T.figDonors, null]
+  ];
+  $('figures').innerHTML = items.map(([n, label, filter], i) => filter
+    ? `<button type="button" class="figure" data-i="${i}"><b>${num(n)}</b><span>${esc(label)}</span></button>`
+    : `<div class="figure"><b>${num(n)}</b><span>${esc(label)}</span></div>`).join('');
+  $('figures').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    Object.assign(state, items[b.dataset.i][2]);
+    refreshList(true);
+  }));
+  $('figures').title = T.figHint;
+}
+
+function donorTable() {
+  const s = summary();
+  const rows = donorsOpen ? s.donors : s.donors.slice(0, TABLE_ROWS);
+  const whole = s.donors.reduce((sum, d) => sum + d.wholeCount, 0);
+  $('donors').innerHTML = rows.map(d =>
+    `<tr${state.donor === d.id ? ' class="chosen"' : ''}><td><button type="button" class="pick" data-donor="${esc(d.id)}">${esc(d.name)}</button></td>` +
+    `<td class="num" data-label="${esc(T.colActivities)}">${num(d.total)} / ${num(d.active)}</td>` +
+    `<td class="num" data-label="${esc(T.colCommitment)}">${usd(d.wholeCommitment)}</td>` +
+    `<td class="num" data-label="${esc(T.colSpend)}">${usd(d.wholeSpend)}</td></tr>`
+  ).join('') + `<tr><td colspan="4"><span class="small">${esc(T.wholeNote(num(whole), num(s.counted)))}</span></td></tr>`;
+  $('donors').querySelectorAll('[data-donor]').forEach(b => b.addEventListener('click', () => {
+    state.donor = state.donor === b.dataset.donor ? '' : b.dataset.donor;
+    refreshList(true);
+  }));
+  toggleButton($('donors-more'), s.donors.length, donorsOpen);
+}
+
+function implementerTable() {
+  const s = summary();
+  const rows = implOpen ? s.implementers : s.implementers.slice(0, TABLE_ROWS);
+  $('implementers').innerHTML = rows.map(i =>
+    `<tr${state.impl === i.id ? ' class="chosen"' : ''}><td><button type="button" class="pick" data-impl="${esc(i.id)}">${esc(i.name)}</button></td>` +
+    `<td class="num" data-label="${esc(T.colCount)}">${num(i.activities)}</td>` +
+    `<td data-label="${esc(T.colWithDonors)}">${esc(i.donors.map(id => donorNames[id] || id).join('; '))}</td></tr>`
+  ).join('');
+  $('implementers').querySelectorAll('[data-impl]').forEach(b => b.addEventListener('click', () => {
+    state.impl = state.impl === b.dataset.impl ? '' : b.dataset.impl;
+    refreshList(true);
+  }));
+  toggleButton($('implementers-more'), s.implementers.length, implOpen);
+}
+
+function toggleButton(button, total, open) {
+  button.hidden = total <= TABLE_ROWS;
+  button.textContent = open ? T.showFewer : T.showAll(num(total));
+}
+
+function fillFilters() {
+  const options = (select, items, value) => {
+    select.innerHTML = items.map(([v, label]) => `<option value="${esc(v)}">${esc(label)}</option>`).join('');
+    select.value = items.some(([v]) => v === value) ? value : '';
+  };
+  options($('f-status'), [['', T.any], ...Object.entries(T.status)], state.status);
+  options($('f-donor'), [['', T.any], ...data.donors.map(d => [d.id, d.name])], state.donor);
+  const year = Number(data.snapshot.slice(0, 4));
+  options($('f-end'), [['', T.anyTime], ['12m', T.within12], ...[0, 1, 2, 3, 4].map(k => [String(year + k), T.byEndOf(year + k)])], state.end);
+  options($('f-sort'), [['end', T.sortEndDesc], ['end-asc', T.sortEndAsc], ['sum', T.sortSum]], state.sort);
+  $('f-sort').value = state.sort;
+  $('f-all').checked = state.all;
+}
+
+function chips() {
+  const list = [];
+  if (state.impl) list.push(['impl', `${T.implementerChip}: <b>${esc(data.organisations[state.impl] || state.impl)}</b>`]);
+  $('chips').innerHTML = list.map(([key, html]) =>
+    `<button type="button" class="chip" data-clear="${key}" aria-label="${esc(T.clear)}">${html} <span aria-hidden="true">×</span></button>`).join('');
+  $('chips').querySelectorAll('[data-clear]').forEach(b => b.addEventListener('click', () => {
+    state[b.dataset.clear] = '';
+    refreshList(false);
+  }));
+}
+
+function haystack(a) {
+  if (!a._text) {
+    const orgs = a.implementers.map(k => data.organisations[k] || '').concat(a.otherImplementers, a.funders, [donorNames[a.donor] || '']);
+    a._text = [a.id, a.title, a.description || '', ...orgs].join(' \n ').toLowerCase();
+  }
+  return a._text;
+}
+
+function matches(a, words, endLimit) {
+  if (!state.all && !a.direct) return false;
+  if (state.status && String(a.status) !== state.status) return false;
+  if (state.donor && a.donor !== state.donor) return false;
+  if (state.impl && !a.implementers.includes(state.impl)) return false;
+  if (endLimit && !(a.end && a.end >= data.snapshot && a.end <= endLimit)) return false;
+  const text = words.length ? haystack(a) : '';
+  return words.every(w => text.includes(w));
+}
+
+function endLimit() {
+  if (!state.end) return null;
+  if (state.end === '12m') {
+    const d = new Date(data.snapshot + 'T00:00:00Z');
+    d.setUTCFullYear(d.getUTCFullYear() + 1);
+    return d.toISOString().slice(0, 10);
+  }
+  return `${state.end}-12-31`;
+}
+
+function filtered() {
+  const words = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const limit = endLimit();
+  const list = data.activities.filter(a => matches(a, words, limit));
+  const byEnd = (a, b) => (a.end || '').localeCompare(b.end || '');
+  if (state.sort === 'sum') list.sort((a, b) => (b.commitment || 0) - (a.commitment || 0));
+  else if (state.sort === 'end-asc') list.sort((a, b) => (!a.end) - (!b.end) || byEnd(a, b));
+  else list.sort((a, b) => byEnd(b, a));
+  return list;
+}
+
+function card(a) {
+  const names = a.implementers.map(k => data.organisations[k]).filter(Boolean).concat(a.otherImplementers);
+  let who = names.slice(0, 3).join('; ');
+  if (names.length > 3) who += ` ${T.andMore(names.length - 3)}`;
+  if (a.hiddenImplementers) who += (who ? '; ' : '') + T.hiddenImplementer(a.hiddenImplementers);
+  if (!who) who = T.noImplementer;
+  const meta = [donorNames[a.donor] || a.donor, who, years(a), T.status[a.status] || ''].filter(Boolean);
+
+  const money = [];
+  if (a.commitment) money.push(`${T.commitment} ${usd(a.commitment)}`);
+  if (a.spend) money.push(`${T.spend} ${usd(a.spend)}`);
+  const shares = [];
+  if (a.ukraine == null) shares.push(T.ukraineUnknown);
+  else if (a.ukraine < 99.995) shares.push(T.ukraineShare(pct(a.ukraine)));
+  if (a.ict > 0 && a.ict < 100) shares.push(T.ictShare(pct(a.ict)));
+  const moneyLine = (money.length ? money.join(' · ') : T.noMoney) +
+    (shares.length ? ` <span class="share">(${esc(shares.join(', '))})</span>` : '');
+
+  const why = `${T.basis[a.basis]}: ${a.why.filter((_, i) => i < 4).join(', ')}`;
+  const tags = [`<span class="tag${a.direct ? ' direct' : ''}">${esc(a.direct ? T.direct : T.tangential)} · ${esc(why)}</span>`];
+  if (a.parent) tags.push(`<span class="tag part">${esc(T.partOf)}</span>`);
+  if (a.hasParts) tags.push(`<span class="tag part">${esc(T.hasParts)}</span>`);
+
+  const url = 'https://d-portal.org/ctrack.html#view=act&aid=' + encodeURIComponent(a.id);
+  return `<article class="act"><h3><a href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a></h3>` +
+    `<p class="meta">${esc(meta.join(' · '))}</p>` +
+    `<p class="money">${moneyLine}</p>` +
+    `<p>${tags.join('')} <span class="tag code">${esc(a.id)}</span></p>` +
+    (a.description ? `<details><summary>${esc(T.description)}</summary><p>${esc(a.description)}</p></details>` : '') +
+    `</article>`;
+}
+
+function showList() {
+  const list = filtered();
+  if (!list.length) {
+    results.innerHTML = '';
+    statusLine.textContent = T.nothing;
+    $('results-more').hidden = true;
+    return;
+  }
+  const visible = list.slice(0, shown);
+  statusLine.textContent = T.found(list.length, visible.length);
+  results.innerHTML = visible.map(card).join('');
+  const rest = list.length - visible.length;
+  $('results-more').hidden = rest <= 0;
+  $('results-more').textContent = T.more(num(Math.min(PAGE, rest)));
+}
+
+function refreshList(scroll) {
+  shown = PAGE;
+  writeState();
+  render();
+  if (scroll) $('list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function render() {
+  if (!data) return;
+  figures();
+  donorTable();
+  implementerTable();
+  fillFilters();
+  chips();
+  showList();
+  $('snapshot').textContent = T.snapshot(day(data.snapshot));
+  $('keywords').innerHTML = data.keywords.map(k => {
+    const text = k.kind === 'Stem' ? k.text + '…' : k.text;
+    return `<span>${esc(k.plural ? `${text} / ${k.plural}` : text)}</span>`;
+  }).join('');
+}
+
+function setLanguage(next) {
+  lang = next;
+  applyLanguage();
+  writeState();
+  render();
+}
+
+state = readState();
+lang = state.lang === 'en' || state.lang === 'uk' ? state.lang : defaultLang();
+applyLanguage();
+
+document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => setLanguage(b.dataset.lang)));
+
+let timer;
+input.addEventListener('input', () => {
+  clearTimeout(timer);
+  timer = setTimeout(() => { state.q = input.value.trim(); refreshList(false); }, 150);
+});
+for (const [id, key] of [['f-status', 'status'], ['f-donor', 'donor'], ['f-end', 'end'], ['f-sort', 'sort']])
+  $(id).addEventListener('change', e => { state[key] = e.target.value; refreshList(false); });
+$('f-all').addEventListener('change', e => { state.all = e.target.checked; refreshList(false); });
+$('results-more').addEventListener('click', () => { shown += PAGE; showList(); });
+$('donors-more').addEventListener('click', () => { donorsOpen = !donorsOpen; donorTable(); });
+$('implementers-more').addEventListener('click', () => { implOpen = !implOpen; implementerTable(); });
+
+fetch('data.json')
+  .then(response => { if (!response.ok) throw new Error(response.status); return response.json(); })
+  .then(loaded => {
+    data = loaded;
+    data.donors.forEach(d => { donorNames[d.id] = d.name; });
+    input.disabled = false;
+    input.value = state.q;
+    render();
+  })
+  .catch(() => { failed = true; statusLine.textContent = T.failed; });
+</script>
+</body>
+</html>
