@@ -1,0 +1,57 @@
+name: site
+
+# Щопонеділка забирає свіжі записи з d-portal і перезбирає сторінку.
+# Кеш активностей переживає запуски, тому повні записи качаються тільки для нових і змінених.
+# Якщо d-portal недоступний або зібрано менше половини від минулого разу, fetch падає,
+# кеш не зберігається, і на Pages лишається попередня сторінка.
+on:
+  schedule:
+    - cron: '41 4 * * 1'
+  push:
+    branches: [main]
+    paths: ['src/**', 'site/**', '.github/workflows/site.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      # ключ щоразу новий, а restore-keys підтягує найсвіжіший попередній кеш
+      - uses: actions/cache@v6
+        with:
+          path: cache
+          key: activities-${{ github.run_id }}
+          restore-keys: activities-
+      - name: Fetch activities from d-portal
+        run: dotnet run -c Release --project src/UkraineDigitalAid -- fetch
+      - name: Export data for the page
+        run: dotnet run -c Release --no-build --project src/UkraineDigitalAid -- export site
+      - name: Build report
+        run: dotnet run -c Release --no-build --project src/UkraineDigitalAid -- report site/report.md
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
