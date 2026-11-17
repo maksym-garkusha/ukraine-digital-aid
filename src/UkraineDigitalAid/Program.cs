@@ -1,3 +1,4 @@
+using System.Text.Json;
 using UkraineDigitalAid.Export;
 using UkraineDigitalAid.Iati;
 using UkraineDigitalAid.Report;
@@ -30,11 +31,12 @@ static async Task<int> Fetch(ActivityStore store, CancellationToken ct)
     using var http = new HttpClient { BaseAddress = new Uri("https://d-portal.org/"), Timeout = TimeSpan.FromMinutes(3) };
     http.DefaultRequestHeaders.UserAgent.ParseAdd("ukraine-digital-aid/1.0 (+https://github.com/maksym-garkusha/ukraine-digital-aid)");
 
+    bool haveCodelists = Codelists.Names.All(name => File.Exists(Path.Combine(store.CodelistsDirectory, name + ".json")));
     try
     {
         await Codelists.DownloadAsync(http, store.CodelistsDirectory, ct);
     }
-    catch (HttpRequestException e) when (Directory.Exists(store.CodelistsDirectory))
+    catch (Exception e) when (haveCodelists && IsNetworkFailure(e, ct))
     {
         Console.WriteLine($"Довідники IATI не оновлено, лишаються попередні: {e.Message}");
     }
@@ -45,9 +47,9 @@ static async Task<int> Fetch(ActivityStore store, CancellationToken ct)
     {
         collected = await collector.RunAsync(store.Load(), DateTime.UtcNow, ct);
     }
-    catch (HttpRequestException e)
+    catch (Exception e) when (IsNetworkFailure(e, ct) || e is JsonException)
     {
-        Console.Error.WriteLine($"d-portal недоступний: {e.Message}. Кеш не змінено.");
+        Console.Error.WriteLine($"d-portal недоступний або відповів не тим: {e.Message}. Кеш не змінено.");
         return 1;
     }
 
@@ -83,6 +85,10 @@ static async Task<int> Report(ActivityStore store, string path, CancellationToke
     Console.WriteLine($"Звіт записано в {path}");
     return 0;
 }
+
+// тайм-аут HttpClient приходить як TaskCanceledException без скасування з нашого боку
+static bool IsNetworkFailure(Exception e, CancellationToken ct) =>
+    e is HttpRequestException || (e is TaskCanceledException && !ct.IsCancellationRequested);
 
 static int NoCache(ActivityStore store)
 {

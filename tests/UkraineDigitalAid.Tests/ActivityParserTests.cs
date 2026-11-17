@@ -69,6 +69,14 @@ public class ActivityParserTests
     }
 
     [Fact]
+    public void English_with_a_region_tag_is_preferred_too()
+    {
+        Narrative[] titles = [new("uk", "Цифрові послуги"), new("en-gb", "Digital services")];
+
+        Assert.Equal("Digital services", Narratives.Preferred(titles));
+    }
+
+    [Fact]
     public void Narrative_without_language_takes_the_activity_language()
     {
         var record = Fixture.Json("""

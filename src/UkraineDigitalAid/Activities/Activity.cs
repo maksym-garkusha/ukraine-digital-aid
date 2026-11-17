@@ -53,7 +53,8 @@ public record Activity(
 
 public static class Narratives
 {
-    /// <summary>Англійський текст, якщо він є, інакше перший непорожній.</summary>
+    /// <summary>Англійський текст (en, en-gb), якщо він є, інакше перший непорожній.</summary>
     public static string? Preferred(IReadOnlyList<Narrative> narratives) =>
-        (narratives.FirstOrDefault(n => n.Lang == "en") ?? narratives.FirstOrDefault())?.Text;
+        (narratives.FirstOrDefault(n => n.Lang == "en" || n.Lang.StartsWith("en-", StringComparison.Ordinal))
+         ?? narratives.FirstOrDefault())?.Text;
 }

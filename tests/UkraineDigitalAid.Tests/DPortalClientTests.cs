@@ -11,6 +11,12 @@ public class DPortalClientTests
     private static string Rows(params string[] aids) =>
         "{\"rows\":[" + string.Join(',', aids.Select(a => $"{{\"aid\":\"{a}\"}}")) + "]}";
 
+    private static async Task<string> FirstAid(FakeHandler handler)
+    {
+        using var result = await Client(handler).QueryAsync([("from", "act")], CancellationToken.None);
+        return result.RootElement.GetProperty("rows")[0].GetProperty("aid").GetString()!;
+    }
+
     private static int Offset(Uri uri) => int.Parse(HttpUtility.ParseQueryString(uri.Query)["offset"]!);
 
     [Fact]
@@ -42,11 +48,9 @@ public class DPortalClientTests
     {
         var handler = new FakeHandler((_, n) => n < 3
             ? FakeHandler.Json("", HttpStatusCode.ServiceUnavailable)
-            : FakeHandler.Json("{\"rows\":[{\"count\":\"83\"}]}"));
+            : FakeHandler.Json(Rows("A-1")));
 
-        int count = await Client(handler).CountAsync([("from", "act")], CancellationToken.None);
-
-        Assert.Equal(83, count);
+        Assert.Equal("A-1", await FirstAid(handler));
         Assert.Equal(3, handler.Requests.Count);
     }
 
@@ -55,9 +59,10 @@ public class DPortalClientTests
     {
         var handler = new FakeHandler((_, n) => n == 1
             ? FakeHandler.Json("", HttpStatusCode.TooManyRequests)
-            : FakeHandler.Json("{\"rows\":[{\"count\":1}]}"));
+            : FakeHandler.Json(Rows("A-1")));
 
-        Assert.Equal(1, await Client(handler).CountAsync([("from", "act")], CancellationToken.None));
+        Assert.Equal("A-1", await FirstAid(handler));
+        Assert.Equal(2, handler.Requests.Count);
     }
 
     [Fact]
@@ -65,7 +70,7 @@ public class DPortalClientTests
     {
         var handler = new FakeHandler((_, _) => FakeHandler.Json("", HttpStatusCode.BadGateway));
 
-        await Assert.ThrowsAsync<HttpRequestException>(() => Client(handler).CountAsync([("from", "act")], CancellationToken.None));
+        await Assert.ThrowsAsync<HttpRequestException>(() => FirstAid(handler));
         Assert.Equal(4, handler.Requests.Count);
     }
 
@@ -74,7 +79,7 @@ public class DPortalClientTests
     {
         var handler = new FakeHandler((_, _) => FakeHandler.Json("", HttpStatusCode.BadRequest));
 
-        await Assert.ThrowsAsync<HttpRequestException>(() => Client(handler).CountAsync([("from", "act")], CancellationToken.None));
+        await Assert.ThrowsAsync<HttpRequestException>(() => FirstAid(handler));
         Assert.Single(handler.Requests);
     }
 
@@ -84,9 +89,9 @@ public class DPortalClientTests
         int calls = 0;
         var handler = new FakeHandler((_, _) => ++calls == 1
             ? throw new HttpRequestException("connection reset")
-            : FakeHandler.Json("{\"rows\":[{\"count\":\"5\"}]}"));
+            : FakeHandler.Json(Rows("A-5")));
 
-        Assert.Equal(5, await Client(handler).CountAsync([("from", "act")], CancellationToken.None));
+        Assert.Equal("A-5", await FirstAid(handler));
     }
 
     [Fact]

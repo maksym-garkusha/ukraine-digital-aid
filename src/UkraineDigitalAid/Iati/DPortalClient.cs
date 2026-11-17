@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,7 +30,7 @@ public class DPortalClient(HttpClient http, TimeSpan pause, TimeSpan retryDelay)
         {
             var query = filter.Concat([
                 ("select", select), ("orderby", "aid"),
-                ("limit", pageSize.ToString()), ("offset", offset.ToString())]).ToList();
+                ("limit", pageSize.ToString(CultureInfo.InvariantCulture)), ("offset", offset.ToString(CultureInfo.InvariantCulture))]).ToList();
             using var page = await QueryAsync(query, ct);
             var rows = page.RootElement.GetProperty("rows");
             foreach (var row in rows.EnumerateArray())
@@ -37,14 +38,6 @@ public class DPortalClient(HttpClient http, TimeSpan pause, TimeSpan retryDelay)
             if (rows.GetArrayLength() < pageSize)
                 yield break;
         }
-    }
-
-    public async Task<int> CountAsync(IReadOnlyList<(string Key, string Value)> filter, CancellationToken ct)
-    {
-        using var result = await QueryAsync([.. filter, ("select", "count")], ct);
-        // count приходить рядком: {"rows":[{"count":"23857"}]}
-        var value = result.RootElement.GetProperty("rows")[0].GetProperty("count");
-        return value.ValueKind == JsonValueKind.String ? int.Parse(value.GetString()!) : value.GetInt32();
     }
 
     /// <summary>

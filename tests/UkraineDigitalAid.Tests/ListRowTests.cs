@@ -36,4 +36,23 @@ public class ListRowTests
 
         Assert.NotEqual(row.Fingerprint(), (row with { Spend = 2300000m }).Fingerprint());
     }
+
+    [Theory]
+    [InlineData("""{"aid":"X-1","commitment":"n/a"}""")]
+    [InlineData("""{"title":"No identifier"}""")]
+    [InlineData("""{"aid":"","title":"Empty identifier"}""")]
+    public void Unreadable_row_is_skipped_not_thrown(string json)
+    {
+        using var document = JsonDocument.Parse(json);
+
+        Assert.Null(ListRow.TryRead(document.RootElement));
+    }
+
+    [Fact]
+    public void Readable_row_is_read()
+    {
+        using var document = JsonDocument.Parse(Row);
+
+        Assert.Equal("NL-KVK-41158230-SHONUA0003", ListRow.TryRead(document.RootElement)!.Aid);
+    }
 }

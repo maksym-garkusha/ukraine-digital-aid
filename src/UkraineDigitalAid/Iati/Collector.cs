@@ -26,12 +26,15 @@ public class Collector(DPortalClient portal, TextWriter log)
         var clock = Stopwatch.StartNew();
 
         var rows = new Dictionary<string, ListRow>();
+        int unreadable = 0;
         await foreach (var element in portal.ListAsync(Ukraine, ListRow.Columns, 2000, ct))
         {
-            var row = element.Deserialize<ListRow>()!;
-            rows.TryAdd(row.Aid, row);
+            if (ListRow.TryRead(element) is { } row)
+                rows.TryAdd(row.Aid, row);
+            else
+                unreadable++;
         }
-        log.WriteLine($"У списку d-portal {rows.Count} активностей з отримувачем Україна");
+        log.WriteLine($"У списку d-portal {rows.Count} активностей з отримувачем Україна, нерозбірних рядків: {unreadable}");
 
         var sources = new Dictionary<string, int>();
         var candidates = new HashSet<string>();
@@ -81,6 +84,7 @@ public class Collector(DPortalClient portal, TextWriter log)
                             Interlocked.Increment(ref notFound);
                     }
                     catch (Exception e) when (e is HttpRequestException or TaskCanceledException or JsonException or FormatException
+                                                  or KeyNotFoundException or InvalidOperationException
                                               && !token.IsCancellationRequested)
                     {
                         Interlocked.Increment(ref failed);

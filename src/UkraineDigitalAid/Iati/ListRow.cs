@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace UkraineDigitalAid.Iati;
@@ -21,6 +22,22 @@ public record ListRow(
 {
     public const string Columns =
         "aid,title,reporting,reporting_ref,status_code,day_start,day_end,commitment,spend,country_percent";
+
+    /// <summary>
+    /// Рядок списку або null, якщо в ньому немає aid чи поле має несподіваний тип:
+    /// один такий рядок не повинен зупиняти весь збір.
+    /// </summary>
+    public static ListRow? TryRead(JsonElement element)
+    {
+        try
+        {
+            return element.Deserialize<ListRow>() is { Aid: { Length: > 0 } } row ? row : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
 
     public DateOnly? Start => Days.ToDate(DayStart);
 
