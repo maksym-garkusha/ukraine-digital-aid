@@ -222,6 +222,18 @@ public class ActivityParserTests
     }
 
     [Fact]
+    public void Description_repeated_under_another_type_with_an_email_is_kept_once()
+    {
+        var record = Fixture.Json("""
+            {"/iati-identifier":"X-1","/description":[
+              {"@type":"1","/narrative":[{"":"Write to office@example.org","@xml:lang":"en"}]},
+              {"@type":"2","/narrative":[{"":"Write to office@example.org","@xml:lang":"en"}]}]}
+            """);
+
+        Assert.Equal(["Write to [e-mail]"], ActivityParser.Parse(record).Descriptions.Select(d => d.Text));
+    }
+
+    [Fact]
     public void Path_finds_value_whether_xson_flattens_it_or_not()
     {
         var flat = Fixture.Json("""{"/reporting-org@ref":"44000"}""");

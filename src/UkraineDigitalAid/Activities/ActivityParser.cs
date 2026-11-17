@@ -53,8 +53,11 @@ public static partial class ActivityParser
         var result = new List<Narrative>();
         foreach (var item in items)
             foreach (var n in Xson.Narratives(item, "/narrative", Xson.Lang(item) ?? lang))
-                if (!result.Any(r => r.Text == n.Text))
-                    result.Add(n with { Text = HideEmails(n.Text) });
+            {
+                string text = HideEmails(n.Text);
+                if (!result.Any(r => r.Text == text))
+                    result.Add(n with { Text = text });
+            }
         return result;
     }
 
