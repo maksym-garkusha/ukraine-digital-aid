@@ -144,4 +144,17 @@ public class SiteExportTests
 
         Assert.Equal(["22040"], data.Sectors.Keys);
     }
+
+    [Fact]
+    public void Energy_theme_is_written_only_for_energy_records()
+    {
+        var data = Export(
+            Build.Activity(id: "DE-1-1", title: "Digital metering for the electricity transmission grid", sectors: [new SectorShare("23630", 100)]),
+            Build.Activity(id: "SE-0-2", title: "Digital skills for teachers"));
+
+        var json = JsonSerializer.SerializeToElement(data, ActivityStore.Json).GetProperty("activities");
+        var energy = json.EnumerateArray().Single(a => a.GetProperty("id").GetString() == "DE-1-1").GetProperty("energy");
+        Assert.False(energy.GetProperty("worthChecking").GetBoolean());
+        Assert.False(json.EnumerateArray().Single(a => a.GetProperty("id").GetString() == "SE-0-2").TryGetProperty("energy", out _));
+    }
 }

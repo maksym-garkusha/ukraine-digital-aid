@@ -17,6 +17,7 @@ namespace UkraineDigitalAid.Export;
 /// <param name="HasParts">Частини цієї програми є в переліку окремо, у підсумках вона не рахується.</param>
 /// <param name="HasDirectParts">Те саме серед самих прямих записів: підсумки прямих рахуються окремо,
 /// і програма, чиї частини лише дотичні, у них рахується.</param>
+/// <param name="Energy">Тема «енергетика», null для решти записів.</param>
 public record SiteActivity(
     string Id, string Title, bool TitleWithheld, string? Description, string Donor,
     IReadOnlyList<string> Funders, IReadOnlyList<string> Implementers,
@@ -24,11 +25,18 @@ public record SiteActivity(
     DateOnly? Start, DateOnly? End, int? Status,
     decimal? Commitment, decimal? Spend, double? Ukraine, double Ict,
     string Basis, IReadOnlyList<string> Why, bool Direct, bool Military,
-    string? Parent, bool HasParts, bool HasDirectParts);
+    string? Parent, bool HasParts, bool HasDirectParts, EnergyMatch? Energy);
 
 public record SiteDonor(string Id, string Name);
 
-public record SiteKeyword(string Text, string? Plural, KeywordKind Kind);
+public record SiteKeyword(string Text, string? Plural, KeywordKind Kind)
+{
+    public static List<SiteKeyword> From(IEnumerable<Keyword> keywords) =>
+        keywords.Select(k => new SiteKeyword(k.Text, k.Plural, k.Kind)).ToList();
+}
+
+/// <summary>Слова теми «енергетика» для розділу методики: окремо для назв і для описів.</summary>
+public record SiteEnergyWords(IReadOnlyList<SiteKeyword> Title, IReadOnlyList<SiteKeyword> Description);
 
 public record SiteData(
     DateTime GeneratedAt,
@@ -40,6 +48,7 @@ public record SiteData(
     IReadOnlyDictionary<string, string> Organisations,
     IReadOnlyDictionary<string, Summary> Summary,
     IReadOnlyList<SiteKeyword> Keywords,
+    SiteEnergyWords EnergyWords,
     IReadOnlyList<SiteActivity> Activities);
 
 /// <summary>
@@ -85,7 +94,8 @@ public static class SiteExport
             now, today, run.Listed, run.Candidates,
             sectorCodes.Order().ToDictionary(c => c, c => codelists.Sectors.GetValueOrDefault(c, c)),
             donors, organisations, summary,
-            Selection.Keywords.All.Select(k => new SiteKeyword(k.Text, k.Plural, k.Kind)).ToList(),
+            SiteKeyword.From(Selection.Keywords.All),
+            new SiteEnergyWords(SiteKeyword.From(EnergyRules.TitleWords), SiteKeyword.From(EnergyRules.DescriptionWords)),
             rows.OrderByDescending(r => r.End ?? DateOnly.MinValue).ThenBy(r => r.Id, StringComparer.Ordinal).ToList());
     }
 
@@ -126,7 +136,8 @@ public static class SiteExport
             s.Selection.Military,
             a.ParentId is { } parent && ids.Contains(parent) ? parent : null,
             parents.Contains(a.Id),
-            directParents.Contains(a.Id));
+            directParents.Contains(a.Id),
+            EnergyRules.Evaluate(a));
     }
 
     private static string? Shorten(string? text)
