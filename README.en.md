@@ -2,7 +2,7 @@
 
 [Українська версія](README.md)
 
-Which donors fund digital transformation in Ukraine, through whom, how much and until when. Data from the international IATI registry, brought together on one searchable page.
+Which donors fund digital transformation in Ukraine, through whom, how much and until when. Data from the international IATI registry, brought together on one searchable page for people who plan, fund or deliver digital projects in Ukrainian public bodies.
 
 **Page: [maksym-garkusha.github.io/ukraine-digital-aid](https://maksym-garkusha.github.io/ukraine-digital-aid/)**. The data there is refreshed weekly.
 
@@ -10,9 +10,9 @@ This is an independent learning project built on IATI open data. It is not affil
 
 ## Why
 
-Digital projects in Ukrainian public bodies are mostly paid for by donors: the EU, the US, the UK, Germany, Sweden, Switzerland, UNDP, the World Bank. Each donor publishes its projects in the open [IATI](https://iatistandard.org/) standard, but nobody offers a combined view of digital transformation in Ukraine specifically: you have to go through the donors' sites one by one and make sense of each format.
+Most digital projects in Ukrainian public bodies are paid for by donors: the EU, the US, the UK, Germany, Sweden, Switzerland, UNDP, the World Bank. Each donor publishes its projects in the open [IATI](https://iatistandard.org/) standard, but there is no combined view of digital transformation in Ukraine as such: you have to go through the donors' sites one by one and work out each format.
 
-The project takes every IATI activity with Ukraine as a recipient, picks out the ones about digital transformation and shows them in a single list: donor, implementers, amounts, dates, status. It also shows what is in implementation now and what ends within the next year.
+The project takes every IATI activity with Ukraine as a recipient, picks out the ones about digital transformation and shows them in a single list: donor, implementers, amounts, dates, status. It also shows what is under way now and what ends within the next year.
 
 Who might find it useful:
 
@@ -39,7 +39,7 @@ The full report with donor and implementer tables and a list of what ends within
 
 ## How "digital" records are selected
 
-To be clear: this is a heuristic. An activity is included if at least one of these holds:
+The selection is a heuristic. An activity is included if at least one of these holds:
 
 1. **Sector.** Its DAC sectors include 22040 (ICT), 22010 (communications policy) or 22020 (telecommunications). 22030 (radio, TV, print media) is left out: that is media.
 2. **A keyword in the title** from the list below.
@@ -62,23 +62,23 @@ Tricky cases covered by tests: `IT` is not found in `ITALY` or in the English "i
 After the first collection, 120 records were checked by hand.
 
 - **60 random direct records.** 6 are not about digital transformation: a project for small farms where the donor gave 20% to the ICT sector; a WHO output on mental health policy with "information systems" in its title; the media project "Investigative journalism meets IT-Expertise"; "Ukraine Transport Connectivity", which is about roads; a US Department of Energy record whose title is the name of an accounting system while the description is about humanitarian response; software for the M109A6 howitzer. 2 more cannot be judged from the text: the donor withheld the title, or the title says only "Project Sentinel Software".
-- **30 random related records.** 7 are about digital transformation: Prozorro.Sale, software licences for nuclear plant safety analysis, telemedicine, the electronic regulatory platform of the communications regulator (NCEC), the VzayemoDiia e-participation platform, an online dialogue platform for labour migrants, and e-services of the tax service. The rest mention digital things in passing, which is why related records are hidden by default.
+- **30 random related records.** 7 are about digital transformation: Prozorro.Sale, software licences for nuclear plant safety analysis, telemedicine, the electronic regulatory platform of the communications regulator (NCEC), the VzayemoDiia e-participation platform, an online dialogue platform for labour migrants, and e-services of the tax service. The rest mention digital work only in passing, which is why related records are hidden by default.
 - **30 rejected records from neighbouring sectors** (15110, 15111, 15113, 16010). None was clearly digital, 2 are open to question ("NGO Risk Scoring Center" and CoST reporting on disclosed data). 10 of the 30 cannot be judged: 6 have no description, and in 4 the donor withheld both title and description.
 
 Two rules changed after the check. The list originally had a bare `connectivity`, but in Ukrainian records it is mostly about roads and logistics (Ukraine Transport Connectivity, RELINC), so the word now counts only as `internet connectivity`. Later, US Department of Defense records became related; two of the 60 checked direct records were such records, the M109A6 howitzer and "Project Sentinel Software". False positives among direct records were below a quarter even before these changes (6 of 60), so no second sample was drawn.
 
 ## What the data does not show
 
-- **The data is self-reported.** Each donor decides what to publish and when. Some update monthly, some once a year, and the status "Implementation" sometimes stays after the end date.
-- **Amounts cover the whole activity.** `commitment` and `spend` refer to the entire activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, the page shows those shares next to the amount and does not multiply anything. The donor table counts amounts only for records where Ukraine is 100% (178 of the 199 direct ones), and says so.
-- **Multi-country programmes.** A regional programme carries one amount for all countries. Ukraine's share is taken as the donor stated it. For 36 of the selected records d-portal shows a different share: it leaves out regions and in some records computes the share from transactions.
-- **Not everyone publishes.** Donors and funds that do not report to IATI are invisible here. Some donors (USAID and the US State Department among them) withhold titles, implementers or amounts under their own rules.
-- **Programmes and their parts.** The EU, Sweden and the UK publish a programme and its components separately. Totals count only the components; the list shows both records with a label.
-- **A heuristic selection.** A project with a digital component that never names it with one of the keywords and does not report the ICT sector will not show up.
+- The data is self-reported: each donor decides what to publish and when. Some update monthly, some once a year, and the status "Implementation" sometimes stays after the end date.
+- `commitment` and `spend` refer to the entire activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, the page shows those shares next to the amount and does not multiply anything. The donor table counts amounts only for records where Ukraine is 100% (178 of the 199 direct ones), and says so.
+- A regional programme carries one amount for all countries. Ukraine's share is taken as the donor stated it. For 36 of the selected records d-portal shows a different share: it leaves out regions and in some records computes the share from transactions.
+- Donors and funds that do not report to IATI are invisible here. Some donors (USAID and the US State Department among them) withhold titles, implementers or amounts under their own rules.
+- The EU, Sweden and the UK publish a programme and its components separately. Totals count only the components; the list shows both records with a label.
+- A project with a digital component that never names it with one of the keywords and does not report the ICT sector will not show up.
 
 ## Running it
 
-You need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0). No keys or databases.
+You need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0). No keys or database are needed.
 
 ```bash
 git clone https://github.com/maksym-garkusha/ukraine-digital-aid.git
@@ -120,9 +120,9 @@ tests/          xUnit, fixtures taken from real records of different donors
 
 **Personal data.** The `contact-info` block with names, addresses and phone numbers is not read at all, and a test checks that. E-mail addresses in descriptions are replaced with `[e-mail]`. Some donors list individuals (grantees or contractors) among implementers; an implementer name without an identifier that consists of two to four plain words and no word typical of an organisation is not stored. The check is rough and also hides some organisation names, which the page shows as "implementer name withheld". Titles and descriptions of activities are shown as the donor published them.
 
-**A page without a server.** Once a week GitHub Actions pulls fresh records (the cache is kept between runs), builds `data.json` (about 850 KB, 180 KB compressed) and publishes it with the page on GitHub Pages. If d-portal is unavailable or the run collects less than half of last time's volume, the step fails and the previous page stays up.
+**No server.** Once a week GitHub Actions pulls fresh records (the cache is kept between runs), builds `data.json` (about 850 KB, 180 KB compressed) and publishes it with the page on GitHub Pages. If d-portal is unavailable or the run collects less than half of last time's volume, the step fails and the previous page stays up.
 
-Text from the data reaches the page only escaped, and the CSP in a `<meta>` tag allows only the page's own script and style (by hash) and Google Fonts. After editing the script or style in `site/index.html` the hash has to be updated: the `PageCspTests` test fails and prints the new one, and the page is not published unless the tests pass.
+Text from the data is always escaped before it reaches the page, and the CSP in a `<meta>` tag allows only the page's own script and style (by hash) and Google Fonts. After editing the script or style in `site/index.html` the hash has to be updated: the `PageCspTests` test fails and prints the new one, and the page is not published unless the tests pass.
 
 ## Data and licence
 
