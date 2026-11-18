@@ -63,8 +63,37 @@ jobs:
         with:
           path: site
 
-  deploy:
+  # Атестація походження даних на сторінці: будь-хто перевірить, що файл зібрав цей workflow
+  # з коду репозиторію (команда в README). Окремий job, щоб права на OIDC-токен і запис атестацій
+  # мали лише завантаження артефакту й підпис, а не збірка з пакетами NuGet і запитами до d-portal
+  attest:
     needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      id-token: write
+      attestations: write
+    steps:
+      - uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: audit
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: github-pages
+      # артефакт Pages це tar: атестуємо ті самі байти, що підуть на сайт
+      - name: Unpack the generated files
+        run: tar -xf artifact.tar ./data.json ./snapshot.json ./changes.atom ./changes.en.atom ./report.md
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: |
+            data.json
+            snapshot.json
+            changes.atom
+            changes.en.atom
+            report.md
+
+  deploy:
+    needs: [build, attest]
     runs-on: ubuntu-latest
     # права на публікацію потрібні тільки цьому кроку, збірка їх не має
     permissions:

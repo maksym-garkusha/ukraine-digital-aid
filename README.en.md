@@ -124,6 +124,20 @@ tests/          xUnit, fixtures taken from real records of different donors
 
 Text from the data is always escaped before it reaches the page, and the CSP in a `<meta>` tag allows only the page's own script and style (by hash) and Google Fonts. After editing the script or style in `site/index.html` the hash has to be updated: the `PageCspTests` test fails and prints the new one, and the page is not published unless the tests pass.
 
+**Provenance of the files.** `site.yml` signs a provenance attestation (SLSA provenance, via `actions/attest`) for everything the build generates for Pages: `data.json`, `snapshot.json`, `changes.atom`, `changes.en.atom` and `report.md`, exactly as they go to the site. The attestation records the repository, workflow, commit and run, and is signed by a short-lived Sigstore certificate issued for that run's OIDC token. Only a separate `attest` job holds the token and attestation write permissions; it builds nothing and makes no requests to d-portal.
+
+Anyone can check it with the GitHub CLI (signed in to `gh`):
+
+```bash
+curl -fsSO https://maksym-garkusha.github.io/ukraine-digital-aid/data.json
+gh attestation verify data.json -R maksym-garkusha/ukraine-digital-aid \
+  --signer-workflow maksym-garkusha/ukraine-digital-aid/.github/workflows/site.yml --source-ref refs/heads/main
+```
+
+A file changed after the build fails the check, since the attestation is bound to the SHA-256 of its content. The attestation shows where a file came from, not that the code it was built from is right: it does not protect against a malicious commit on `main`.
+
+Every job in `site.yml` and `tests.yml` starts with `step-security/harden-runner` in `audit` mode: it records where the runner connects and which processes it starts. That log will become the list of allowed endpoints, and the mode will then change to `block`.
+
 ## Data and licence
 
 Data: [d-portal](https://d-portal.org/) on top of the [IATI](https://iatistandard.org/) registry. Records are published by the organisations themselves. Under the [IATI terms](https://web-terms.iatistandard.org/en/latest/copyright/), the data belongs to the organisation that published it and is released under the open licence listed for it on the IATI Registry. The d-portal code is open source under the MIT licence. `tests/.../Fixtures` holds shortened real records; their contact details and the name of an individual contractor have been replaced with made-up ones.
