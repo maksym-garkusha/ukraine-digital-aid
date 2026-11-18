@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- вбудовані скрипт і стиль дозволені за хешем; після їх зміни тест PageCspTests покаже новий хеш -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data:; script-src 'sha256-5zCF1M17EcVtleI6NDQ8PmpffuHKrem+Kt5/yW+WDzE='; style-src 'sha256-1BX3hcFvhl3LLYY/7za0xViZvTQKEIH0ngJD1HZIGUE=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data:; script-src 'sha256-060/H1k1TaTrUDSrg/g+d6+i45PMpxE/wTpl+Sh2tVU='; style-src 'sha256-5vdXjiYNOjLCz3i7BDGTVvUxZ0sgT91f7XBKJEvr5wY=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Хто фінансує цифровізацію України: донорські проєкти з IATI</title>
 <meta name="description" content="Донорські активності з цифровізації в Україні за відкритими даними IATI: донори, виконавці, суми, дати, статус. Незалежний навчальний проєкт.">
@@ -19,6 +19,8 @@
 <meta property="og:locale" content="uk_UA">
 <meta property="og:locale:alternate" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" href="changes.atom" title="Нові й завершені активності (Atom)" hreflang="uk">
+<link rel="alternate" type="application/atom+xml" href="changes.en.atom" title="New and ended activities (Atom)" hreflang="en">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2314201c'/%3E%3Crect x='6' y='6' width='8' height='8' fill='%23fff'/%3E%3Crect x='18' y='6' width='8' height='8' fill='%23fff'/%3E%3Crect x='6' y='18' width='8' height='8' fill='%23fff'/%3E%3Crect x='18' y='18' width='8' height='8' fill='%23f2b705'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +36,9 @@
   --amber-soft: #fdf3cf;
   --blue: #1f4fd8;
   --off: #c9d0cc;
+  --green: #2f7a4b;
+  --green-soft: #e7f3eb;
+  --green-ink: #1b4d30;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -139,6 +144,23 @@ td .small { display: block; color: var(--muted); font-size: 14px; }
 .tag { display: inline-block; font-size: 13px; line-height: 1.4; padding: 1px 7px; border-radius: 3px; background: var(--paper); border: 1px solid var(--line); color: var(--muted); margin: 4px 6px 0 0; }
 .tag.direct { border-color: var(--ink); color: var(--ink); }
 .tag.part { background: var(--amber-soft); border-color: var(--amber); color: var(--ink); }
+.tag.energy { background: var(--green-soft); border-color: var(--green); color: var(--green-ink); }
+.tag.energy.check { background: var(--card); border-style: dashed; }
+
+.changes { display: grid; gap: 18px; }
+.changes h3 { font-size: 16px; margin: 0 0 6px; }
+.changes ul { list-style: none; margin: 0; padding: 0; background: var(--card); border: 1px solid var(--line); border-radius: 4px; }
+.changes li { padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 15.5px; overflow-wrap: anywhere; }
+.changes li:last-child { border-bottom: 0; }
+.changes li > a { color: var(--ink); text-decoration-color: var(--off); }
+.changes li > a:hover { color: var(--blue); text-decoration-color: currentColor; }
+.changes .small { display: block; color: var(--muted); font-size: 14px; }
+#windows td { overflow-wrap: break-word; }
+#windows td.when { white-space: nowrap; font-variant-numeric: tabular-nums; }
+#windows td > a { color: var(--ink); text-decoration-color: var(--off); }
+#windows td > a:hover { color: var(--blue); text-decoration-color: currentColor; }
+.empty { color: var(--muted); font-size: 15px; margin: 12px 0 0; }
+.empty .more { margin: 0 0 0 8px; }
 .act details { margin-top: 6px; font-size: 15px; }
 .act summary { cursor: pointer; color: var(--blue); width: max-content; }
 .act details p { color: var(--muted); margin-top: 6px; }
@@ -198,6 +220,33 @@ footer p { margin: 0 0 8px; max-width: 46em; }
 
   <div class="figures" id="figures"></div>
 
+  <section class="block" id="changes">
+    <h2 data-t="changesTitle"></h2>
+    <p id="changes-note"></p>
+    <div class="changes" id="changes-body"></div>
+    <p class="note"><a id="feed-link" href="changes.atom" data-t="feed"></a></p>
+  </section>
+
+  <section class="block" id="windows">
+    <h2 data-t="winTitle"></h2>
+    <p data-t="winNote"></p>
+    <div class="filters">
+      <label><span data-t="fTheme"></span><select id="w-theme"></select></label>
+      <span class="check"><input type="checkbox" id="w-all"><label for="w-all" data-t="fAll"></label></span>
+    </div>
+    <div class="tablewrap" id="windows-table"><table>
+      <thead><tr>
+        <th data-t="colEnds"></th>
+        <th data-t="colActivity"></th>
+        <th data-t="colImplementers"></th>
+        <th class="num" data-t="colAmount"></th>
+      </tr></thead>
+      <tbody id="windows-rows"></tbody>
+    </table></div>
+    <p class="empty" id="windows-empty" hidden></p>
+    <button type="button" class="more" id="windows-more" hidden></button>
+  </section>
+
   <section class="block" id="donors-block">
     <h2 data-t="donorsTitle"></h2>
     <p data-t="donorsNote"></p>
@@ -238,6 +287,7 @@ footer p { margin: 0 0 8px; max-width: 46em; }
       <label><span data-t="fStatus"></span><select id="f-status"></select></label>
       <label><span data-t="fDonor"></span><select id="f-donor"></select></label>
       <label><span data-t="fEnd"></span><select id="f-end"></select></label>
+      <label><span data-t="fTheme"></span><select id="f-theme"></select></label>
       <label><span data-t="fSort"></span><select id="f-sort"></select></label>
       <span class="check"><input type="checkbox" id="f-all"><label for="f-all" data-t="fAll"></label></span>
     </div>
@@ -254,6 +304,17 @@ footer p { margin: 0 0 8px; max-width: 46em; }
         <h3 data-t="mSelectTitle"></h3>
         <div data-t="mSelect" data-html></div>
         <div class="words" id="keywords"></div>
+      </div>
+      <div>
+        <h3 data-t="mEnergyTitle"></h3>
+        <div data-t="mEnergy" data-html></div>
+        <div class="words" id="energy-title-words"></div>
+        <div data-t="mEnergyDescription" data-html></div>
+        <div class="words" id="energy-description-words"></div>
+      </div>
+      <div>
+        <h3 data-t="mChangesTitle"></h3>
+        <div data-t="mChanges" data-html></div>
       </div>
       <div>
         <h3 data-t="mMoneyTitle"></h3>
@@ -353,6 +414,31 @@ const TEXT = {
     military: 'військова допомога',
     partOf: 'частина програми, яка теж є в переліку',
     hasParts: 'програма: її частини в переліку окремо, у підсумках не рахується',
+    energy: 'енергетика',
+    energyCheck: 'енергетика: варто перевірити',
+    fTheme: 'Тема',
+    anyTheme: 'усі',
+    themeEnergy: 'енергетика',
+    changesTitle: 'Що змінилося за тиждень',
+    changesBetween: (a, b) => `Порівняння зрізів d-portal від ${a} і ${b}: що з'явилося в переліку і що завершилося між ними.`,
+    changesNone: 'Попереднього зрізу ще немає. Порівняння з\'явиться після наступного щотижневого збору.',
+    changesNothing: 'Між цими зрізами нових і завершених записів немає.',
+    changesAdded: n => `Нові в переліку: ${n}`,
+    changesEnded: n => `Завершилися: ${n}`,
+    changesGone: n => `Ще ${n} ${plural(n, 'запис зник', 'записи зникли', 'записів зникли')} з переліку: донор зняв запис, або він перестав підпадати під правила відбору.`,
+    endedStatus: s => `статус «${s}»`,
+    endedDate: d => `дата завершення ${d} минула`,
+    feed: 'Стрічка змін у форматі Atom',
+    winTitle: 'Вікна можливостей',
+    winNote: 'Активності у статусі «у реалізації», що завершуються протягом 12 місяців від дати зрізу, від найближчої. Під кінець програми донор і виконавці вирішують, що буде далі, тож це час говорити про продовження чи наступну фазу. Виконавці такі, як їх указав донор (роль Implementing).',
+    colEnds: 'Завершується',
+    colActivity: 'Активність і донор',
+    colImplementers: 'Виконавці',
+    colAmount: 'Зобов\'язання',
+    noAmount: 'не вказано',
+    winEmpty: 'За цими умовами протягом 12 місяців нічого не завершується.',
+    winEmptyDirect: 'Серед прямих записів за цими умовами протягом 12 місяців нічого не завершується.',
+    winShowRelated: 'Показати з дотичними',
     description: 'Опис',
     titleWithheld: 'Назву приховано донором',
     donorTitle: 'Текст донора на місці назви',
@@ -366,6 +452,13 @@ const TEXT = {
       <li>слово є тільки в описі: це слабший сигнал.</li></ul>
       <p><b>Прямі</b> записи: частка ІКТ-секторів від 20% або слово в назві. Решта <b>дотичні</b>, вони показуються, якщо поставити позначку «з дотичними». Записи Міністерства оборони США завжди дотичні: це військові постачання (програмне забезпечення до техніки, кіберпідтримка війська), а не цифровізація державного управління. Результат ручної перевірки відбору наведено в <a href="https://github.com/maksym-garkusha/ukraine-digital-aid#readme">README</a>.</p>
       <p>Слова шукаються без урахування регістру й тільки цілими словами; IT лише великими літерами, українські основи на початку слова:</p>`,
+    mEnergyTitle: 'Тема «енергетика»',
+    mEnergy: `<p>Тему мають цифрові записи, у яких сектори DAC з групи 230 Energy (коди 231xx–236xx: політика, генерація, атомна енергетика і ядерна безпека, передача й розподіл) разом становлять щонайменше 20%. Запис з меншою часткою або без енергетичного сектору теж має тему, якщо слово є в назві або словосполучення в описі, але з позначкою <b>варто перевірити</b>: слово ще не означає, що проєкт про енергетику.</p>
+      <p>Слова в назві:</p>`,
+    mEnergyDescription: '<p>В описі просте energy трапляється в переліках галузей і в однаковому абзаці десятків записів, які не про енергетику, тому там шукаються лише словосполучення:</p>',
+    mChangesTitle: 'Як рахуються зміни і вікна',
+    mChanges: `<p>Кожен збір зберігає короткий зріз переліку: ідентифікатор, статус, дату завершення. Новий зріз порівнюється з найсвіжішим, старшим щонайменше на 6 днів. <b>Нові</b>: записів не було в попередньому зрізі; це і щойно опубліковані, і давні, які почали підпадати під правила відбору. <b>Завершилися</b>: статус став «фінальна стадія», «закрито» чи «скасовано», або між зрізами минула дата завершення.</p>
+      <p><b>Вікна можливостей</b> показують ті самі записи, що й плитка «у реалізації, завершуються протягом 12 місяців». Програма, частини якої є в переліку окремо, представлена своїми частинами.</p>`,
     mMoneyTitle: 'Як читати суми',
     mMoney: `<p>Суми d-portal перераховує в долари США. Вони стосуються всієї активності, а не її цифрової частини і не тільки України. Якщо Україна лише один з отримувачів або ІКТ лише частина секторів, ці частки показано поруч із сумою; сторінка їх не множить.</p>
       <p>У таблиці донорів суми рахуються тільки за записами, де Україна єдиний отримувач. Деякі донори публікують і програму, і її частини окремими записами; у підсумках тоді рахуються тільки частини.</p>`,
@@ -454,6 +547,31 @@ const TEXT = {
     military: 'military assistance',
     partOf: 'part of a programme that is also listed',
     hasParts: 'programme: its parts are listed separately and not counted twice',
+    energy: 'energy',
+    energyCheck: 'energy: worth checking',
+    fTheme: 'Theme',
+    anyTheme: 'all',
+    themeEnergy: 'energy',
+    changesTitle: 'What changed this week',
+    changesBetween: (a, b) => `Comparison of the d-portal snapshots of ${a} and ${b}: what joined the list and what ended in between.`,
+    changesNone: 'There is no earlier snapshot yet. The comparison will appear after the next weekly run.',
+    changesNothing: 'No new or ended records between these snapshots.',
+    changesAdded: n => `New to the list: ${n}`,
+    changesEnded: n => `Ended: ${n}`,
+    changesGone: n => `${n} more record${n === 1 ? '' : 's'} left the list: withdrawn by the donor or no longer meeting the selection rules.`,
+    endedStatus: s => `status "${s}"`,
+    endedDate: d => `end date ${d} has passed`,
+    feed: 'Atom feed of the changes',
+    winTitle: 'Windows of opportunity',
+    winNote: 'Activities with the status "Implementation" that end within 12 months of the snapshot date, soonest first. As a programme draws to a close, the donor and the implementers decide what comes next, so this is the time to discuss an extension or a follow-up phase. Implementers are as the donor lists them (the Implementing role).',
+    colEnds: 'Ends',
+    colActivity: 'Activity and donor',
+    colImplementers: 'Implementers',
+    colAmount: 'Commitments',
+    noAmount: 'not given',
+    winEmpty: 'Nothing matching these conditions ends within 12 months.',
+    winEmptyDirect: 'No direct record matching these conditions ends within 12 months.',
+    winShowRelated: 'Include related',
     description: 'Description',
     titleWithheld: 'Title withheld by the donor',
     donorTitle: 'Donor\'s text in place of the title',
@@ -467,6 +585,13 @@ const TEXT = {
       <li>the word appears only in the description, which is a weaker signal.</li></ul>
       <p><b>Direct</b> records have an ICT sector share of at least 20% or a keyword in the title. The rest are <b>related</b> and appear when "include related" is ticked. Records from the US Department of Defense are always related: they are military supplies (software for equipment, cyber support for the armed forces) rather than digital government. The results of a manual check of the selection are in the <a href="https://github.com/maksym-garkusha/ukraine-digital-aid/blob/main/README.en.md">README</a>.</p>
       <p>Words are matched regardless of case and only as whole words; IT only in capitals, Ukrainian stems at the start of a word:</p>`,
+    mEnergyTitle: 'The energy theme',
+    mEnergy: `<p>A digital record has the theme when its DAC sectors from group 230 Energy (codes 231xx–236xx: policy, generation, nuclear energy and nuclear safety, transmission and distribution) add up to at least 20%. A record with a smaller share or no energy sector at all also gets the theme if a word appears in its title or a phrase in its description, but it is marked <b>worth checking</b>: a word alone does not make a project about energy.</p>
+      <p>Words in the title:</p>`,
+    mEnergyDescription: '<p>In descriptions, plain "energy" turns up in lists of sectors and in one paragraph repeated across dozens of records that are not about energy, so only phrases are matched there:</p>',
+    mChangesTitle: 'How changes and windows are worked out',
+    mChanges: `<p>Each run keeps a short snapshot of the list: identifier, status, end date. The new snapshot is compared with the latest one that is at least 6 days older. <b>New</b> records were not in the previous snapshot; they include both newly published records and older ones that now meet the selection rules. <b>Ended</b> means the status became Finalisation, Closed or Cancelled, or the end date passed between the snapshots.</p>
+      <p><b>Windows of opportunity</b> show the same records as the "in implementation, ending within 12 months" figure. A programme whose parts are listed separately is represented by its parts.</p>`,
     mMoneyTitle: 'Reading the amounts',
     mMoney: `<p>d-portal converts amounts into US dollars. They cover the whole activity, not just its digital part and not just Ukraine. Where Ukraine is one of several recipients or ICT is one of several sectors, those shares are shown next to the amount; the page does not multiply them.</p>
       <p>In the donor table, amounts are counted only for records where Ukraine is the sole recipient. Some donors publish a programme and its parts as separate records; totals then count only the parts.</p>`,
@@ -485,12 +610,13 @@ const TEXT = {
   }
 };
 
-const PAGE = 50, TABLE_ROWS = 15;
+const PAGE = 50, TABLE_ROWS = 15, CHANGE_ROWS = 10;
 const $ = id => document.getElementById(id);
 const input = $('q'), statusLine = $('status'), results = $('results');
 
 let data = null, failed = false, lang = 'uk', T = TEXT.uk;
-let state = {}, shown = PAGE, donorsOpen = false, implOpen = false;
+let state = {}, shown = PAGE, donorsOpen = false, implOpen = false, windowsOpen = false;
+const changesOpen = { added: false, ended: false };
 const donorNames = {}, byId = {};
 
 function esc(value) {
@@ -535,7 +661,8 @@ function readState() {
   const p = new URLSearchParams(location.hash.slice(1));
   return {
     lang: p.get('lang'), q: p.get('q') || '', status: p.get('status') || '', donor: p.get('donor') || '',
-    impl: p.get('impl') || '', end: p.get('end') || '', sort: p.get('sort') || 'end', all: p.get('all') === '1'
+    impl: p.get('impl') || '', end: p.get('end') || '', sort: p.get('sort') || 'end', all: p.get('all') === '1',
+    theme: p.get('theme') === 'energy' ? 'energy' : ''
   };
 }
 
@@ -543,7 +670,7 @@ function writeState() {
   const p = new URLSearchParams();
   if (lang !== defaultLang()) p.set('lang', lang);
   if (state.q) p.set('q', state.q);
-  for (const key of ['status', 'donor', 'impl', 'end']) if (state[key]) p.set(key, state[key]);
+  for (const key of ['status', 'donor', 'impl', 'end', 'theme']) if (state[key]) p.set(key, state[key]);
   if (state.sort !== 'end') p.set('sort', state.sort);
   if (state.all) p.set('all', '1');
   const hash = p.toString();
@@ -578,7 +705,8 @@ function figures() {
   const items = [
     [s.counted, state.all ? T.figAll : T.figDirect, null, ''],
     [s.active, T.figActive, { status: '2', end: '' }, s.activePastEnd ? T.figActivePast(num(s.activePastEnd)) : ''],
-    [s.endingSoon, T.figEnding, { status: '2', end: '12m' }, ''],
+    // ці самі записи показує розділ «Вікна можливостей», тож плитка веде туди
+    [s.endingSoon, T.figEnding, 'windows', ''],
     [s.donors.length, T.figDonors, null, '']
   ];
   const inner = (n, label, note) => `<b>${num(n)}</b><span>${esc(label)}</span>` + (note ? `<small>${esc(note)}</small>` : '');
@@ -586,8 +714,16 @@ function figures() {
     ? `<button type="button" class="figure" data-i="${i}">${inner(n, label, note)}</button>`
     : `<div class="figure">${inner(n, label, note)}</div>`).join('');
   $('figures').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const filter = items[b.dataset.i][2];
+    if (filter === 'windows') {
+      // тема звужує вікна, і число на плитці з ними б не зійшлося
+      state.theme = '';
+      refreshList(false);
+      $('windows').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     // плитка показує свій набір цілком, тож інші фільтри знімаються, і числа зійдуться
-    Object.assign(state, { q: '', donor: '', impl: '' }, items[b.dataset.i][2]);
+    Object.assign(state, { q: '', donor: '', impl: '', theme: '' }, filter);
     input.value = '';
     refreshList(true);
   }));
@@ -642,7 +778,9 @@ function fillFilters() {
   options($('f-end'), [['', T.anyTime], ['12m', T.within12], ...[0, 1, 2, 3, 4].map(k => [String(year + k), T.byEndOf(year + k)])], state.end);
   options($('f-sort'), [['end', T.sortEndDesc], ['end-asc', T.sortEndAsc], ['sum', T.sortSum]], state.sort);
   $('f-sort').value = state.sort;
-  $('f-all').checked = state.all;
+  // тема і позначка «з дотичними» є і над вікнами, і над переліком; стан у них спільний
+  for (const id of ['f-theme', 'w-theme']) options($(id), [['', T.anyTheme], ['energy', T.themeEnergy]], state.theme);
+  $('f-all').checked = $('w-all').checked = state.all;
 }
 
 function chips() {
@@ -670,6 +808,7 @@ function matches(a, words, endLimit) {
   if (state.status && String(a.status) !== state.status) return false;
   if (state.donor && a.donor !== state.donor) return false;
   if (state.impl && !a.implementers.includes(state.impl)) return false;
+  if (!inTheme(a)) return false;
   if (endLimit && !(a.end && a.end >= data.snapshot && a.end <= endLimit)) return false;
   const text = words.length ? haystack(a) : '';
   return words.every(w => text.includes(w));
@@ -696,13 +835,29 @@ function filtered() {
   return list;
 }
 
-function card(a) {
+function inTheme(a) { return state.theme !== 'energy' || Boolean(a.energy); }
+
+function implementersText(a) {
   const names = a.implementers.map(k => data.organisations[k]).filter(Boolean).concat(a.otherImplementers);
   let who = names.slice(0, 3).join('; ');
   if (names.length > 3) who += ` ${T.andMore(names.length - 3)}`;
   if (a.hiddenImplementers) who += (who ? '; ' : '') + T.hiddenImplementer(a.hiddenImplementers);
-  if (!who) who = T.noImplementer;
-  const meta = [donorNames[a.donor] || a.donor, who, years(a), T.status[a.status] || ''].filter(Boolean);
+  return who || T.noImplementer;
+}
+
+function activityUrl(a) { return 'https://d-portal.org/ctrack.html#view=act&aid=' + encodeURIComponent(a.id); }
+
+function shownTitle(a) { return a.titleWithheld ? T.titleWithheld : a.title; }
+
+function energyTag(a) {
+  if (!a.energy) return '';
+  const label = a.energy.worthChecking ? T.energyCheck : T.energy;
+  const why = a.energy.why.filter((_, i) => i < 3).join(', ');
+  return `<span class="tag energy${a.energy.worthChecking ? ' check' : ''}">${esc(label)} · ${esc(why)}</span>`;
+}
+
+function card(a) {
+  const meta = [donorNames[a.donor] || a.donor, implementersText(a), years(a), T.status[a.status] || ''].filter(Boolean);
 
   const money = [];
   if (a.commitment) money.push(`${T.commitment} ${usd(a.commitment)}`);
@@ -720,17 +875,74 @@ function card(a) {
   const parent = a.parent && byId[a.parent];
   if (parent && (state.all || parent.direct)) tags.push(`<span class="tag part">${esc(T.partOf)}</span>`);
   if (isProgramme(a)) tags.push(`<span class="tag part">${esc(T.hasParts)}</span>`);
+  if (a.energy) tags.push(energyTag(a));
 
-  const url = 'https://d-portal.org/ctrack.html#view=act&aid=' + encodeURIComponent(a.id);
   // замість прихованої назви донори пишуть довге речення про закон; його видно в розгорнутому описі
   const details = (a.titleWithheld ? `<p>${esc(T.donorTitle)}: ${esc(a.title)}</p>` : '') +
     (a.description ? `<p>${esc(a.description)}</p>` : '');
-  return `<article class="act"><h3><a href="${url}" target="_blank" rel="noopener">${esc(a.titleWithheld ? T.titleWithheld : a.title)}</a></h3>` +
+  return `<article class="act"><h3><a href="${activityUrl(a)}" target="_blank" rel="noopener">${esc(shownTitle(a))}</a></h3>` +
     `<p class="meta">${esc(meta.join(' · '))}</p>` +
     `<p class="money">${moneyLine}</p>` +
     `<p>${tags.join('')} <span class="tag code">${esc(a.id)}</span></p>` +
     (details ? `<details><summary>${esc(T.description)}</summary>${details}</details>` : '') +
     `</article>`;
+}
+
+// у зміни потрапляє те саме, що в переліку: прямі або з дотичними, з урахуванням теми
+function changesView() {
+  const c = data.changes, body = $('changes-body');
+  $('feed-link').href = lang === 'en' ? 'changes.en.atom' : 'changes.atom';
+  if (!c) {
+    $('changes-note').textContent = T.changesNone;
+    body.innerHTML = '';
+    return;
+  }
+  $('changes-note').textContent = T.changesBetween(day(c.from), day(c.to));
+  const keep = a => a && (state.all || a.direct) && inTheme(a);
+  const added = c.added.map(id => byId[id]).filter(keep).map(a => [a, '']);
+  const ended = c.ended.filter(e => keep(byId[e.id])).map(e => {
+    const a = byId[e.id];
+    return [a, e.reason === 'Status' ? T.endedStatus(T.status[a.status] || a.status) : T.endedDate(day(a.end))];
+  });
+  const line = ([a, why]) => `<li><a href="${activityUrl(a)}" target="_blank" rel="noopener">${esc(shownTitle(a))}</a>` +
+    `<span class="small">${esc([donorNames[a.donor] || a.donor, years(a), why].filter(Boolean).join(' · '))}</span>${energyTag(a)}</li>`;
+  const group = (key, title, items) => {
+    if (!items.length) return '';
+    const visible = changesOpen[key] ? items : items.slice(0, CHANGE_ROWS);
+    return `<div><h3>${esc(title(num(items.length)))}</h3><ul>${visible.map(line).join('')}</ul>` +
+      (items.length > CHANGE_ROWS
+        ? `<button type="button" class="more" data-open="${key}">${esc(changesOpen[key] ? T.showFewer : T.showAll(num(items.length)))}</button>`
+        : '') + '</div>';
+  };
+  // у знятих записів немає теми, тож при обраній темі їх не рахуємо
+  const gone = state.theme ? 0 : c.gone.filter(g => state.all || g.direct).length;
+  body.innerHTML = (added.length || ended.length
+    ? group('added', T.changesAdded, added) + group('ended', T.changesEnded, ended)
+    : `<p class="empty">${esc(T.changesNothing)}</p>`) +
+    (gone ? `<p class="empty">${esc(T.changesGone(gone))}</p>` : '');
+  body.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => {
+    changesOpen[b.dataset.open] = !changesOpen[b.dataset.open];
+    changesView();
+  }));
+}
+
+function windowsView() {
+  const list = summary().windows.map(id => byId[id]).filter(a => a && inTheme(a));
+  const visible = windowsOpen ? list : list.slice(0, TABLE_ROWS);
+  $('windows-rows').innerHTML = visible.map(a =>
+    `<tr><td class="when" data-label="${esc(T.colEnds)}">${esc(day(a.end))}</td>` +
+    `<td><a href="${activityUrl(a)}" target="_blank" rel="noopener">${esc(shownTitle(a))}</a>` +
+    `<span class="small">${esc(donorNames[a.donor] || a.donor)}</span>${energyTag(a)}</td>` +
+    `<td data-label="${esc(T.colImplementers)}">${esc(implementersText(a))}</td>` +
+    `<td class="num" data-label="${esc(T.colAmount)}">${a.commitment ? usd(a.commitment) : esc(T.noAmount)}</td></tr>`
+  ).join('');
+  $('windows-table').hidden = !list.length;
+  const empty = $('windows-empty');
+  empty.hidden = list.length > 0;
+  empty.innerHTML = list.length ? '' : esc(state.all ? T.winEmpty : T.winEmptyDirect) +
+    (state.all ? '' : ` <button type="button" class="more" id="windows-related">${esc(T.winShowRelated)}</button>`);
+  if ($('windows-related')) $('windows-related').addEventListener('click', () => { state.all = true; refreshList(false); });
+  toggleButton($('windows-more'), list.length, windowsOpen);
 }
 
 function showList() {
@@ -759,16 +971,21 @@ function refreshList(scroll) {
 function render() {
   if (!data) return;
   figures();
+  changesView();
+  windowsView();
   donorTable();
   implementerTable();
   fillFilters();
   chips();
   showList();
   $('snapshot').textContent = T.snapshot(day(data.snapshot));
-  $('keywords').innerHTML = data.keywords.map(k => {
+  const words = list => list.map(k => {
     const text = k.kind === 'Stem' ? k.text + '…' : k.text;
     return `<span>${esc(k.plural ? `${text} / ${k.plural}` : text)}</span>`;
   }).join('');
+  $('keywords').innerHTML = words(data.keywords);
+  $('energy-title-words').innerHTML = words(data.energyWords.title);
+  $('energy-description-words').innerHTML = words(data.energyWords.description);
 }
 
 function setLanguage(next) {
@@ -789,10 +1006,12 @@ input.addEventListener('input', () => {
   clearTimeout(timer);
   timer = setTimeout(() => { state.q = input.value.trim(); refreshList(false); }, 150);
 });
-for (const [id, key] of [['f-status', 'status'], ['f-donor', 'donor'], ['f-end', 'end'], ['f-sort', 'sort']])
+for (const [id, key] of [['f-status', 'status'], ['f-donor', 'donor'], ['f-end', 'end'], ['f-sort', 'sort'], ['f-theme', 'theme'], ['w-theme', 'theme']])
   $(id).addEventListener('change', e => { state[key] = e.target.value; refreshList(false); });
-$('f-all').addEventListener('change', e => { state.all = e.target.checked; refreshList(false); });
+for (const id of ['f-all', 'w-all'])
+  $(id).addEventListener('change', e => { state.all = e.target.checked; refreshList(false); });
 $('results-more').addEventListener('click', () => { shown += PAGE; showList(); });
+$('windows-more').addEventListener('click', () => { windowsOpen = !windowsOpen; windowsView(); });
 $('donors-more').addEventListener('click', () => { donorsOpen = !donorsOpen; donorTable(); });
 $('implementers-more').addEventListener('click', () => { implOpen = !implOpen; implementerTable(); });
 
