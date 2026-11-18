@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- вбудовані скрипт і стиль дозволені за хешем; після їх зміни тест PageCspTests покаже новий хеш -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data:; script-src 'sha256-/VPTK32PZptFTlI6Px8guMAzRc3O/HKQuITphRlp2ns='; style-src 'sha256-1BX3hcFvhl3LLYY/7za0xViZvTQKEIH0ngJD1HZIGUE=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'; connect-src 'self'; img-src 'self' data:; script-src 'sha256-5zCF1M17EcVtleI6NDQ8PmpffuHKrem+Kt5/yW+WDzE='; style-src 'sha256-1BX3hcFvhl3LLYY/7za0xViZvTQKEIH0ngJD1HZIGUE=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Хто фінансує цифровізацію України: донорські проєкти з IATI</title>
 <meta name="description" content="Донорські активності з цифровізації в Україні за відкритими даними IATI: донори, виконавці, суми, дати, статус. Незалежний навчальний проєкт.">
@@ -273,6 +273,7 @@ footer p { margin: 0 0 8px; max-width: 46em; }
 
 <footer>
   <p data-t="footer"></p>
+  <p data-t="report" data-html></p>
   <p data-t="author" data-html></p>
 </footer>
 
@@ -378,6 +379,7 @@ const TEXT = {
     mSource: `<p>Дані: <a href="https://d-portal.org/">d-portal</a>, відкритий сервіс поверх реєстру <a href="https://iatistandard.org/">IATI</a>. Записи публікують самі організації. За <a href="https://web-terms.iatistandard.org/en/latest/copyright/">правилами IATI</a> дані належать організації, яка їх опублікувала, і поширюються за відкритою ліцензією, вказаною для неї в реєстрі IATI. Код d-portal відкритий під ліцензією MIT.</p>
       <p>Код цього проєкту: MIT. Контактні дані з записів не читаються і не зберігаються.</p>`,
     footer: 'Незалежний навчальний проєкт на відкритих даних IATI. Не пов\'язаний з державними органами чи донорами і не є офіційною статистикою.',
+    report: 'Звіт з таблицями донорів і виконавців у Markdown: <a href="https://github.com/maksym-garkusha/ukraine-digital-aid/blob/main/docs/report.md">docs/report.md на GitHub</a>.',
     author: 'Автор: <a href="https://github.com/maksym-garkusha">Максим Гаркуша</a>.'
   },
   en: {
@@ -478,6 +480,7 @@ const TEXT = {
     mSource: `<p>Data: <a href="https://d-portal.org/">d-portal</a>, an open service on top of the <a href="https://iatistandard.org/">IATI</a> registry. Records are published by the organisations themselves. Under the <a href="https://web-terms.iatistandard.org/en/latest/copyright/">IATI terms</a>, the data belongs to the organisation that published it and is released under the open licence listed for it on the IATI Registry. The d-portal code is open source under the MIT licence.</p>
       <p>This project's code: MIT. Contact details in the records are neither read nor stored.</p>`,
     footer: 'An independent learning project on IATI open data. Not affiliated with any government body or donor, and not official statistics.',
+    report: 'The report with donor and implementer tables, in Markdown and in Ukrainian: <a href="https://github.com/maksym-garkusha/ukraine-digital-aid/blob/main/docs/report.md">docs/report.md on GitHub</a>.',
     author: 'Author: <a href="https://github.com/maksym-garkusha">Maksym Harkusha</a>.'
   }
 };
