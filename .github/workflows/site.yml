@@ -34,6 +34,9 @@ jobs:
           path: cache
           key: activities-${{ github.run_id }}
           restore-keys: activities-
+      # серед тестів є звірка хешів CSP: зі старим хешем сторінка не запустила б свій скрипт
+      - name: Test
+        run: dotnet test
       - name: Fetch activities from d-portal
         run: dotnet run -c Release --project src/UkraineDigitalAid -- fetch
       - name: Export data for the page

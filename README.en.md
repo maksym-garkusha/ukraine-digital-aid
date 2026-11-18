@@ -122,6 +122,8 @@ tests/          xUnit, fixtures taken from real records of different donors
 
 **A page without a server.** Once a week GitHub Actions pulls fresh records (the cache is kept between runs), builds `data.json` (about 850 KB, 180 KB compressed) and publishes it with the page on GitHub Pages. If d-portal is unavailable or the run collects less than half of last time's volume, the step fails and the previous page stays up.
 
+Text from the data reaches the page only escaped, and the CSP in a `<meta>` tag allows only the page's own script and style (by hash) and Google Fonts. After editing the script or style in `site/index.html` the hash has to be updated: the `PageCspTests` test fails and prints the new one, and the page is not published unless the tests pass.
+
 ## Data and licence
 
 Data: [d-portal](https://d-portal.org/) on top of the [IATI](https://iatistandard.org/) registry. Records are published by the organisations themselves. Under the [IATI terms](https://web-terms.iatistandard.org/en/latest/copyright/), the data belongs to the organisation that published it and is released under the open licence listed for it on the IATI Registry. The d-portal code is open source under the MIT licence. `tests/.../Fixtures` holds shortened real records; their contact details and the name of an individual contractor have been replaced with made-up ones.
