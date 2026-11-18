@@ -1,7 +1,8 @@
 name: site
 
-# Щопонеділка забирає свіжі записи з d-portal і перезбирає сторінку.
+# Щопонеділка забирає свіжі записи з d-portal і перезбирає сторінку, стрічки змін і звіт.
 # Кеш активностей переживає запуски, тому повні записи качаються тільки для нових і змінених.
+# У тому ж кеші лежать зрізи переліку за останні 35 днів, з них рахується блок «Що змінилося».
 # Якщо d-portal недоступний або зібрано менше половини від минулого разу, fetch падає,
 # кеш не зберігається, і на Pages лишається попередня сторінка.
 on:
@@ -42,8 +43,15 @@ jobs:
         run: dotnet test
       - name: Fetch activities from d-portal
         run: dotnet run -c Release --project src/UkraineDigitalAid -- fetch
+      # зріз з опублікованої сторінки потрібен, лише якщо кеш зник: тоді export порівнює з ним,
+      # інакше блок змін тиждень був би порожній. Першого разу файлу ще немає, і це не помилка
+      - name: Download the published snapshot
+        run: >-
+          curl -fsS --max-time 60 --max-filesize 5242880 -o published-snapshot.json
+          https://maksym-garkusha.github.io/ukraine-digital-aid/snapshot.json
+          || echo "Опублікованого зрізу немає"
       - name: Export data for the page
-        run: dotnet run -c Release --no-build --project src/UkraineDigitalAid -- export site
+        run: dotnet run -c Release --no-build --project src/UkraineDigitalAid -- export site --previous published-snapshot.json
       - name: Build report
         run: dotnet run -c Release --no-build --project src/UkraineDigitalAid -- report site/report.md
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
