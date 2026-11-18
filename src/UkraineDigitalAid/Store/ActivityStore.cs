@@ -58,15 +58,13 @@ public class ActivityStore(string directory)
     public async Task SaveAsync(IEnumerable<CachedActivity> entries, FetchRun run, CancellationToken ct)
     {
         System.IO.Directory.CreateDirectory(Directory);
-        // спершу у тимчасовий файл: перерваний запис не зіпсує попередній кеш
-        string temp = ActivitiesPath + ".tmp";
-        await using (var writer = new StreamWriter(temp))
+        await AtomicFile.WriteAsync(ActivitiesPath, async file =>
         {
+            await using var writer = new StreamWriter(file);
             foreach (var entry in entries.OrderBy(e => e.Activity.Id, StringComparer.Ordinal))
                 await writer.WriteLineAsync(JsonSerializer.Serialize(entry, Json).AsMemory(), ct);
-        }
-        File.Move(temp, ActivitiesPath, overwrite: true);
-        await File.WriteAllTextAsync(RunPath, JsonSerializer.Serialize(run, Json), ct);
+        });
+        await AtomicFile.WriteTextAsync(RunPath, JsonSerializer.Serialize(run, Json), ct);
     }
 
     public FetchRun? LoadRun() =>

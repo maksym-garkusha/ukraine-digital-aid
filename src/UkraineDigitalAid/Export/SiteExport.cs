@@ -93,8 +93,7 @@ public static class SiteExport
     {
         Directory.CreateDirectory(directory);
         string path = Path.Combine(directory, FileName);
-        await using (var file = File.Create(path))
-            await JsonSerializer.SerializeAsync(file, data, ActivityStore.Json, ct);
+        await AtomicFile.WriteAsync(path, file => JsonSerializer.SerializeAsync(file, data, ActivityStore.Json, ct));
         return new FileInfo(path).Length;
     }
 

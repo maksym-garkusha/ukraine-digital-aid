@@ -81,7 +81,7 @@ static async Task<int> Report(ActivityStore store, string path, CancellationToke
     string report = RunReport.Build(store.Load().Values.Select(e => e.Activity), run, Codelists.Read(store.CodelistsDirectory));
     if (Path.GetDirectoryName(path) is { Length: > 0 } directory)
         Directory.CreateDirectory(directory);
-    await File.WriteAllTextAsync(path, report, ct);
+    await AtomicFile.WriteTextAsync(path, report, ct);
     Console.WriteLine($"Звіт записано в {path}");
     return 0;
 }

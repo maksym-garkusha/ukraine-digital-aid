@@ -1,4 +1,5 @@
 using System.Text.Json;
+using UkraineDigitalAid.Store;
 
 namespace UkraineDigitalAid.Iati;
 
@@ -31,7 +32,7 @@ public record Codelists(IReadOnlyDictionary<string, string> Sectors, IReadOnlyDi
         {
             string json = await http.GetStringAsync(Url(name), ct);
             Parse(json); // не зберігаємо те, що не розбирається
-            await File.WriteAllTextAsync(Path.Combine(directory, name + ".json"), json, ct);
+            await AtomicFile.WriteTextAsync(Path.Combine(directory, name + ".json"), json, ct);
         }
     }
 

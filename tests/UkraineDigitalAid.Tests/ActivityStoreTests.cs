@@ -66,4 +66,21 @@ public sealed class ActivityStoreTests : IDisposable
         Assert.Empty(store.Load());
         Assert.Null(store.LoadRun());
     }
+
+    [Fact]
+    public async Task Failed_write_keeps_the_previous_file()
+    {
+        Directory.CreateDirectory(_directory);
+        string path = Path.Combine(_directory, "data.json");
+        await File.WriteAllTextAsync(path, "old");
+
+        await Assert.ThrowsAsync<IOException>(() => AtomicFile.WriteAsync(path, async file =>
+        {
+            await file.WriteAsync("new, but cut"u8.ToArray());
+            throw new IOException("disk full");
+        }));
+
+        Assert.Equal("old", await File.ReadAllTextAsync(path));
+        Assert.Equal([path], Directory.GetFiles(_directory));
+    }
 }
