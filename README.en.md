@@ -12,7 +12,7 @@ This is an independent learning project built on IATI open data. It is not affil
 
 Most digital projects in Ukrainian public bodies are paid for by donors: the EU, the US, the UK, Germany, Sweden, Switzerland, UNDP, the World Bank. Each donor publishes its projects in the open [IATI](https://iatistandard.org/) standard, but there is no combined view of digital transformation in Ukraine as such: you have to go through the donors' sites one by one and work out each format.
 
-The project takes every IATI activity with Ukraine as a recipient, picks out the ones about digital transformation and shows them in a single list: donor, implementers, amounts, dates, status. It also shows what is under way now and what ends within the next year.
+The project takes every IATI activity with Ukraine as a recipient, picks out the ones about digital transformation and shows them in a single list: donor, implementers, amounts, dates, status. It also shows what is under way now, what ends within the next year and who implements it ("windows of opportunity"), what changed over the week (also as an Atom feed) and which records concern energy.
 
 Who might find it useful:
 
@@ -34,6 +34,12 @@ These numbers need some context:
 - **Military assistance is among the related records.** The US Department of Defense published 27 of the selected records: cyber support to Ukraine's Ministry of Defence under USAI and software for military equipment provided under Presidential Drawdown Authority. 19 of them have a keyword in the title, but all 27 count as related (see the rule below), so they are not among the direct records or in the direct implementers table.
 - **Status is not always current.** Of the 113 direct records marked "Implementation", 71 are past their end date, and 37 of those are SDC's yearly records. The page shows this number under the "Implementation" figure.
 - **Amounts are not always there.** 206 records have no or zero commitments, 136 name no implementer at all, and in 22 the donor withheld the title of the activity itself.
+
+For the new sections of the page, as of the 18 November 2026 snapshot (689 selected records):
+
+- **Energy.** 62 records carry the theme: 36 by a DAC sector from group 230 of at least 20%, and 26 by words alone, marked "worth checking". Only 14 of the 62 are direct. Of those, 8 qualify by sector, and they are 4 closed projects of the Swedish Radiation Safety Authority (Strålsäkerhetsmyndigheten), each published as two records: a registry of radiation sources, a dose registry, software licences and antivirus software for the IT department of the State Nuclear Regulatory Inspectorate of Ukraine (SNRIU). The other energy records are related: they mention digital work only in passing in the description.
+- **Windows of opportunity.** 13 direct records in implementation end by 18 November 2027; 43 including related ones. None of the direct ones concerns energy; among the related ones 4 do: the World Bank's Second Power Transmission Project (implementer per the record: Ministry of Finance, 31 December 2026), FCDO's Green Cities, Infrastructure and Energy (PricewaterhouseCoopers, 31 December 2026), Sweden's NIR ITP Sustainability Impact Accelerator (31 December 2026) and BMZ's Strengthening of urban resilience in the Areas of Supply Infrastructure and Housing (implementer as the record names it: Ministerium für Entwicklung von Gemeinden und Territorien der Ukraine, 31 October 2027).
+- **What changed.** The run cache holds no earlier snapshot yet, so the first comparison will appear after the weekly run on 23 November 2026.
 
 The full report with donor and implementer tables and a list of what ends within a year: [docs/report.md](docs/report.md) (in Ukrainian). It is a snapshot as of the date at its top: in the repository the file is updated by hand with the `report` command. The weekly page build regenerates the report from fresh data and publishes it next to the page: [report.md](https://maksym-garkusha.github.io/ukraine-digital-aid/report.md).
 
@@ -67,6 +73,18 @@ After the first collection, 120 records were checked by hand.
 
 Two rules changed after the check. The list originally had a bare `connectivity`, but in Ukrainian records it is mostly about roads and logistics (Ukraine Transport Connectivity, RELINC), so the word now counts only as `internet connectivity`. Later, US Department of Defense records became related; two of the 60 checked direct records were such records, the M109A6 howitzer and "Project Sentinel Software". False positives among direct records were below a quarter even before these changes (6 of 60), so no second sample was drawn.
 
+## Energy, weekly changes and windows of opportunity
+
+**The energy theme** is given only to records already selected as digital. The reliable signal is a DAC sector from group 230 Energy: codes 231xx–236xx, covering policy, generation from renewable and non-renewable sources, nuclear energy and nuclear safety, transmission and distribution. If such sectors add up to at least 20% of a record, it gets the theme without reservation. Donors assign smaller shares to administrative records (USAID "Travel and Transportation" with 0.09% in 23110) and to multi-sector EU frameworks with 10% for everything, so a small share alone does not count. A record with a smaller share or no energy sector gets the theme if its title contains one of `energy`, `electricity`, `power grid`, `power plant`, `power transmission`, `hydropower`, `nuclear`, `renewable`, `solar`, `heating`, `natural gas`, `substation`, `Ukrenergo`, `Energoatom`, `Naftogaz` (in Ukrainian the stems `енерг`, `електроенерг`, `теплопостач`), or its description contains a phrase such as `energy sector`, `energy infrastructure`, `renewable energy`, `power supply`, `nuclear safety`. Such a record is marked "worth checking". Plain `energy` is not matched in descriptions: it appears in lists of sectors ("energy, transport, agri-food") and in one paragraph on energy security repeated across dozens of DG NEAR records about media, housing or statistics. With it, 70 records instead of 26 would be marked worth checking, most of them wrongly. Both lists live in [EnergyRules.cs](src/UkraineDigitalAid/Selection/EnergyRules.cs), and the page shows them in its methodology section.
+
+**What changed this week.** Every `export` writes a short snapshot of the list (`snapshot.json`: identifier, status, end date, direct or related) and keeps a copy in the run cache, under `cache/snapshots`, for 35 days. The new snapshot is compared with the latest one that is at least 6 days older, so neither a mid-week rebuild after a push nor a scheduled run that starts a few hours late upsets the weekly comparison. If there is none, the oldest one from earlier days is used, and the page shows both dates. New records are those missing from the previous snapshot, which covers both freshly published records and older ones that now meet the selection rules. Ended means the status became Finalisation, Closed or Cancelled, or the end date passed between the snapshots. Records that left the list are only counted.
+
+GitHub removes cache entries that have not been read for 7 days, and the weekly run sits right on that edge. So before `export` the workflow downloads the published `snapshot.json` from the page and passes it as `--previous`. It is used only if the cache has no snapshot for that date, and only with a date between 35 days ago and yesterday.
+
+The same changes are published as Atom feeds: [changes.atom](https://maksym-garkusha.github.io/ukraine-digital-aid/changes.atom) in Ukrainian and [changes.en.atom](https://maksym-garkusha.github.io/ukraine-digital-aid/changes.en.atom) in English. A feed entry id depends only on the kind of change and the activity id, so a mid-week rebuild does not create duplicates in a reader.
+
+**Windows of opportunity** are records with the status "Implementation" that end within 12 months of the snapshot date, soonest first, with implementers as the donor lists them. They are the same records the "in implementation, ending within 12 months" figure counts; a programme whose parts are listed separately is represented by its parts. The theme and the "include related" box above the table are shared with the list.
+
 ## What the data does not show
 
 - The data is self-reported: each donor decides what to publish and when. Some update monthly, some once a year, and the status "Implementation" sometimes stays after the end date.
@@ -75,6 +93,7 @@ Two rules changed after the check. The list originally had a bare `connectivity`
 - Donors and funds that do not report to IATI are invisible here. Some donors (USAID and the US State Department among them) withhold titles, implementers or amounts under their own rules.
 - The EU, Sweden and the UK publish a programme and its components separately. Totals count only the components; the list shows both records with a label.
 - A project with a digital component that never names it with one of the keywords and does not report the ICT sector will not show up.
+- The energy theme is set only on digital records. This is not a list of all donor support to the energy sector.
 
 ## Running it
 
@@ -85,7 +104,7 @@ git clone https://github.com/maksym-garkusha/ukraine-digital-aid.git
 cd ukraine-digital-aid
 
 dotnet run --project src/UkraineDigitalAid -- fetch                    # pull activities from d-portal into ./cache
-dotnet run --project src/UkraineDigitalAid -- export site              # build site/data.json
+dotnet run --project src/UkraineDigitalAid -- export site              # build site/data.json, snapshot.json and the change feeds
 dotnet run --project src/UkraineDigitalAid -- report docs/report.md    # build the report
 cd site && python3 -m http.server                                      # page at http://localhost:8000
 dotnet test                                                            # from the repository root
@@ -99,10 +118,11 @@ My first `fetch` took 4 min 55 s and downloaded 1,237 full records. A repeat run
 src/UkraineDigitalAid/
   Iati/         d-portal client (paging, pauses, retries), IATI codelists, candidate collection
   Activities/   activity model and parsing of the full IATI record
-  Selection/    keyword list and selection rules
+  Selection/    keyword list and selection rules, the energy theme
   Store/        on-disk cache in JSON Lines
-  Stats/        summaries by donor, implementer, status, end year
-  Export/       data.json for the page
+  Stats/        summaries by donor, implementer, status, end year, windows of opportunity
+  History/      snapshots of the list and comparison with the previous week
+  Export/       data.json, snapshot.json and the Atom feeds for the page
   Report/       Markdown report
 site/           the page: one HTML file, no build step, Ukrainian and English
 tests/          xUnit, fixtures taken from real records of different donors
