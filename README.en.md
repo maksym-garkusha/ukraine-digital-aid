@@ -35,7 +35,7 @@ These numbers need some context:
 - **Status is not always current.** Of the 113 direct records marked "Implementation", 71 are past their end date, and 37 of those are SDC's yearly records. The page shows this number under the "Implementation" figure.
 - **Amounts are not always there.** 206 records have no or zero commitments, 136 name no implementer at all, and in 22 the donor withheld the title of the activity itself.
 
-The full report with donor and implementer tables and a list of what ends within a year: [docs/report.md](docs/report.md) (in Ukrainian). It is produced by the `report` command and rebuilt weekly together with the page.
+The full report with donor and implementer tables and a list of what ends within a year: [docs/report.md](docs/report.md) (in Ukrainian). It is a snapshot as of the date at its top: in the repository the file is updated by hand with the `report` command. The weekly page build regenerates the report from fresh data and publishes it next to the page: [report.md](https://maksym-garkusha.github.io/ukraine-digital-aid/report.md).
 
 ## How "digital" records are selected
 
