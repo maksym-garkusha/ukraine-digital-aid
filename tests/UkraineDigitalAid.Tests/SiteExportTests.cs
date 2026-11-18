@@ -198,4 +198,16 @@ public class SiteExportTests
             [new SnapshotEntry("A-1", 2, new DateOnly(2027, 3, 31), true), new SnapshotEntry("A-2", 4, null, false)],
             snapshot.Activities);
     }
+
+    [Fact]
+    public void Windows_are_given_for_direct_and_for_all_and_point_to_exported_rows()
+    {
+        var data = Export(
+            Build.Activity(id: "A-1", title: "Digital skills", status: 2, end: new DateOnly(2027, 2, 28)),
+            Build.Activity(id: "A-2", title: "Human rights", description: "Includes an information system.", status: 2, end: new DateOnly(2027, 1, 31)));
+
+        Assert.Equal(["A-1"], data.Summary["direct"].Windows);
+        Assert.Equal(["A-2", "A-1"], data.Summary["all"].Windows);
+        Assert.All(data.Summary["all"].Windows, id => Assert.Contains(data.Activities, a => a.Id == id));
+    }
 }

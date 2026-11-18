@@ -127,17 +127,31 @@ public static class RunReport
             md.AppendLine($"- {text}: {N(count)}");
         md.AppendLine();
 
-        md.AppendLine("## Завершуються протягом року");
+        md.AppendLine("## Енергетика");
         md.AppendLine();
-        md.AppendLine("Прямі активності у статусі «у реалізації» з датою завершення в найближчі 12 місяців.");
+        var energy = selected.Select(s => (s.Selection, Energy: EnergyRules.Evaluate(s.Activity))).Where(x => x.Energy is not null).ToList();
+        md.AppendLine($"Серед відібраних записів тему «енергетика» мають {N(energy.Count)}, з них прямих {N(energy.Count(x => x.Selection.Direct))}. "
+                      + $"За сектором групи 230 від {EnergyRules.SectorShare:0}% {N(energy.Count(x => !x.Energy!.WorthChecking))}, "
+                      + $"лише за словами (на сторінці «варто перевірити») {N(energy.Count(x => x.Energy!.WorthChecking))}.");
         md.AppendLine();
-        md.AppendLine("| Завершення | Донор | Активність |");
-        md.AppendLine("|---|---|---|");
-        var parents = Stats.Stats.Parents(direct);
-        foreach (var a in direct.Where(a => !parents.Contains(a.Id) && Stats.Stats.IsEndingSoon(a, today)).OrderBy(a => a.End).ThenBy(a => a.Id))
-            md.AppendLine($"| {a.End:dd.MM.yyyy} | {Cell(Organisations.PublisherName(a.Publisher))} | [{Cell(ShownTitle(a))}](https://d-portal.org/ctrack.html#view=act&aid={Uri.EscapeDataString(a.Id)}) |");
+
+        md.AppendLine("## Вікна можливостей: завершуються протягом року");
+        md.AppendLine();
+        md.AppendLine("Прямі активності у статусі «у реалізації» з датою завершення в найближчі 12 місяців, з виконавцями.");
+        md.AppendLine();
+        md.AppendLine("| Завершення | Донор | Активність | Виконавці |");
+        md.AppendLine("|---|---|---|---|");
+        var byId = direct.ToDictionary(a => a.Id);
+        foreach (var a in summary.Windows.Select(id => byId[id]))
+            md.AppendLine($"| {a.End:dd.MM.yyyy} | {Cell(Organisations.PublisherName(a.Publisher))} | [{Cell(ShownTitle(a))}](https://d-portal.org/ctrack.html#view=act&aid={Uri.EscapeDataString(a.Id)}) | {Cell(Implementers(a))} |");
 
         return md.ToString();
+    }
+
+    private static string Implementers(Activity a)
+    {
+        var names = a.WithRole(OrgRole.Implementing).Select(p => p.Name).OfType<string>().Distinct().ToList();
+        return names.Count > 0 ? string.Join("; ", names) : "не вказано";
     }
 
     // USAID і Держдеп пишуть замість прихованої назви довге речення про закон FATAA

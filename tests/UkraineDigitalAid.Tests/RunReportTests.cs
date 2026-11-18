@@ -50,6 +50,32 @@ public class RunReportTests
     }
 
     [Fact]
+    public void Window_row_names_the_implementers()
+    {
+        string report = RunReport.Build([
+            Build.Activity(id: "A-1", title: "Digital skills", status: 2, end: new DateOnly(2027, 3, 31),
+                participants: [Build.Implementer("Beetroot Academy"), Build.Implementer("Kyiv School of Economics")]),
+            Build.Activity(id: "A-2", title: "Digital courts", status: 2, end: new DateOnly(2027, 1, 31))
+        ], Run, Lists);
+
+        Assert.Contains("| Beetroot Academy; Kyiv School of Economics |", report);
+        Assert.Contains("| не вказано |", report);
+        Assert.True(report.IndexOf("aid=A-2", StringComparison.Ordinal) < report.IndexOf("aid=A-1", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Report_counts_energy_records_and_those_worth_checking()
+    {
+        string report = RunReport.Build([
+            Build.Activity(id: "A-1", title: "Digital metering", sectors: [new SectorShare("23630", 100)]),
+            Build.Activity(id: "A-2", title: "Digital tools for the energy regulator"),
+            Build.Activity(id: "A-3", title: "Digital skills")
+        ], Run, Lists);
+
+        Assert.Contains("тему «енергетика» мають 2, з них прямих 2. За сектором групи 230 від 20% 1, лише за словами (на сторінці «варто перевірити») 1.", report);
+    }
+
+    [Fact]
     public void Report_says_how_many_active_records_are_past_their_end_date()
     {
         string report = RunReport.Build([

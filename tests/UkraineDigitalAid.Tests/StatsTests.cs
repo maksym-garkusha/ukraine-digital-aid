@@ -65,6 +65,38 @@ public class StatsTests
     }
 
     [Fact]
+    public void Windows_list_what_ends_within_a_year_soonest_first()
+    {
+        var summary = Summarise(
+            Build.Activity(id: "A-1", status: 2, end: Today.AddMonths(11)),
+            Build.Activity(id: "A-2", status: 2, end: Today.AddMonths(1)),
+            Build.Activity(id: "A-3", status: 2, end: Today.AddYears(1)),
+            Build.Activity(id: "A-4", status: 2, end: Today.AddYears(1).AddDays(1)),
+            Build.Activity(id: "A-5", status: 1, end: Today.AddMonths(2)),
+            Build.Activity(id: "A-6", status: 2, end: null));
+
+        // межі включно: і день зрізу, і рівно через рік; підготовка й записи без дати не входять
+        Assert.Equal(["A-2", "A-1", "A-3"], summary.Windows);
+        Assert.Equal(summary.Windows.Count, summary.EndingSoon);
+    }
+
+    [Fact]
+    public void Window_of_a_programme_published_in_parts_is_given_by_its_parts()
+    {
+        var summary = Summarise(
+            Build.Activity(id: "SE-0-P", status: 2, end: Today.AddMonths(4)),
+            Build.Activity(id: "SE-0-P-1", status: 2, end: Today.AddMonths(4), parentId: "SE-0-P"));
+
+        Assert.Equal(["SE-0-P-1"], summary.Windows);
+    }
+
+    [Fact]
+    public void Record_ending_on_the_snapshot_day_is_still_a_window()
+    {
+        Assert.Equal(["A-1"], Summarise(Build.Activity(id: "A-1", status: 2, end: Today)).Windows);
+    }
+
+    [Fact]
     public void Implementers_group_by_identifier_and_take_the_common_name()
     {
         var summary = Summarise(

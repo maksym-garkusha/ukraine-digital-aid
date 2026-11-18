@@ -14,14 +14,19 @@ public record DonorStats(
 public record ImplementerStats(string Id, string Name, int Activities, IReadOnlyList<string> Donors);
 
 /// <param name="Counted">Скільки записів у підсумках: програми, частини яких теж відібрано, не рахуються.</param>
-/// <param name="EndingSoon">У реалізації і завершуються протягом 12 місяців від дати зрізу.</param>
 /// <param name="ActivePastEnd">Статус «у реалізації», хоча дата завершення вже минула.</param>
+/// <param name="Windows">«Вікна можливостей»: записи у реалізації, що завершуються протягом
+/// 12 місяців від дати зрізу, від найближчого завершення.</param>
 public record Summary(
-    int Counted, int Active, int EndingSoon, int ActivePastEnd,
+    int Counted, int Active, int ActivePastEnd,
     IReadOnlyList<DonorStats> Donors,
     IReadOnlyList<ImplementerStats> Implementers,
     IReadOnlyDictionary<int, int> ByStatus,
-    IReadOnlyDictionary<int, int> ByEndYear);
+    IReadOnlyDictionary<int, int> ByEndYear,
+    IReadOnlyList<string> Windows)
+{
+    public int EndingSoon => Windows.Count;
+}
 
 public static class Stats
 {
@@ -92,12 +97,13 @@ public static class Stats
         return new Summary(
             counted.Count,
             counted.Count(a => a.Status == Implementation),
-            counted.Count(a => IsEndingSoon(a, today)),
             counted.Count(a => a.Status == Implementation && a.End < today),
             donors,
             implementers,
             Histogram(counted.Where(a => a.Status is not null).Select(a => a.Status!.Value)),
-            Histogram(counted.Where(a => a.End is not null).Select(a => a.End!.Value.Year)));
+            Histogram(counted.Where(a => a.End is not null).Select(a => a.End!.Value.Year)),
+            counted.Where(a => IsEndingSoon(a, today)).OrderBy(a => a.End).ThenBy(a => a.Id, StringComparer.Ordinal)
+                .Select(a => a.Id).ToList());
     }
 
     private static Dictionary<int, int> Histogram(IEnumerable<int> values) =>
