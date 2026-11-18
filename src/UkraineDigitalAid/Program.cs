@@ -6,7 +6,7 @@ using UkraineDigitalAid.Report;
 using UkraineDigitalAid.Store;
 
 // dotnet run -- fetch                 забрати активності з d-portal у кеш
-// dotnet run -- export <тека>         зібрати data.json і snapshot.json для сторінки
+// dotnet run -- export <тека>         зібрати data.json, snapshot.json і стрічки змін для сторінки
 // dotnet run -- report <файл.md>      зібрати звіт за даними з кешу
 // Кеш лежить у теці cache поруч із місцем запуску, інше місце: --cache <тека>
 // export --previous <snapshot.json>   опублікований зріз на випадок, якщо в кеші зрізів немає
@@ -86,6 +86,7 @@ static async Task<int> Export(ActivityStore store, string directory, string? pre
     var data = SiteExport.Build(store.Load().Values.Select(e => e.Activity), run, Codelists.Read(store.CodelistsDirectory),
         DateTime.UtcNow, baseline);
     long size = await SiteExport.WriteAsync(data, directory, ct);
+    await ChangesFeed.WriteAsync(data, directory, ct);
     await snapshots.SaveAsync(SiteExport.CurrentSnapshot(data), ct);
 
     Console.WriteLine($"{Path.Combine(directory, SiteExport.FileName)}: {data.Activities.Count} активностей, {size / 1024} КБ");
