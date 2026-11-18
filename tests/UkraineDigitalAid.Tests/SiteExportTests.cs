@@ -1,6 +1,7 @@
 using System.Text.Json;
 using UkraineDigitalAid.Activities;
 using UkraineDigitalAid.Export;
+using UkraineDigitalAid.History;
 using UkraineDigitalAid.Iati;
 using UkraineDigitalAid.Store;
 
@@ -156,5 +157,45 @@ public class SiteExportTests
         var energy = json.EnumerateArray().Single(a => a.GetProperty("id").GetString() == "DE-1-1").GetProperty("energy");
         Assert.False(energy.GetProperty("worthChecking").GetBoolean());
         Assert.False(json.EnumerateArray().Single(a => a.GetProperty("id").GetString() == "SE-0-2").TryGetProperty("energy", out _));
+    }
+
+    [Fact]
+    public void Changes_compare_the_list_with_the_previous_snapshot()
+    {
+        var previous = new Snapshot(new DateOnly(2026, 11, 11),
+        [
+            new SnapshotEntry("A-1", 2, new DateOnly(2026, 11, 15), true),
+            new SnapshotEntry("A-9", 2, null, true)
+        ]);
+
+        var data = SiteExport.Build(
+            [Build.Activity(id: "A-1", title: "Digital skills", end: new DateOnly(2026, 11, 15)), Build.Activity(id: "A-2", title: "Digital registry")],
+            Run, Lists, Run.FetchedAt, previous);
+
+        Assert.Equal(new DateOnly(2026, 11, 18), data.Changes!.To);
+        Assert.Equal(["A-2"], data.Changes.Added);
+        Assert.Equal([new Ended("A-1", EndReason.EndDate)], data.Changes.Ended);
+        Assert.Equal("A-9", data.Changes.Gone.Single().Id);
+    }
+
+    [Fact]
+    public void Without_a_previous_snapshot_there_is_no_change_block()
+    {
+        Assert.Null(Export(Build.Activity(title: "Digital skills")).Changes);
+    }
+
+    [Fact]
+    public void Current_snapshot_keeps_status_end_and_kind_of_every_row()
+    {
+        var data = Export(
+            Build.Activity(id: "A-1", title: "Digital skills", status: 2, end: new DateOnly(2027, 3, 31)),
+            Build.Activity(id: "A-2", title: "Human rights", description: "Includes an information system.", status: 4));
+
+        var snapshot = SiteExport.CurrentSnapshot(data);
+
+        Assert.Equal(data.Snapshot, snapshot.Date);
+        Assert.Equal(
+            [new SnapshotEntry("A-1", 2, new DateOnly(2027, 3, 31), true), new SnapshotEntry("A-2", 4, null, false)],
+            snapshot.Activities);
     }
 }

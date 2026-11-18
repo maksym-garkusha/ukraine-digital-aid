@@ -39,6 +39,8 @@ public class ActivityStore(string directory)
 
     public string CodelistsDirectory => Path.Combine(Directory, "codelists");
 
+    public string SnapshotsDirectory => Path.Combine(Directory, "snapshots");
+
     public Dictionary<string, CachedActivity> Load()
     {
         var result = new Dictionary<string, CachedActivity>();

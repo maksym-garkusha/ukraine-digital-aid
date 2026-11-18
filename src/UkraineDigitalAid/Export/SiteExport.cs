@@ -1,5 +1,6 @@
 using System.Text.Json;
 using UkraineDigitalAid.Activities;
+using UkraineDigitalAid.History;
 using UkraineDigitalAid.Iati;
 using UkraineDigitalAid.Selection;
 using UkraineDigitalAid.Stats;
@@ -49,7 +50,8 @@ public record SiteData(
     IReadOnlyDictionary<string, Summary> Summary,
     IReadOnlyList<SiteKeyword> Keywords,
     SiteEnergyWords EnergyWords,
-    IReadOnlyList<SiteActivity> Activities);
+    IReadOnlyList<SiteActivity> Activities,
+    Changes? Changes);
 
 /// <summary>
 /// Усе для сторінки одним JSON. Сторінка статична, зведення пораховані тут для двох
@@ -58,9 +60,12 @@ public record SiteData(
 public static class SiteExport
 {
     public const string FileName = "data.json";
+    public const string SnapshotFileName = "snapshot.json";
     public const int DescriptionLength = 600;
 
-    public static SiteData Build(IEnumerable<Activity> activities, FetchRun run, Codelists codelists, DateTime now)
+    /// <param name="previous">Попередній зріз для блоку «Що змінилося»; null, якщо його ще немає.</param>
+    public static SiteData Build(IEnumerable<Activity> activities, FetchRun run, Codelists codelists, DateTime now,
+        Snapshot? previous = null)
     {
         var today = DateOnly.FromDateTime(run.FetchedAt);
         var selected = Stats.Stats.Select(activities);
@@ -79,7 +84,10 @@ public static class SiteExport
         foreach (var implementer in summary["all"].Implementers)
             organisations[implementer.Id] = implementer.Name;
 
-        var rows = selected.Select(s => Row(s, ids, parents, directParents, organisations)).ToList();
+        var rows = selected.Select(s => Row(s, ids, parents, directParents, organisations))
+            .OrderByDescending(r => r.End ?? DateOnly.MinValue).ThenBy(r => r.Id, StringComparer.Ordinal)
+            .ToList();
+        var changes = previous is null ? null : SnapshotDiff.Compare(previous, CurrentSnapshot(today, rows));
 
         var sectorCodes = selected.SelectMany(s => s.Activity.Sectors).Select(s => s.Code)
             .Where(DigitalRules.SectorCodes.Contains).Distinct();
@@ -96,14 +104,23 @@ public static class SiteExport
             donors, organisations, summary,
             SiteKeyword.From(Selection.Keywords.All),
             new SiteEnergyWords(SiteKeyword.From(EnergyRules.TitleWords), SiteKeyword.From(EnergyRules.DescriptionWords)),
-            rows.OrderByDescending(r => r.End ?? DateOnly.MinValue).ThenBy(r => r.Id, StringComparer.Ordinal).ToList());
+            rows,
+            changes);
     }
 
+    public static Snapshot CurrentSnapshot(SiteData data) => CurrentSnapshot(data.Snapshot, data.Activities);
+
+    private static Snapshot CurrentSnapshot(DateOnly date, IEnumerable<SiteActivity> rows) =>
+        new(date, rows.Select(r => new SnapshotEntry(r.Id, r.Status, r.End, r.Direct)).OrderBy(e => e.Id, StringComparer.Ordinal).ToList());
+
+    /// <summary>Пише data.json і поруч snapshot.json. Повертає розмір data.json.</summary>
     public static async Task<long> WriteAsync(SiteData data, string directory, CancellationToken ct)
     {
         Directory.CreateDirectory(directory);
         string path = Path.Combine(directory, FileName);
         await AtomicFile.WriteAsync(path, file => JsonSerializer.SerializeAsync(file, data, ActivityStore.Json, ct));
+        await AtomicFile.WriteAsync(Path.Combine(directory, SnapshotFileName),
+            file => JsonSerializer.SerializeAsync(file, CurrentSnapshot(data), ActivityStore.Json, ct));
         return new FileInfo(path).Length;
     }
 
