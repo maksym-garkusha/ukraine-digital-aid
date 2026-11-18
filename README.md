@@ -138,6 +138,8 @@ gh attestation verify data.json -R maksym-garkusha/ukraine-digital-aid \
 
 Кожен job у `site.yml` і `tests.yml` починається з `step-security/harden-runner` у режимі `audit`: він записує, куди раннер ходить мережею і які процеси запускає. З цього журналу складеться список дозволених адрес, і тоді режим зміниться на `block`.
 
+Про вразливість повідомляйте приватно, як описано в [SECURITY.md](SECURITY.md).
+
 ## Дані та ліцензія
 
 Дані: [d-portal](https://d-portal.org/) поверх реєстру [IATI](https://iatistandard.org/). Записи публікують самі організації. За [правилами IATI](https://web-terms.iatistandard.org/en/latest/copyright/) дані належать організації, яка їх опублікувала, і поширюються за відкритою ліцензією, вказаною для неї в реєстрі IATI. Код d-portal відкритий під ліцензією MIT. У `tests/.../Fixtures` лежать скорочені справжні записи; контактні дані в них і ім'я підрядника-фізособи замінено вигаданими.

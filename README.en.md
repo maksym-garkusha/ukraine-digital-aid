@@ -138,6 +138,8 @@ A file changed after the build fails the check, since the attestation is bound t
 
 Every job in `site.yml` and `tests.yml` starts with `step-security/harden-runner` in `audit` mode: it records where the runner connects and which processes it starts. That log will become the list of allowed endpoints, and the mode will then change to `block`.
 
+Please report vulnerabilities privately, as described in [SECURITY.md](SECURITY.md).
+
 ## Data and licence
 
 Data: [d-portal](https://d-portal.org/) on top of the [IATI](https://iatistandard.org/) registry. Records are published by the organisations themselves. Under the [IATI terms](https://web-terms.iatistandard.org/en/latest/copyright/), the data belongs to the organisation that published it and is released under the open licence listed for it on the IATI Registry. The d-portal code is open source under the MIT licence. `tests/.../Fixtures` holds shortened real records; their contact details and the name of an individual contractor have been replaced with made-up ones.
