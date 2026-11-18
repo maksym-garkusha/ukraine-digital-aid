@@ -477,7 +477,7 @@ let state = {}, shown = PAGE, donorsOpen = false, implOpen = false;
 const donorNames = {}, byId = {};
 
 function esc(value) {
-  return String(value ?? '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 }
 
 function locale() { return lang === 'uk' ? 'uk-UA' : 'en-GB'; }
@@ -630,7 +630,8 @@ function fillFilters() {
 
 function chips() {
   const list = [];
-  if (state.impl) list.push(['impl', `${T.implementerChip}: <b>${esc(data.organisations[state.impl] || state.impl)}</b>`]);
+  // ключ приходить з адреси, тож «constructor» чи «__proto__» не мають знаходити властивості Object
+  if (state.impl) list.push(['impl', `${T.implementerChip}: <b>${esc(Object.hasOwn(data.organisations, state.impl) ? data.organisations[state.impl] : state.impl)}</b>`]);
   $('chips').innerHTML = list.map(([key, html]) =>
     `<button type="button" class="chip" data-clear="${key}" aria-label="${esc(T.clear)}">${html} <span aria-hidden="true">×</span></button>`).join('');
   $('chips').querySelectorAll('[data-clear]').forEach(b => b.addEventListener('click', () => {
@@ -693,7 +694,7 @@ function card(a) {
   if (a.ukraine == null) shares.push(T.ukraineUnknown);
   else if (a.ukraine < 99.995) shares.push(T.ukraineShare(pct(a.ukraine)));
   if (a.ict > 0 && a.ict < 100) shares.push(T.ictShare(pct(a.ict)));
-  const moneyLine = (money.length ? money.join(' · ') : T.noMoney) +
+  const moneyLine = esc(money.length ? money.join(' · ') : T.noMoney) +
     (shares.length ? ` <span class="share">(${esc(shares.join(', '))})</span>` : '');
 
   const why = `${T.basis[a.basis]}: ${a.why.filter((_, i) => i < 4).join(', ')}`;
