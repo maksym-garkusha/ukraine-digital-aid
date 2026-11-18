@@ -121,4 +121,26 @@ public class DPortalClientTests
 
         Assert.Equal("q?text_search=open%20data&aid=XI-IATI-EC_NEAR-2019%2F1&form=json", url);
     }
+
+    [Fact]
+    public async Task Body_that_never_ends_fails_by_timeout()
+    {
+        var handler = new FakeHandler((_, _) => new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(new EndlessStream()) });
+        using var http = handler.Client();
+        http.Timeout = TimeSpan.FromMilliseconds(100);
+
+        await Assert.ThrowsAsync<TaskCanceledException>(
+            () => new DPortalClient(http, TimeSpan.Zero, TimeSpan.Zero).QueryAsync([("from", "act")], CancellationToken.None));
+        Assert.Equal(4, handler.Requests.Count);
+    }
+
+    // сервер надіслав заголовки, а тіло не віддає
+    private sealed class EndlessStream : MemoryStream
+    {
+        public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken ct = default)
+        {
+            await Task.Delay(Timeout.Infinite, ct);
+            return 0;
+        }
+    }
 }

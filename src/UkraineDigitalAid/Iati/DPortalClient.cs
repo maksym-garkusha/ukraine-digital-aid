@@ -61,7 +61,9 @@ public class DPortalClient(HttpClient http, TimeSpan pause, TimeSpan retryDelay)
             await Task.Delay(pause, ct);
             try
             {
-                using var response = await http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, ct);
+                // тіло читається цілком ще всередині GetAsync: так HttpClient.Timeout покриває і його,
+                // а MaxResponseContentBufferSize обмежує розмір
+                using var response = await http.GetAsync(url, ct);
                 if (IsTransient(response.StatusCode) && attempt < Attempts)
                 {
                     await Task.Delay(RetryAfter(response) ?? Backoff(attempt), ct);

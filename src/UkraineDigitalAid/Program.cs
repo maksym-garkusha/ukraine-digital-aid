@@ -28,7 +28,13 @@ switch (args)
 
 static async Task<int> Fetch(ActivityStore store, CancellationToken ct)
 {
-    using var http = new HttpClient { BaseAddress = new Uri("https://d-portal.org/"), Timeout = TimeSpan.FromMinutes(3) };
+    // найбільша справжня відповідь, сторінка списку на 2000 рядків, важить близько мегабайта
+    using var http = new HttpClient
+    {
+        BaseAddress = new Uri("https://d-portal.org/"),
+        Timeout = TimeSpan.FromMinutes(3),
+        MaxResponseContentBufferSize = 32 * 1024 * 1024
+    };
     http.DefaultRequestHeaders.UserAgent.ParseAdd("ukraine-digital-aid/1.0 (+https://github.com/maksym-garkusha/ukraine-digital-aid)");
 
     bool haveCodelists = Codelists.Names.All(name => File.Exists(Path.Combine(store.CodelistsDirectory, name + ".json")));
