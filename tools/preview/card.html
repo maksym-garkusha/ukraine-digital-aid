@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<!--
+  Картинка для прев'ю посилання в месенджерах (og:image), 1200×630.
+  Кольори й шрифти ті самі, що в site/index.html. Після правки перезібрати з кореня репозиторію:
+  google-chrome --headless --hide-scrollbars --window-size=1200,630 --screenshot=site/preview.png tools/preview/card.html
+  На macOS замість google-chrome: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome".
+-->
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f3f5f4;
+  --ink: #14201c;
+  --muted: #5e6b66;
+  --amber: #f2b705;
+}
+html, body { margin: 0; }
+body {
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Golos Text", system-ui, sans-serif;
+}
+.card { box-sizing: border-box; height: 100%; padding: 60px 80px 0; display: flex; flex-direction: column; position: relative; }
+.mark { font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+.mark i { font-style: normal; font-weight: 400; color: var(--muted); }
+.logo { position: absolute; top: 56px; right: 80px; display: grid; grid-template-columns: repeat(2, 40px); gap: 10px; }
+.logo span { width: 40px; height: 40px; background: var(--ink); }
+.logo span:last-child { background: var(--amber); }
+h1 { font-size: 80px; line-height: 1.04; letter-spacing: -.03em; font-weight: 700; margin: 84px 0 28px; max-width: 12em; }
+.lead { font-size: 30px; line-height: 1.4; color: var(--muted); margin: 0; max-width: 30em; }
+footer { margin-top: auto; border-top: 3px solid var(--ink); padding: 22px 0 38px; display: flex; justify-content: space-between; font-size: 24px; color: var(--muted); }
+footer b { color: var(--ink); font-weight: 500; }
+.url { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 22px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="mark">ukraine-digital-aid <i>/ відкриті дані IATI</i></div>
+  <div class="logo" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <h1>Хто фінансує цифровізацію України</h1>
+  <p class="lead">Донорські проєкти з отримувачем Україна: донор, виконавці, суми, дати і статус в одному переліку.</p>
+  <footer><b>Максим Гаркуша</b><span class="url">maksym-garkusha.github.io/ukraine-digital-aid</span></footer>
+</div>
+</body>
+</html>
