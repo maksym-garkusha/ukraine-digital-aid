@@ -95,6 +95,7 @@ jobs:
   deploy:
     needs: [build, attest]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     # права на публікацію потрібні тільки цьому кроку, збірка їх не має
     permissions:
       pages: write
